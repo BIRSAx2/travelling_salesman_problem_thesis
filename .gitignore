@@ -1,0 +1,86 @@
+# LaTeX generated files
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+*.lb
+*.bbl
+*.blg
+*.brf
+*.idx
+*.ilg
+*.ind
+*.loa
+*.nav
+*.snm
+*.synctex.gz
+*.vrb
+*.xdv
+*.tmb
+*.tmh
+*.tps
+*.bcf
+*.run.xml
+*.fdb_latexmk
+*.synctex(busy)
+*.synctex.gz(busy)
+*.pdfsync
+*.alg
+*.acr
+*.acn
+*.glg
+*.glo
+*.gls
+*.ist
+*.slg
+*.syg
+*.syi
+*.syo
+*.nlo
+*.nls
+*.pyg
+# End LaTeX generated files
+
+# Output files
+dissertation.pdf
+*.dvi
+*.ps
+
+# Editor files and temporary files
+*~
+*.tmp
+*.bak
+*.swp
+*.auxlock
+# End editor and temporary files
+
+# OS generated files #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+# End OS generated files
+
+/scripts
+/resources
+/fonts
+/figures
+/frontmatter/*.aux
+/frontmatter/*.log
+/frontmatter/*.out
+
+/chapters/*.aux
+/chapters/*.log
+/chapters/*.out
+
+

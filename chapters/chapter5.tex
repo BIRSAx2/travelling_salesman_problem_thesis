@@ -1,0 +1,70 @@
+\chapter{Ant Colony System by Dorigo et al}\label{chapt:5}
+
+\section{Fundamentals}
+
+\subsection{Biological Inspiration}
+The Ant Colony System (ACS) draws its inspiration from the foraging behavior of real ants, which can efficiently find the shortest paths between food sources and their nest. This capability is attributed to the pheromone trails laid down by ants, facilitating an indirect form of communication that guides other ants towards optimal paths.
+
+
+\subsection{Algorithmic Principles}
+ACS leverages a colony of artificial ants which work cooperatively to explore and exploit solutions for optimization problems, notably the Traveling Salesman Problem (TSP). The approach integrates both the exploration of new solutions and the exploitation of known good solutions through a balance between pheromone influence and heuristic desirability.
+
+\subsection{Application to TSP}
+The TSP is particularly suited for application of the ACS due to its need for efficient pathfinding solutions. The algorithm simulates ant behavior to construct paths, with the optimization process guided by both heuristic information (e.g., city distances) and pheromone trails that represent a form of learned experience.
+
+\section{Implementation Details}
+
+
+\subsection{Pheromone Update Rules}
+
+The pheromone update rules in ACS are crucial for guiding the search process towards promising areas of the solution space. These rules are divided into local and global updates.
+
+\subsubsection{Local Update Rule}
+Each time an ant traverses an edge $(i,j)$, it applies the local pheromone update rule to decrease the pheromone level, encouraging exploration by other ants. The local update rule is given by:
+\[
+	\tau_{ij} = (1 - \rho) \cdot \tau_{ij} + \rho \cdot \Delta \tau_{ij}^0
+\]
+where $\tau_{ij}$ is the pheromone concentration on edge $(i,j)$, $\rho$ is the local evaporation rate, and $\Delta \tau_{ij}^0$ is the initial pheromone level.
+
+\subsubsection{Global Update Rule}
+After all ants have completed their tours, the global update rule is applied to edges that belong to the best tour (either globally or in the current iteration). The global update enhances the pheromone trail on critical paths, making them more attractive for future ants. The global update rule is defined as:
+\[
+	\tau_{ij} = (1 - \alpha) \cdot \tau_{ij} + \alpha \cdot \Delta \tau_{ij}^{\text{best}}
+\]
+where $\alpha$ is the global evaporation rate, and $\Delta \tau_{ij}^{\text{best}}$ represents the pheromone deposited by the best ant, which is inversely proportional to the tour length.
+
+\subsection{Ant Movement Rules}
+
+Ants select the next city to visit based on a probabilistic decision rule that balances the exploration of new paths with the exploitation of pheromone trails and heuristic information.
+
+\subsubsection{Transition Rule}
+The probability $p_{ij}^k$ that ant $k$ moves from city $i$ to city $j$ is given by:
+\[
+	p_{ij}^k = \frac{[\tau_{ij}]^\beta \cdot [\eta_{ij}]^\gamma}{\sum_{l \in \text{allowed}_k} [\tau_{il}]^\beta \cdot [\eta_{il}]^\gamma}
+\]
+where $\eta_{ij}$ is the heuristic value (inverse of the distance), $\beta$ controls the influence of the pheromone trail, and $\gamma$ controls the influence of the heuristic information. The denominator sums over all allowed cities $l$ that ant $k$ can visit next.
+
+\subsection{Algorithm Pseudocode}
+
+\begin{algorithm}
+	\caption{Ant Colony System for the TSP}
+	\begin{algorithmic}[1]
+		\State Initialize pheromone levels $\tau_{ij}$ for all edges $(i,j)$
+		\For{each iteration}
+		\For{each ant $k$}
+		\State Place ant $k$ on a starting city
+		\Repeat
+		\State Select the next city using the transition rule
+		\State Apply local pheromone update
+		\Until{tour is complete}
+		\EndFor
+		\State Apply global pheromone update to the best tour
+		\EndFor
+	\end{algorithmic}
+\end{algorithm}
+
+\section{Performance Evaluation}
+
+The ACS demonstrates superior performance compared to other nature-inspired algorithms for both symmetric and asymmetric TSPs, attributed to its effective balance between exploration and exploitation and its ability to dynamically focus search efforts based on collective learning.
+
+When enhanced with local search procedures, such as the 3-opt, the ACS shows competitive or superior performance against some of the best-performing algorithms for TSP, highlighting its robustness and efficiency in solving complex optimization problems.

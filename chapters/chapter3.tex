@@ -1,0 +1,88 @@
+\chapter{Exact Algorithms for TSP} \label{chapt:3}
+
+This chapter provides an in-depth examination of exact algorithms for solving the Traveling Salesman Problem (TSP), incorporating detailed pseudo-code to elucidate the operational principles of each method. Through these algorithms, we explore the computational landscape of finding optimal solutions to TSP.
+
+\section{Overview of Exact Algorithms}
+
+Exact algorithms for TSP are characterized by their ability to invariably find the optimal solution, albeit with computational costs that can become prohibitive as the number of cities increases. These algorithms serve as a theoretical and practical foundation for understanding the limits of computationally solving TSP.
+
+\subsection{Brute Force Method}
+
+The brute force method systematically examines every possible tour to identify the one with the lowest total distance. Despite its simplicity, the exponential growth in computations makes it impractical for large instances.
+
+\begin{algorithm}
+	\caption{Brute Force TSP}\label{bruteforce}
+	\begin{algorithmic}[1]
+		\Procedure{BruteForceTSP}{$cities$}\Comment{Find the shortest tour}
+		\State $min\_distance \gets \infty$
+		\State $min\_tour \gets \emptyset$
+		\ForAll{tours $t$ of $cities$}
+		\State $distance \gets$ \textsc{TourDistance}($t$)
+		\If{$distance < min\_distance$}
+		\State $min\_distance \gets distance$
+		\State $min\_tour \gets t$
+		\EndIf
+		\EndFor
+		\State \Return $min\_tour$
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
+The computational complexity of this method is $O(n!)$, reflecting the factorial number of tours that must be evaluated.
+
+\subsection{Dynamic Programming}
+
+Dynamic programming (DP) is an optimization method that solves complex problems by breaking them down into simpler subproblems. It is particularly effective for the TSP when the goal is to reduce the redundant exploration of tour configurations.
+\begin{algorithm}
+	\caption{Dynamic Programming for TSP}\label{dynamicprogramming}
+	\begin{algorithmic}[1]
+		\Procedure{DynamicProgrammingTSP}{$cities, distances$}
+		\State Initialize $C(\{i\}, i)$ to $\infty$ for all $i$
+		\State $C(\{1\}, 1) \gets 0$ \Comment{Start from the first city}
+		\For{$s \gets 2$ to $|cities|$}
+		\ForAll{subsets $S \subseteq \{1, 2, ..., n\}$ of size $s$ and containing 1}
+		\ForAll{$i \in S, i \neq 1$}
+		\State $C(S, i) \gets \min\limits_{j \in S, j \neq i}\{C(S-\{i\}, j) + distances[j, i]\}$
+		\EndFor
+		\EndFor
+		\EndFor
+		\State \Return $\min\limits_{i \neq 1}\{C(\{1,2,...,n\}, i) + distances[i, 1]\}$
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
+The DP approach offers a significant improvement over brute force, with a computational complexity of $O(n^2 \cdot 2^n)$, which, while still exponential, allows for the solution of TSP instances of moderate size more feasibly.
+
+\subsection{Held-Karp Algorithm}
+
+The Held-Karp algorithm refines dynamic programming for TSP, storing the shortest paths to subsets of cities to avoid redundant calculations. Its pseudo-code emphasizes the optimal substructure and overlapping subproblems inherent in dynamic programming.
+
+TODO: add pseudocode for Held-Karp algorithm
+
+The Held-Karp algorithm achieves a time complexity of $O(n^2 \cdot 2^n)$, providing an optimal solution with significantly reduced computation time compared to the brute force method, though still exponential.
+
+Through the inclusion of pseudo-code, this chapter offers a detailed exploration of the methodologies behind exact algorithms for solving TSP, from the straightforward brute force method to the more sophisticated dynamic programming and Held-Karp algorithm. These exact algorithms illuminate the computational challenges and ingenuity required to find optimal solutions to the TSP, setting a foundation for the exploration of heuristic and metaheuristic approaches in subsequent chapters.
+
+
+\section{Analysis of Exact Algorithms}
+
+\subsection{Computational Feasibility}
+
+Exact algorithms for the TSP, such as the brute force method, dynamic programming, and the Held-Karp algorithm, offer theoretical guarantees for finding the optimal tour. However, their computational feasibility is significantly challenged as the number of cities increases. The factorial growth rate of the brute force method's complexity and the exponential growth rate of dynamic programming and Held-Karp's complexities restrict their practical application to relatively small instances of the TSP.
+
+\subsection{Pros and Cons}
+
+\textbf{Pros:}
+\begin{itemize}
+	\item Guarantee of finding an optimal solution.
+	\item Provide a benchmark for evaluating the performance of heuristic and metaheuristic algorithms.
+\end{itemize}
+
+\textbf{Cons:}
+\begin{itemize}
+	\item Exponential time complexity makes them impractical for large instances.
+	\item Significant computational resources required for even moderate-sized problems.
+	\item Dynamic programming and Held-Karp, while more efficient than brute force, still face limitations due to their space complexity and the need for extensive computation.
+\end{itemize}
+
+The exploration of exact algorithms lays the foundation for understanding the computational intricacies of the TSP. While their practical application is limited by their computational demands, they remain crucial for theoretical analysis and for setting the stage for alternative solving techniques discussed in subsequent chapters.

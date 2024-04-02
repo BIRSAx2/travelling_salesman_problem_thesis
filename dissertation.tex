@@ -1,0 +1,41 @@
+% arara: xelatex
+% arara: indent
+% arara: clean: { extensions: [ aux, xdv, blg, fls, lof, log, lot, out, toc, ind, bbl, fdb_latexmk, fis] }
+% arara: clean: { files: [chapters/chapter1.aux, chapters/chapter2.aux, chapters/chapter3.aux, chapters/chapter4.aux, chapters/chapter5.aux, chapters/chapter6.aux, chapters/chapter7.aux, chapters/chapter8.aux, chapters/conclusion.aux ] }
+
+\documentclass{Dissertate}
+\usepackage{titlesec}
+\usepackage{fontspec}
+\usepackage{amsbsy}
+\usepackage[export]{adjustbox}
+
+\begin{document}
+
+% the front matter
+\input{frontmatter/personalize}
+\frontmatter
+\setstretch{\dnormalspacing}
+
+% include each chapter...
+\setcounter{chapter}{0}  % start chapter numbering at 1
+\include{chapters/chapter1}
+\include{chapters/chapter2}
+\include{chapters/chapter3}
+\include{chapters/chapter4}
+\include{chapters/chapter5}
+\include{chapters/chapter6}
+\include{chapters/chapter7}
+\include{chapters/chapter8}
+\include{chapters/conclusion}
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{References}
+\bibliography{references}
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Acknowledgments}
+\acknowledgments
+
+\end{document}
