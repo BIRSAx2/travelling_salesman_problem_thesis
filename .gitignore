@@ -72,9 +72,6 @@ Thumbs.db
 # End OS generated files
 
 /scripts
-/resources
-/fonts
-/figures
 /frontmatter/*.aux
 /frontmatter/*.log
 /frontmatter/*.out
