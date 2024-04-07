@@ -12,118 +12,169 @@ The importance of TSP transcends its deceptively simple formulation, branching i
 
 \subsection{Historical Overview}
 
-The origins of the TSP are not precisely documented, but its mathematical study can be traced back to the 18th and 19th centuries with the work of mathematicians such as Sir William Rowan Hamilton and Thomas Penyngton Kirkman. Hamilton and Kirkman explored problems related to Hamiltonian cycles and tours, which are closely related to what is known today as the TSP.
+The Travelling Salesman Problem (TSP) represents one of the most studied challenges in computational mathematics and optimization, with a history that intertwines with the development of mathematical and operational research. Its evolution from early conceptual explorations to a pivotal problem in algorithm design is a testament to its complexity and widespread applicability.
 
-The explicit formulation of TSP as it is recognized today was introduced in the 1930s. However, it was the advent of computers and the development of operational research techniques in the mid-20th century that truly catalyzed the intensive study of TSP. Mathematicians and computer scientists, including George Dantzig, Delbert Ray Fulkerson, and Selmer M. Johnson, made significant early contributions by applying linear programming and cutting plane methods to solve instances of TSP, laying the groundwork for decades of research to follow.
+The study of TSP can be traced back to the works of Sir William Rowan Hamilton and Thomas Penyngton Kirkman in the 19th century, focusing on Hamiltonian cycles and paths. Karl Menger, in the 1920s, introduced the "Messenger Problem," laying the groundwork for the modern formulation of TSP and emphasizing the quest for efficient routing.
 
-In the subsequent years, the TSP has continued to captivate researchers due to its NP-hardness—a classification that implies there is no known algorithm that can solve all instances of the problem efficiently (in polynomial time). This inherent complexity, coupled with the TSP's applicability to a wide array of practical problems, has made it a centerpiece in the study of algorithm design and optimization.
+The advent of computers and operational research techniques marked a significant phase in TSP research. Early pioneers like George Dantzig and Delbert Ray Fulkerson applied linear programming and cutting plane methods, illustrating the problem's computational complexity and its potential for practical applications.
 
+By the 1940s, the TSP began to find relevance in agriculture and statistics, with researchers applying the problem's framework to optimize surveying and data collection processes, showcasing the TSP's versatility beyond theoretical mathematics.
+
+In recent decades, the exploration of heuristic and bio-inspired algorithms, notably Marco Dorigo's work on ant colony optimization, has opened new avenues for solving TSP, highlighting the continued innovation in tackling its NP-hardness.
 
 \section{Problem Statement}
 
+\textbf{The Travelling Salesman Problem:} Given a set of cities and the distances between each pair of cities, find the shortest possible route that visits each city exactly once and returns to the original city.
+
 \subsection{Mathematical Formulation}
 
-
-The Travelling Salesman Problem (TSP) is formally defined on a graph \(G = (V, E)\), where \(V\) represents the set of vertices (cities) and \(E\) the set of edges (paths between cities). Each edge \((i, j) \in E\) is associated with a weight \(w_{ij}\), which represents the cost (distance, time, or expense) of traveling from city \(i\) to city \(j\). The objective is to find a Hamiltonian cycle (a cycle that visits each vertex exactly once and returns to the starting vertex) with the minimum possible total weight.
-
-Mathematically, the problem can be expressed as an optimization problem. Let \(x_{ij}\) be a binary variable that equals 1 if the tour moves directly from city \(i\) to city \(j\) and 0 otherwise. The goal is to minimize the total cost of the tour:
-
+Given a graph \(G = (V, E)\), where \(V\) is the set of vertices (cities) and \(E\) is the set of edges (paths between cities), with each edge \((i, j) \in E\) assigned a weight \(w_{ij}\) representing the travel cost from city \(i\) to city \(j\), the TSP seeks a Hamiltonian cycle of minimal weight.
+The objective function to minimize is:
 \[
-    \text{Minimize} \sum_{i=1}^{n} \sum_{j \ne i, j=1}^{n} w_{ij} x_{ij}
+	\text{Minimize} \sum_{i=1}^{n} \sum_{j \ne i, j=1}^{n} w_{ij} x_{ij},
+\]
+subject to the constraints:
+\[
+	\sum_{i=1, i \ne j}^{n} x_{ij} = 1, \quad \forall j \in V,
+\]
+\[
+	\sum_{j=1, j \ne i}^{n} x_{ij} = 1, \quad \forall i \in V,
+\]
+alongside subtour elimination constraints, ensuring each city is visited exactly once and the tour is cyclic.
+
+\subsection{Integer Linear Programming Formulations}
+
+\subsubsection{Miller–Tucker–Zemlin Formulation}
+
+The MTZ formulation introduces auxiliary variables \(u_i\) for ordering, alongside the binary variables \(x_{ij}\):
+
+Objective:
+\[
+	\min \sum_{i=1}^{n} \sum_{j \ne i, j=1}^{n} c_{ij} x_{ij},
+\]
+Subject to:
+\[
+	\sum_{i=1, i \ne j}^{n} x_{ij} = 1, \quad \forall j,
+\]
+\[
+	\sum_{j=1, j \ne i}^{n} x_{ij} = 1, \quad \forall i,
+\]
+\[
+	u_i - u_j + 1 \le (n-1)(1 - x_{ij}), \quad \forall 2 \le i \ne j \le n,
+\]
+\[
+	2 \le u_i \le n, \quad \forall 2 \le i \le n.
 \]
 
-subject to:
+This formulation enforces a single tour through auxiliary ordering variables, preventing subtours effectively.
 
+\subsubsection{Dantzig–Fulkerson–Johnson Formulation}
+
+The DFJ formulation, known for its efficiency, introduces subtour elimination constraints directly:
+
+Objective:
 \[
-    \sum_{i=1, i \ne j}^{n} x_{ij} = 1, \quad \forall j \in V
+	\min \sum_{i=1}^{n} \sum_{j \ne i, j=1}^{n} c_{ij} x_{ij},
+\]
+Subject to:
+\[
+	\sum_{i=1, i \ne j}^{n} x_{ij} = 1, \quad \forall j,
+\]
+\[
+	\sum_{j=1, j \ne i}^{n} x_{ij} = 1, \quad \forall i,
+\]
+\[
+	\sum_{i \in S, j \notin S} x_{ij} \ge 1, \quad \forall S \subset V, S \ne \emptyset, S \ne V.
 \]
 
-\[
-    \sum_{j=1, j \ne i}^{n} x_{ij} = 1, \quad \forall i \in V
-\]
-
-\[
-    \text{and the subtour elimination constraints.}
-\]
-
-The first two sets of constraints ensure that each city is entered and left exactly once. The subtour elimination constraints are more complex and are necessary to prevent the solution from containing separate cycles that do not constitute a valid tour.
+This formulation combats subtours by ensuring at least one edge leads out of every subset of vertices, guaranteeing a single, connected tour.
 
 \subsection{Variants and Applications}
 
-% TODO Adjust spacing
+The TSP adapts to a broad array of practical challenges, demonstrating its versatility. Key variants include:
 
-The TSP exhibits numerous variants, broadening its application to a variety of real-world scenarios. Key variants include:
+\begin{itemize}
+	\item \textbf{Symmetric vs. Asymmetric TSP (STSP vs. ATSP):} STSP assumes identical travel costs between any two cities, whereas ATSP allows for distinct costs, reflecting the complexity of real-world routes.
+	\item \textbf{Euclidean TSP:} This variant situates cities within a Euclidean plane, emphasizing direct, straight-line distances, pivotal for drone navigation and infrastructure planning.
+	\item \textbf{Time Windows TSP:} It adds specific time frames within which each city must be visited, crucial for scheduling in delivery services and maintenance operations.
+	\item \textbf{Vehicle Routing Problem (VRP):} An extension of TSP that involves multiple vehicles, central to optimizing fleet logistics and distribution networks.
+\end{itemize}
 
-- \textbf{Symmetric vs. Asymmetric TSP (STSP vs. ATSP)}: In the STSP, the distance from city $i$ to city $j$ is identical to that from city $j$ to city $i$, while in the ATSP, these distances may differ, mirroring real scenarios such as one-way streets.
+The application of TSP and its variants extends across various fields, showcasing its utility in tackling complex optimization problems:
 
-- \textbf{Euclidean TSP}: Cities are points within the Euclidean plane, and distances are Euclidean distances, relevant to logistics and drone navigation.
-
-- \textbf{Time Windows TSP}: Each city must be visited within a specific timeframe, adding temporal dimensions to the routing challenge, applicable in delivery services and scheduling.
-
-- \textbf{Vehicle Routing Problem (VRP)}: An extension of the TSP where multiple vehicles are available for deliveries or pickups, used in fleet logistics and distribution management.
-
-The applications for TSP and its variants span across diverse fields including logistics optimization, manufacturing, scheduling, network design, and genetics for genome sequencing. This illustrates the TSP's universality not only as a theoretical challenge in computer science and operations research but also as a practical tool for addressing complex optimization issues across various industries and scientific domains.
-
+\begin{itemize}
+	\item \textbf{Logistics Optimization:} Euclidean TSP and VRP are instrumental in streamlining delivery routes and enhancing logistics efficiency.
+	\item \textbf{Manufacturing:} TSP aids in optimizing production processes, reducing downtime, and improving overall manufacturing workflows.
+	\item \textbf{Scheduling and Planning:} Time Windows TSP ensures timely operations, optimizing resource allocation for services with critical timing requirements.
+	\item \textbf{Network Design:} TSP algorithms facilitate the development of cost-effective and efficient telecommunications and transportation networks.
+	\item \textbf{Genomics:} In genetics, TSP supports advancements in genome sequencing, offering insights into complex biological structures and processes.
+\end{itemize}
 \section{Objectives of the Thesis}
 
-The overarching objective of this thesis is to delve into the intricacies of the Travelling Salesman Problem (TSP), with a particular focus on exploring innovative algorithmic solutions and their applications. This exploration is twofold: firstly, to extend the theoretical understanding of TSP within the realm of computational complexity and optimization; and secondly, to develop and assess the efficacy of a novel algorithmic approach, the Red-Black Ant Colony System, in solving instances of TSP more efficiently than existing methodologies.
+This thesis aims to explore the Travelling Salesman Problem (TSP) from both a theoretical and practical standpoint. The focus is on examining the Red-Black Ant Colony System—a variation of the Ant Colony Optimization algorithm—with some modifications, to understand its effectiveness in addressing TSP challenges. The study has dual objectives: enhancing the comprehension of TSP in computational optimization and evaluating the modified Red-Black Ant Colony System's performance against conventional solutions.
 
 \subsection{Main Goals}
 
-The thesis is driven by several key goals:
+The research is guided by the following objectives:
 
 \begin{itemize}
-    \item To provide a comprehensive review of existing literature on TSP, including its mathematical formulation, historical development, and the various algorithmic strategies previously employed to tackle the problem.
-    \item To introduce the Red-Black Ant Colony System, a novel variant of the Ant Colony Optimization technique, detailing its conceptual foundation, algorithmic structure, and potential advantages over traditional methods.
-    \item To conduct a rigorous experimental analysis comparing the Red-Black Ant Colony System with established TSP algorithms across various problem instances, thereby evaluating its performance and scalability.
-    \item To demonstrate the practical applications of the proposed algorithm in real-world scenarios, thereby illustrating its utility beyond theoretical interest.
+	\item To survey the existing body of work on TSP, encapsulating its mathematical underpinnings, evolution, and the array of strategies previously devised for its resolution.
+	\item To detail the workings of the Red-Black Ant Colony System, emphasizing its theoretical basis, operational mechanics, and its distinctions from more traditional approaches.
+	\item To perform a methodical experimental comparison of the Red-Black Ant Colony System against standard TSP-solving algorithms over a spectrum of problem sets, aiming to discern its operational efficacy and scalability.
+	\item To identify practical scenarios where the modified algorithm could be applied, showcasing its relevance and potential benefits in tangible settings.
 \end{itemize}
 
 \subsection{Scope of Investigation}
 
-This thesis confines its investigation to the following areas:
+The research delves into specific areas of interest:
 
 \begin{itemize}
-    \item A detailed examination of the TSP, including its definitions, significance, and variants, to set the stage for further algorithmic exploration.
-    \item An in-depth analysis of heuristic and metaheuristic algorithms, with a spotlight on Ant Colony Optimization as a precursor to the proposed Red-Black Ant Colony System.
-    \item The development and implementation of the Red-Black Ant Colony System, including its algorithmic innovations and operational principles.
-    \item An extensive comparative study of algorithmic performance, utilizing a variety of TSP instances to assess both efficiency and solution quality.
-    \item Exploration of the broader implications of the research findings, including potential applications in logistics, scheduling, and network design, and a discussion on future research directions.
+	\item An analytical overview of TSP, covering its definitions, implications, and variations, laying the groundwork for subsequent algorithmic investigations.
+	\item A thorough review of heuristic and metaheuristic algorithms, focusing particularly on Ant Colony Optimization as the foundation for the Red-Black Ant Colony System.
+	\item The adaptation and application of the Red-Black Ant Colony System, elucidating the novel aspects introduced and their theoretical justifications.
+	\item A comprehensive comparison of algorithmic performances, using diverse TSP instances to evaluate effectiveness and solution quality.
 \end{itemize}
 
-The thesis aims to contribute valuable insights into the TSP domain, pushing the boundaries of existing algorithmic approaches and opening new avenues for practical applications and further research.
-
+Through this investigation, the thesis endeavors to offer meaningful contributions to the study of TSP, demonstrating the utility of the Red-Black Ant Colony System in solving optimization problems and paving the way for future inquiries.
 
 \section{Scope and Limitations}
 
-This thesis is subject to certain scope definitions and limitations that delineate the extent of the investigation and the applicability of its findings. These limitations are grounded in both theoretical constraints and practical considerations, which are essential to acknowledge for a comprehensive understanding of the study's context and its contributions to the field.
+This bachelor thesis navigates through specific scope definitions and encounters limitations that are crucial to delineate for an accurate interpretation of the study's outcomes and their relevance to the broader field.
 
 \subsection{Theoretical Constraints}
 
-Practically, the thesis is bounded by the computational resources available for the testing and evaluation of the proposed algorithms. The experimental analysis focuses on instances of the TSP that pose a significant challenge yet remain manageable within the constraints of the available computational framework. Furthermore, this study has necessitated the re-implementation of all discussed algorithms in Rust, a decision driven by the unavailability of original source code for some algorithms. It is important to note that this re-implementation could potentially impact the performance comparison between the newly implemented algorithms and the existing ones. The discrepancies in performance metrics could stem not solely from algorithmic efficiency but also from the intrinsic differences in programming languages and the possible nuances lost or gained in the translation of algorithmic logic to Rust. Additionally, while the thesis briefly explores the potential real-world applications of the developed system, conducting in-depth case studies falls outside its scope, prioritizing instead the theoretical and computational exploration of TSP solutions.
+The exploration within this thesis is tailored to fit the computational resources at hand, focusing on TSP instances that balance between presenting a notable challenge and being feasible for analysis within the constraints of our computational setup. A notable aspect of this research involves the re-implementation of all algorithms discussed in Rust, owing to the unavailability of the original source code for some of these algorithms. This necessity brings to light a potential variation in the performance metrics, which may not fully align with those derived from the original authors' implementations. Such differences could arise from various factors, including the inherent characteristics of Rust as a programming language and the intricacies involved in translating complex algorithmic logic into code. Consequently, while aiming to provide a comparative analysis of algorithmic performance, it's imperative to consider these re-implementation factors as potential variables affecting the results.
+
+Moreover, while there is an acknowledgment of the potential real-world applications of the algorithms under study, in-depth case studies extending beyond theoretical exploration and computational experimentation fall outside the purview of this bachelor thesis. The primary focus remains on the theoretical underpinnings and computational assessment of TSP solutions.
 
 \subsection{Practical Considerations}
 
-Practical limitations also shape the scope of this thesis, influencing the design, execution, and evaluation of the proposed solutions:
-
+The practicality of this thesis is influenced by several limitations that guide its experimental approach and evaluation methodology:
 
 \begin{itemize}
-    \item The performance assessment of the Red-Black Ant Colony System is based on a selected set of TSP instances, which, while diverse, cannot encompass the full spectrum of possible problem configurations.
-    \item Computational resource constraints limit the scalability testing of the proposed algorithm, potentially affecting the generalization of performance results to larger problem instances.
-    \item The practical applicability of findings is considered within the contexts provided
-
-
+	\item The evaluation of the Red-Black Ant Colony System's performance is conducted through a carefully chosen subset of TSP instances. These instances aim to provide a diverse yet not exhaustive representation of potential problem scenarios, highlighting the inherent limitation in capturing the full spectrum of TSP configurations.
+	\item Due to computational resource limitations, the scalability of the proposed algorithm is tested within a constrained environment. This limitation may impede the extrapolation of performance results to significantly larger or more complex TSP instances.
+	\item The thesis considers the practical implications of its findings within a theoretical and computational context, without venturing into extensive field testing or application-specific case studies.
 \end{itemize}
+
+These considerations are fundamental in shaping the research approach and interpreting the findings of this bachelor thesis, setting realistic expectations for its contributions to the understanding and solving of the Travelling Salesman Problem.
+
 \section{Thesis Structure}
 
 \subsection{Overview of Chapters}
 
-Chapter~\ref{chapt:1} lays the foundation by delving into the TSP's definition, significance, and historical context, subsequently framing the problem statement, thesis objectives, and methodological approach. The discourse progresses to Chapter~\ref{chapt:2}, where the theoretical underpinnings of computational complexity, particularly the P vs. NP problem, are examined to contextualize the TSP's computational challenges.
+Chapter~\ref{chapt:1} introduces the Travelling Salesman Problem (TSP), covering what it is, why it matters, and a bit about its history. It sets up the main questions this thesis aims to answer and briefly outlines the methods used.
 
-In Chapters \ref{chapt:3} and ~\ref{chapt:4}, the thesis scrutinizes both exact and heuristic/metaheuristic algorithms, respectively, providing a critical analysis of methods ranging from the brute force approach to more nuanced strategies like genetic algorithms and simulated annealing. Special attention is devoted to the original Ant Colony System by Dorigo et al. in Chapter ~\ref{chapt:5}, dissecting its biological inspiration, algorithmic principles, and application to TSP.
+Chapter~\ref{chapt:2} looks at the big picture of computational complexity, focusing on the famous P vs. NP question, to help understand why solving the TSP can be so challenging.
 
-The narrative then shifts in Chapter~\ref{chapt:6} to spotlight the Red-Black Ant Colony System, detailing its conceptualization, algorithmic innovations, and the experimental analysis underscoring its comparative advantage. Chapter~\ref{chapt:7} introduces "Ibn-Battuta," a bespoke software visualizer for TSP algorithms, designed to elucidate the operational dynamics of various algorithms, including the newly proposed system.
+The discussion moves on in Chapters \ref{chapt:3} and ~\ref{chapt:4} to explore different ways to tackle the TSP. Chapter \ref{chapt:3} looks at exact solutions while Chapter ~\ref{chapt:4} discusses heuristic and metaheuristic methods, including well-known strategies like genetic algorithms and simulated annealing.
 
-Concluding in Chapter~\ref{chapt:8}, the thesis synthesizes the findings, emphasizing the Red-Black Ant Colony System's performance and the broader theoretical and practical implications of the study. While acknowledging limitations, the thesis also proposes avenues for future research, suggesting potential improvements and broader applications of the findings.
+Chapter~\ref{chapt:5} zooms in on the Ant Colony System, explaining how it works, why it's inspired by nature, and how it applies to solving the TSP.
 
-This work not only contributes a novel perspective to the algorithmic tackling of TSP but also reinforces the interdisciplinary bridge between computational theory and practical application, paving the way for future explorations in optimization problems.
+Then, Chapter~\ref{chapt:6} introduces a twist on the Ant Colony System called the Red-Black Ant Colony System. This chapter explains how it was developed, the new ideas it brings, and how testing shows it might offer an edge in solving TSP instances.
+
+Chapter~\ref{chapt:7} presents "Ibn-Battuta," a tool created to visualize how different TSP algorithms, including the Red-Black Ant Colony System, solve problems. This makes it easier to see how the algorithms work in practice.
+
+Finally, Chapter~\ref{chapt:8} wraps up the thesis by summarizing the main discoveries, particularly how the Red-Black Ant Colony System performs. It recognizes the study's limitations and suggests directions for further research, pointing out how these findings could be built upon or applied in new ways.
+
+This thesis aims to add to the conversation on solving the TSP, hoping to bridge the gap between theoretical challenges and real-world solutions, and open the door for more investigations into optimization problems.
