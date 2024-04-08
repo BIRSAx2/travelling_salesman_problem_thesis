@@ -1,6 +1,7 @@
 \chapter{Heuristic and Metaheuristic Algorithms}\label{chapt:4}
 
 \section{Heuristic Approaches}
+
 Heuristic approaches to solving problems like the Travelling Salesman Problem (TSP) are strategies designed to find good-enough solutions within a reasonable amount of time, especially when an exact solution is not feasible due to the problem's complexity. These methods are essential in cases where the computational cost of finding the optimal solution is prohibitive, as is common with NP-hard problems such as the TSP.
 
 \subsection{Concept and Necessity}
@@ -17,16 +18,16 @@ Greedy algorithms constitute a significant class of heuristic approaches charact
 
 A greedy algorithm builds up a solution piece by piece, always choosing the next piece that offers the most immediate benefit. This approach is simple and straightforward, making it an attractive option for many problems where a quick and easy solution is more valuable than an optimal one. The efficacy of greedy algorithms varies widely from one problem to another; in some cases, they achieve an optimal solution, while in others, they may only reach a suboptimal solution.
 
-\subsubsection{Application to TSP: Greedy Algorithm}
+\subsubsection{Application to TSP: Nearest Neighbor Search}
 
-In the TSP, a classic application of the greedy algorithm is the Greedy Best First Search, where the algorithm constructs a tour by starting from an arbitrary city and, at each step, extending the tour by moving to the nearest unvisited city until all cities are visited.
+In the TSP, a classic application of the greedy algorithm is the Nearest Neighbor Search, where the algorithm constructs a tour by starting from an arbitrary city and, at each step, extending the tour by moving to the nearest unvisited city until all cities are visited.
 
-\paragraph{Pseudocode for Greedy Best First Search}
+\paragraph{Pseudocode}
 
 \begin{algorithm}
 	\caption{Greedy Best First Search for TSP}\label{alg:greedybestfirst}
 	\begin{algorithmic}[1]
-		\Procedure{GreedyBestFirstTSP}{$cities, distances$}
+		\Procedure{NearestNeighborSearch}{$cities, distances$}
 		\State $start \gets$ select an arbitrary city from $cities$
 		\State $current \gets start$
 		\State $tour \gets$ list containing $start$
@@ -45,6 +46,8 @@ In the TSP, a classic application of the greedy algorithm is the Greedy Best Fir
 
 This greedy strategy ensures that at each step, the tour grows by adding the closest possible destination, optimizing for the immediate next step without regard for the overall tour length. While this method does not guarantee the discovery of the shortest possible tour, it significantly reduces the computation time compared to exhaustive search methods.
 
+% TODO: Rearrange this
+
 \subsubsection{Advantages and Limitations}
 
 \textbf{Advantages:}
@@ -60,6 +63,7 @@ This greedy strategy ensures that at each step, the tour grows by adding the clo
 \end{itemize}
 
 Greedy algorithms, with their inherent simplicity and efficiency, play a crucial role in heuristic problem-solving, especially in cases where obtaining an exact solution is computationally infeasible. Their application to TSP highlights the balance between computational efficiency and solution quality, a theme that resonates across the study of heuristic and metaheuristic algorithms.
+
 \section{Local Search Algorithms}
 
 Local search algorithms represent a class of heuristic methods designed to explore the solution space of an optimization problem by iteratively moving from a solution to a neighboring solution in the search space. These algorithms are particularly effective for problems like the TSP, where finding an optimal solution is computationally infeasible for large instances. Local search provides a mechanism to improve an initial solution through small, localized changes.
@@ -72,7 +76,53 @@ The 2-opt and 3-opt techniques are specific local search strategies used to refi
 
 The 2-opt algorithm systematically checks each pair of edges in the tour and determines whether swapping them would result in a shorter path. This process is repeated until no further improvements can be made.
 
-\paragraph{Pseudocode for 2-opt Technique}
+
+\begin{center}
+	\begin{tikzpicture}
+		% Define nodes
+		\node[draw=none, fill=none] (A) at (0,2) {A};
+		\node[draw=none] (B) at (2,1.7) {B};
+		\node[draw=none] (C) at (4,1.5) {C};
+		\node[draw=none] (D) at (6,2) {D};
+
+		\node[draw=none] (G) at (0,0) {G};
+		\node[draw=none] (F) at (2,0.2) {F};
+		\node[draw=none] (E) at (4,0.5) {E};
+
+		% Connect nodes
+		\draw (A) -- (B);
+		\draw[red] (B) -- (E);
+		\draw (E) -- (D);
+		\draw (D) -- (C);
+		\draw[red] (C) -- (F);
+		\draw (F) -- (G);
+		\draw (G) -- (A);
+
+		% Define nodes
+		\node[draw=none] (A2) at (10-2,2) {A};
+		\node[draw=none] (B2) at (12-2,1.7) {B};
+		\node[draw=none] (C2) at (14-2,1.5) {C};
+		\node[draw=none] (D2) at (16-2,2) {D};
+
+		\node[draw=none] (G2) at (10-2,0) {G};
+		\node[draw=none] (F2) at (12-2,0.2) {F};
+		\node[draw=none] (E2) at (14-2,0.5) {E};
+
+		% Connect nodes
+		\draw (A2) -- (B2);
+		\draw[blue] (B2) -- (C2);
+		\draw (E2) -- (D2);
+		\draw (D2) -- (C2);
+		\draw[blue] (E2) -- (F2);
+		\draw (F2) -- (G2);
+		\draw (G2) -- (A2);
+
+
+
+
+	\end{tikzpicture}
+\end{center}
+
 
 \begin{algorithm}
 	\caption{2-opt Technique for TSP}\label{alg:twoopt}
@@ -94,6 +144,7 @@ The 2-opt algorithm systematically checks each pair of edges in the tour and det
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
+
 
 \subsubsection{3-opt Technique}
 
@@ -160,6 +211,9 @@ For TSP, an initial population of random tours is first generated. The algorithm
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
+
+\subsection{Lin–Kernighan}
+% TODO
 
 \subsection{Tabu Search}
 
