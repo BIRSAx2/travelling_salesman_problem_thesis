@@ -13,7 +13,7 @@ The brute force method systematically examines every possible tour to identify t
 \begin{algorithm}
 	\caption{Brute Force TSP}\label{bruteforce}
 	\begin{algorithmic}[1]
-		\Procedure{BruteForceTSP}{$cities$}\Comment{Find the shortest tour}
+		\Procedure{BruteForceTSP}{$cities$}
 		\State $min\_distance \gets \infty$
 		\State $min\_tour \gets \emptyset$
 		\ForAll{tours $t$ of $cities$}
@@ -30,38 +30,59 @@ The brute force method systematically examines every possible tour to identify t
 
 The computational complexity of this method is $O(n!)$, reflecting the factorial number of tours that must be evaluated.
 
-\subsection{Dynamic Programming}
+\subsection{Bellman-Held-Karp Algorithm}
 
-Dynamic programming (DP) is an optimization method that solves complex problems by breaking them down into simpler subproblems. It is particularly effective for the TSP when the goal is to reduce the redundant exploration of tour configurations.
+The Bellman-Held-Karp algorithm represents a significant advancement in exact TSP solutions by leveraging dynamic programming to reduce the computational burden. This approach calculates the shortest path by breaking down the problem into smaller subproblems and storing the results of these subproblems to avoid redundant calculations.
+
 \begin{algorithm}
-	\caption{Dynamic Programming for TSP}\label{dynamicprogramming}
+	\caption{Bellman-Held-Karp Algorithm}\label{bellmanheldkarp}
 	\begin{algorithmic}[1]
-		\Procedure{DynamicProgrammingTSP}{$cities, distances$}
-		\State Initialize $C(\{i\}, i)$ to $\infty$ for all $i$
-		\State $C(\{1\}, 1) \gets 0$ \Comment{Start from the first city}
-		\For{$s \gets 2$ to $|cities|$}
-		\ForAll{subsets $S \subseteq \{1, 2, ..., n\}$ of size $s$ and containing 1}
-		\ForAll{$i \in S, i \neq 1$}
-		\State $C(S, i) \gets \min\limits_{j \in S, j \neq i}\{C(S-\{i\}, j) + distances[j, i]\}$
+		\Procedure{BellmanHeldKarp}{$cities$}
+		\State Create a table $distances$ to store the shortest paths
+		\State Initialize all entries in $distances$ to $\infty$
+		\State $distances[1][\{1\}] \gets 0$ \Comment{Starting city}
+		\For{$m = 2$ to $|cities|$}
+		\ForAll{subsets $S$ of $cities$ of size $m$ containing 1}
+		\ForAll{$j \in S, j \neq 1$}
+		\State $distances[j][S] \gets \min_{k \neq j, k \in S} (distances[k][S\setminus\{j\}] + distance(k, j))$
 		\EndFor
 		\EndFor
 		\EndFor
-		\State \Return $\min\limits_{i \neq 1}\{C(\{1,2,...,n\}, i) + distances[i, 1]\}$
+		\State \Return $\min_{j}(distances[j][cities] + distance(j, 1))$
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
 
-The DP approach offers a significant improvement over brute force, with a computational complexity of $O(n^2 \cdot 2^n)$, which, while still exponential, allows for the solution of TSP instances of moderate size more feasibly.
+The Bellman-Held-Karp algorithm operates with a time complexity of $O(n^2 \cdot 2^n)$, making it significantly more efficient than the brute force method for moderately sized problem instances. However, the exponential component of its complexity still limits its practical applicability to relatively small TSP instances.
 
-\subsection{Held-Karp Algorithm}
+\subsubsection{Branch and Bound}
 
-The Held-Karp algorithm refines dynamic programming for TSP, storing the shortest paths to subsets of cities to avoid redundant calculations. Its pseudo-code emphasizes the optimal substructure and overlapping subproblems inherent in dynamic programming.
+Branch and Bound is a general algorithmic technique that can be applied to various combinatorial optimization problems, including TSP. It systematically explores the solution space by dividing it into smaller subsets (branching) and using bounds to eliminate subsets that do not contain the optimal solution, thereby reducing the search space.
 
-TODO: add pseudocode for Held-Karp algorithm
+\begin{algorithm}
+	\caption{Branch and Bound for TSP}\label{branchbound}
+	\begin{algorithmic}[1]
+		\Procedure{BranchAndBoundTSP}{$cities$}
+		\State Initialize a priority queue $Q$ with a partial solution starting at the first city
+		\State $min\_distance \gets \infty$
+		\While{$Q$ is not empty}
+		\State Take the partial solution with the lowest bound from $Q$
+		\If{it represents a complete tour}
+		\If{its cost is less than $min\_distance$}
+		\State Update $min\_distance$ and record the tour
+		\EndIf
+		\Else
+		\State Branch by adding a city to the partial solution
+		\State Calculate bounds for new partial solutions
+		\State Add new partial solutions to $Q$
+		\EndIf
+		\EndWhile
+		\State \Return $min\_distance$
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
 
-The Held-Karp algorithm achieves a time complexity of $O(n^2 \cdot 2^n)$, providing an optimal solution with significantly reduced computation time compared to the brute force method, though still exponential.
-
-Through the inclusion of pseudo-code, this chapter offers a detailed exploration of the methodologies behind exact algorithms for solving TSP, from the straightforward brute force method to the more sophisticated dynamic programming and Held-Karp algorithm. These exact algorithms illuminate the computational challenges and ingenuity required to find optimal solutions to the TSP, setting a foundation for the exploration of heuristic and metaheuristic approaches in subsequent chapters.
+The efficiency of Branch and Bound for TSP depends significantly on the bounding function used to estimate the lower bound of partial solutions. Effective bounding can lead to substantial reductions in the search space, allowing the algorithm to find the optimal solution more quickly than exhaustive search methods. However, its worst-case time complexity remains $O(n!)$, which means that for very large problem instances, even this sophisticated approach may not be practical.
 
 
 \section{Analysis of Exact Algorithms}
@@ -69,6 +90,32 @@ Through the inclusion of pseudo-code, this chapter offers a detailed exploration
 \subsection{Computational Feasibility}
 
 Exact algorithms for the TSP, such as the brute force method, dynamic programming, and the Held-Karp algorithm, offer theoretical guarantees for finding the optimal tour. However, their computational feasibility is significantly challenged as the number of cities increases. The factorial growth rate of the brute force method's complexity and the exponential growth rate of dynamic programming and Held-Karp's complexities restrict their practical application to relatively small instances of the TSP.
+
+\begin{center}
+	\begin{tikzpicture}
+		\begin{semilogyaxis}[
+				title={$O(n!)$ Exact algorithms complexity},
+				xlabel={Elements},
+				ylabel={Operations},
+				domain=0:10,
+				ytick={0,1,2,6,24,120,720,5040,40320,362880,3628800},
+				log ticks with fixed point,
+				legend pos=north west,
+				ymajorgrids=true,
+				grid style=dashed,
+			]
+			\addplot+[mark=none,smooth] coordinates {
+					(0,1) (1,1) (2,2) (3,6) (4,24) (5,120) (6,720) (7,5040)
+					(8,40320) (9,362880) (10,3628800)
+				};
+			\addlegendentry{$O(n!)$}
+
+			\addplot+[mark=none,smooth] expression {x^2 * 2^x};
+			\addlegendentry{$O(n^2 \cdot 2^n)$}
+
+		\end{semilogyaxis}
+	\end{tikzpicture}
+\end{center}
 
 \subsection{Pros and Cons}
 
