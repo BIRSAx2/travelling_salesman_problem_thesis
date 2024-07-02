@@ -9,7 +9,10 @@ Computational complexity refers to the study of the resource requirements of alg
 Time complexity is a measure of the amount of computational time that an algorithm takes to complete as a function of the length of the input. It is often expressed using Big O notation, which describes the upper bound of the growth rate of the runtime~\cite{BigONotation}. Understanding an algorithm's time complexity is crucial for predicting its scalability and feasibility in practical applications, especially for problems known to be computationally intensive, like the Travelling Salesman Problem (TSP).
 
 The TSP, being NP-hard, does not have a known polynomial-time solution that can solve all instances of the problem efficiently. The brute-force approach to TSP, for instance, has a factorial time complexity (\(O(n!)\)), making it computationally infeasible for even moderately sized problem instances. This has led to the exploration of various heuristic and metaheuristic algorithms that aim for acceptable solutions in polynomial time (\(O(n^k)\)), where \(k\) is a constant, trading off exactness for efficiency and practical applicability.~\cite{Dorigo1996}
-\begin{center}
+
+\begin{figure}[h]
+	\centering
+	\caption{Growth rate of different complexities}
 	\begin{tikzpicture}
 		\begin{axis}
 			[
@@ -42,7 +45,7 @@ The TSP, being NP-hard, does not have a known polynomial-time solution that can 
 			\addplot+ {x^3};
 		\end{axis}
 	\end{tikzpicture}
-\end{center}
+\end{figure}
 
 \subsection{Space Complexity}
 

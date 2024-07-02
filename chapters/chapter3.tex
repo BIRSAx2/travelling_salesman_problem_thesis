@@ -53,7 +53,7 @@ The Bellman-Held-Karp algorithm represents a significant advancement in exact TS
 	\end{algorithmic}
 \end{algorithm}
 
-The Bellman-Held-Karp algorithm operates with a time complexity of $O(n^2 \cdot 2^n)$, making it significantly more efficient than the brute force method for moderately sized problem instances. However, the exponential component of its complexity still limits its practical applicability to relatively small TSP instances.
+The Bellman-Held-Karp algorithm operates with a time complexity of $O(n^2 \cdot 2^n)$~\ref{fig:agl_complexity}, making it significantly more efficient than the brute force method for moderately sized problem instances. However, the exponential component of its complexity still limits its practical applicability to relatively small TSP instances.
 
 \subsubsection{Branch and Bound}
 
@@ -82,7 +82,7 @@ Branch and Bound is a general algorithmic technique that can be applied to vario
 	\end{algorithmic}
 \end{algorithm}
 
-The efficiency of Branch and Bound for TSP depends significantly on the bounding function used to estimate the lower bound of partial solutions. Effective bounding can lead to substantial reductions in the search space, allowing the algorithm to find the optimal solution more quickly than exhaustive search methods. However, its worst-case time complexity remains $O(n!)$, which means that for very large problem instances, even this sophisticated approach may not be practical.
+The efficiency of Branch and Bound for TSP depends significantly on the bounding function used to estimate the lower bound of partial solutions. Effective bounding can lead to substantial reductions in the search space, allowing the algorithm to find the optimal solution more quickly than exhaustive search methods. However, its worst-case time complexity remains $O(n!)$~\ref{fig:agl_complexity}, which means that for very large problem instances, even this sophisticated approach may not be practical.
 
 
 \section{Analysis of Exact Algorithms}
@@ -92,29 +92,32 @@ The efficiency of Branch and Bound for TSP depends significantly on the bounding
 Exact algorithms for the TSP, such as the brute force method, dynamic programming, and the Held-Karp algorithm, offer theoretical guarantees for finding the optimal tour. However, their computational feasibility is significantly challenged as the number of cities increases. The factorial growth rate of the brute force method's complexity and the exponential growth rate of dynamic programming and Held-Karp's complexities restrict their practical application to relatively small instances of the TSP.
 
 \begin{center}
-	\begin{tikzpicture}
-		\begin{semilogyaxis}[
-				title={$O(n!)$ Exact algorithms complexity},
-				xlabel={Elements},
-				ylabel={Operations},
-				domain=0:10,
-				ytick={0,1,2,6,24,120,720,5040,40320,362880,3628800},
-				log ticks with fixed point,
-				legend pos=north west,
-				ymajorgrids=true,
-				grid style=dashed,
-			]
-			\addplot+[mark=none,smooth] coordinates {
-					(0,1) (1,1) (2,2) (3,6) (4,24) (5,120) (6,720) (7,5040)
-					(8,40320) (9,362880) (10,3628800)
-				};
-			\addlegendentry{$O(n!)$}
+	\begin{figure}[h]
+		\caption{Exact Algorithms complexity}
+		\label{fig:agl_complexity}
+		\begin{tikzpicture}
+			\begin{semilogyaxis}[
+					xlabel={Elements},
+					ylabel={Operations},
+					domain=0:10,
+					ytick={0,1,2,6,24,120,720,5040,40320,362880,3628800},
+					log ticks with fixed point,
+					legend pos=north west,
+					ymajorgrids=true,
+					grid style=dashed,
+				]
+				\addplot+[mark=none,smooth] coordinates {
+						(0,1) (1,1) (2,2) (3,6) (4,24) (5,120) (6,720) (7,5040)
+						(8,40320) (9,362880) (10,3628800)
+					};
+				\addlegendentry{$O(n!)$}
 
-			\addplot+[mark=none,smooth] expression {x^2 * 2^x};
-			\addlegendentry{$O(n^2 \cdot 2^n)$}
+				\addplot+[mark=none,smooth] expression {x^2 * 2^x};
+				\addlegendentry{$O(n^2 \cdot 2^n)$}
 
-		\end{semilogyaxis}
-	\end{tikzpicture}
+			\end{semilogyaxis}
+		\end{tikzpicture}
+	\end{figure}
 \end{center}
 
 \subsection{Pros and Cons}

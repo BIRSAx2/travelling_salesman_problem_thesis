@@ -82,8 +82,17 @@
 \Urlmuskip = 0mu plus 1mu
 \RequirePackage{amssymb}
 \RequirePackage{mathspec}
-%\setmathsfont(Digits,Latin,Greek)[Numbers={Proportional}]{EB Garamond}
-%\setmathrm{EB Garamond}
+\setmainfont
+[ Path        = fonts/EBGaramond/ ,
+	Extension   = .otf,
+	UprightFont = *12-Regular  ,
+	ItalicFont  = *12-Italic ,
+	BoldFont    = *08-Regular ]
+{EBGaramond}
+
+\setmathsfont(Digits,Latin,Greek)[Numbers={Proportional}]{EBGaramond} % Note the curly braces
+\setmathrm{EBGaramond} % Note the curly braces
+
 \AtBeginEnvironment{tabular}{\addfontfeature{RawFeature=+tnum}}
 \widowpenalty=300
 \clubpenalty=300

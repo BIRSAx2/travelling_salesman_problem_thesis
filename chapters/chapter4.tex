@@ -78,49 +78,48 @@ The 2-opt algorithm systematically checks each pair of edges in the tour and det
 
 
 \begin{center}
-	\begin{tikzpicture}
-		% Define nodes
-		\node[draw=none, fill=none] (A) at (0,2) {A};
-		\node[draw=none] (B) at (2,1.7) {B};
-		\node[draw=none] (C) at (4,1.5) {C};
-		\node[draw=none] (D) at (6,2) {D};
+	\begin{figure}[h]
+		\caption{2-opt swap}
+		\begin{tikzpicture}
+			% Define nodes
+			\node[draw=none, fill=none] (A) at (0,2) {A};
+			\node[draw=none] (B) at (2,1.7) {B};
+			\node[draw=none] (C) at (4,1.5) {C};
+			\node[draw=none] (D) at (6,2) {D};
 
-		\node[draw=none] (G) at (0,0) {G};
-		\node[draw=none] (F) at (2,0.2) {F};
-		\node[draw=none] (E) at (4,0.5) {E};
+			\node[draw=none] (G) at (0,0) {G};
+			\node[draw=none] (F) at (2,0.2) {F};
+			\node[draw=none] (E) at (4,0.5) {E};
 
-		% Connect nodes
-		\draw (A) -- (B);
-		\draw[red] (B) -- (E);
-		\draw (E) -- (D);
-		\draw (D) -- (C);
-		\draw[red] (C) -- (F);
-		\draw (F) -- (G);
-		\draw (G) -- (A);
+			% Connect nodes
+			\draw (A) -- (B);
+			\draw[red] (B) -- (E);
+			\draw (E) -- (D);
+			\draw (D) -- (C);
+			\draw[red] (C) -- (F);
+			\draw (F) -- (G);
+			\draw (G) -- (A);
 
-		% Define nodes
-		\node[draw=none] (A2) at (10-2,2) {A};
-		\node[draw=none] (B2) at (12-2,1.7) {B};
-		\node[draw=none] (C2) at (14-2,1.5) {C};
-		\node[draw=none] (D2) at (16-2,2) {D};
+			% Define nodes
+			\node[draw=none] (A2) at (10-2,2) {A};
+			\node[draw=none] (B2) at (12-2,1.7) {B};
+			\node[draw=none] (C2) at (14-2,1.5) {C};
+			\node[draw=none] (D2) at (16-2,2) {D};
 
-		\node[draw=none] (G2) at (10-2,0) {G};
-		\node[draw=none] (F2) at (12-2,0.2) {F};
-		\node[draw=none] (E2) at (14-2,0.5) {E};
+			\node[draw=none] (G2) at (10-2,0) {G};
+			\node[draw=none] (F2) at (12-2,0.2) {F};
+			\node[draw=none] (E2) at (14-2,0.5) {E};
 
-		% Connect nodes
-		\draw (A2) -- (B2);
-		\draw[blue] (B2) -- (C2);
-		\draw (E2) -- (D2);
-		\draw (D2) -- (C2);
-		\draw[blue] (E2) -- (F2);
-		\draw (F2) -- (G2);
-		\draw (G2) -- (A2);
-
-
-
-
-	\end{tikzpicture}
+			% Connect nodes
+			\draw (A2) -- (B2);
+			\draw[blue] (B2) -- (C2);
+			\draw (E2) -- (D2);
+			\draw (D2) -- (C2);
+			\draw[blue] (E2) -- (F2);
+			\draw (F2) -- (G2);
+			\draw (G2) -- (A2);
+		\end{tikzpicture}
+	\end{figure}
 \end{center}
 
 
@@ -152,44 +151,64 @@ The 3-opt technique extends the idea of the 2-opt by considering three edges for
 
 \paragraph{Pseudocode for 3-opt Technique} is conceptually similar to 2-opt but involves more conditions for the swaps, reflecting the increased complexity of considering three edges at a time.
 
+\subsection{Lin–Kernighan}
+% TODO
+
+
+Local search algorithms, including the 2-opt and 3-opt techniques and simulated annealing, offer powerful methods for improving TSP solutions. By iteratively refining an initial solution, they balance between exploring the solution space and exploiting known good configurations, providing effective means of approaching optimal solutions for complex optimization problems.
+
+
+
+\section{Metaheuristic Algorithms}
+
+Metaheuristic algorithms are high-level strategies designed to navigate the search space of complex optimization problems efficiently. These algorithms do not guarantee an optimal solution but are effective for finding very good solutions within a reasonable timeframe, especially for problems where traditional methods falter due to the curse of dimensionality or the presence of numerous local optima.
 \subsection{Simulated Annealing}
 
-Simulated Annealing is a probabilistic technique for approximating the global optimum of a given function. It is particularly useful for large problems like the TSP, where it seeks to escape local optima by allowing worse solutions with a probability that decreases over time, mimicking the cooling process of annealing in metallurgy.
+Simulated Annealing (SA) stands as a stochastic technique designed to approximate the global optimum of a given objective function. This method finds its roots in the physical process of annealing in metallurgy, which involves heating and controlled cooling of a material to increase the size of its crystals and reduce their defects. The SA algorithm mimics this process by introducing a metaphorical "temperature" that gradually decreases according to a predetermined schedule. Initially, the algorithm is more likely to accept solutions that are worse than the current solution, allowing it to explore the solution space broadly and avoid being trapped in local optima prematurely. As the temperature decreases, the algorithm becomes more selective, honing in on the optimal solution.
 
-\subsubsection{Application to TSP}
+\subsubsection{Application to the Traveling Salesman Problem}
 
-For the TSP, simulated annealing starts with a random tour and iteratively improves it by swapping cities. Unlike deterministic local search methods, it occasionally accepts worse solutions, providing a chance to escape local minima. The "temperature" parameter controls the probability of accepting worse solutions, gradually decreasing over time.
+In the context of the Traveling Salesman Problem (TSP), the SA algorithm begins with an arbitrary solution, typically a random tour among the cities. It then iteratively refines this tour by making slight alterations, such as swapping two cities in the tour's sequence. The decision to accept a new solution is probabilistic and depends on both the difference in solution quality and the current temperature. This method's ability to accept worse solutions probabilistically decreases over time as the temperature lowers, simulating the cooling process in annealing.
 
-\paragraph{Pseudocode for Simulated Annealing}
+\paragraph{Detailed Pseudocode for Simulated Annealing}
+
+The pseudocode for applying Simulated Annealing to solve the TSP is outlined below. This algorithmic representation emphasizes the iterative improvement of a tour, taking into consideration the acceptance of sub-optimal solutions based on a decreasing temperature schedule to escape local minima.
 
 \begin{algorithm}
-	\caption{Simulated Annealing for TSP}\label{alg:simulatedannealing}
+	\caption{Detailed Simulated Annealing for TSP}\label{alg:detailedsimulatedannealing}
 	\begin{algorithmic}[1]
-		\Procedure{SimulatedAnnealingTSP}{$cities, initialTemperature, coolingRate$}
-		\State $currentSolution \gets$ generateInitialSolution($cities$)
-		\State $currentTemperature \gets initialTemperature$
-		\While{$currentTemperature > 1$}
-		\State $newSolution \gets$ generateNeighbor($currentSolution$)
-		\State $currentEnergy \gets$ \Call{TourDistance}{$currentSolution$}
-		\State $neighborEnergy \gets$ \Call{TourDistance}{$newSolution$}
-		\If{\Call{AcceptanceProbability}{$currentEnergy, neighborEnergy, currentTemperature$} $>$ random(0, 1)}
+		\Procedure{SATSP}{$cities, initialTemp, coolingRate, stoppingTemp$}
+		\State $bestSolution \gets generateInitialSolution(cities)$
+		\State $currentSolution \gets bestSolution$
+		\State $currentTemp \gets initialTemp$
+		\While{$currentTemp > stoppingTemp$}
+		\State $newSolution \gets$ perturbSolution($currentSolution, cities$)
+		\State $currentCost \gets$ calculateCost($currentSolution$)
+		\State $newCost \gets$ calculateCost($newSolution$)
+		\State $acceptanceProb \gets$ AcceptanceProbability($currentCost, newCost, currentTemp$)
+		\If{acceptanceProb $>$ randomValue(0, 1)}
 		\State $currentSolution \gets newSolution$
+		\If{newCost < calculateCost($bestSolution$)}
+		\State $bestSolution \gets newSolution$
 		\EndIf
-		\State $currentTemperature \gets currentTemperature \times coolingRate$
+		\EndIf
+		\State $currentTemp \gets$ updateTemperature($currentTemp, coolingRate$)
 		\EndWhile
-		\State \Return $currentSolution$
+		\State \textbf{return} $bestSolution$
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
 
-Local search algorithms, including the 2-opt and 3-opt techniques and simulated annealing, offer powerful methods for improving TSP solutions. By iteratively refining an initial solution, they balance between exploring the solution space and exploiting known good configurations, providing effective means of approaching optimal solutions for complex optimization problems.
-\section{Metaheuristic Algorithms}
+In this pseudocode, `generateInitialSolution` creates an initial random tour of the cities. `perturbSolution` slightly alters the current solution, typically by swapping two cities in the tour. `calculateCost` assesses the total distance (or cost) of a tour. `calculateAcceptanceProbability` determines the probability of accepting a new solution based on its cost, the cost of the current solution, and the current temperature, following the Metropolis criterion. The temperature is updated in each iteration by the `updateTemperature` function, which reduces the temperature based on the cooling rate until the stopping temperature is reached.
 
-Metaheuristic algorithms are high-level strategies designed to navigate the search space of complex optimization problems efficiently. These algorithms do not guarantee an optimal solution but are effective for finding very good solutions within a reasonable timeframe, especially for problems where traditional methods falter due to the curse of dimensionality or the presence of numerous local optima.
 
 \subsection{Genetic Algorithms}
 
-Genetic Algorithms (GAs) are inspired by the process of natural selection and concepts of genetics such as mutation, crossover, and selection. In the context of TSP, a genetic algorithm evolves a population of tours (solutions) through successive generations, with the aim of improving the overall fitness of the population, measured as the inverse of the tour length.
+Genetic Algorithms (GAs), drawing inspiration from the principles of natural selection and genetic mechanisms like mutation, crossover, and selection, offer a robust framework for tackling optimization challenges. Within the ambit of the Traveling Salesman Problem (TSP), GAs harness a population of potential solutions, iterating through generations to enhance the overall solution quality. This is quantified by evaluating the fitness of each solution, inversely proportional to the journey's length, thus aiming for the shortest possible route that visits each city once and returns to the starting point.
+
+\paragraph{Underlying principles}
+
+% TODO
 
 \paragraph{Application to TSP}
 
@@ -212,8 +231,6 @@ For TSP, an initial population of random tours is first generated. The algorithm
 	\end{algorithmic}
 \end{algorithm}
 
-\subsection{Lin–Kernighan}
-% TODO
 
 \subsection{Tabu Search}
 
