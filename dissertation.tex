@@ -1,9 +1,5 @@
-% arara: xelatex
-% arara: indent
-% arara: clean: { extensions: [ aux, xdv, blg, fls, lof, log, lot, out, toc, ind, bbl, fdb_latexmk, fis] }
-% arara: clean: { files: [chapters/chapter1.aux, chapters/chapter2.aux, chapters/chapter3.aux, chapters/chapter4.aux, chapters/chapter5.aux, chapters/chapter6.aux, chapters/chapter7.aux, chapters/chapter8.aux, chapters/conclusion.aux ] }
-
 \documentclass{Dissertate}
+\usepackage[italian]{babel}
 \usepackage{titlesec}
 \usepackage{fontspec}
 \usepackage{amsbsy}
@@ -15,6 +11,7 @@
 % the front matter
 \input{frontmatter/personalize}
 \frontmatter
+
 \setstretch{\dnormalspacing}
 
 % include each chapter...

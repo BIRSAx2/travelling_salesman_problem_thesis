@@ -1,6 +1,6 @@
 % -------------------------------------------------------------------
 %  @LaTeX-class-file{
-%     filename        = "dissertate.cls",
+%     filename        = "Dissertate.cls",
 %     codetable       = "ISO/ASCII",
 %     keywords        = "LaTeX, Dissertate",
 %     docstring       = "Class for a dissertation."
@@ -82,17 +82,8 @@
 \Urlmuskip = 0mu plus 1mu
 \RequirePackage{amssymb}
 \RequirePackage{mathspec}
-\setmainfont
-[ Path        = fonts/EBGaramond/ ,
-	Extension   = .otf,
-	UprightFont = *12-Regular  ,
-	ItalicFont  = *12-Italic ,
-	BoldFont    = *08-Regular ]
-{EBGaramond}
-
-\setmathsfont(Digits,Latin,Greek)[Numbers={Proportional}]{EBGaramond} % Note the curly braces
-\setmathrm{EBGaramond} % Note the curly braces
-
+%\setmathsfont(Digits,Latin,Greek)[Numbers={Proportional}]{EB Garamond}
+%\setmathrm{EB Garamond}
 \AtBeginEnvironment{tabular}{\addfontfeature{RawFeature=+tnum}}
 \widowpenalty=300
 \clubpenalty=300
@@ -130,8 +121,8 @@
 
 % Pseudocode
 \usepackage{algorithm}
-% \usepackage{algorithmic}
-\usepackage[noend]{algpseudocode}
+\usepackage{algorithmic}
+%\usepackage[noend]{algpseudocode}
 \renewcommand\algorithmicthen{}
 \renewcommand\algorithmicdo{}
 \@addtoreset{algorithm}{chapter}% algorithm counter resets every chapter
@@ -276,7 +267,7 @@
 		\line(1, 0){400} \\
 		\scshape{\large{Department of \@department}} \\
 		\vspace{3pt}
-		\scshape{\large{\textit{Bachelor Thesis in \@mastername}}} \\
+		\scshape{\large{\textit{Master Thesis in \@mastername}}} \\
 
 		\vspace{2pt}
 
@@ -291,14 +282,14 @@
 		\vfill
 		\begin{normalsize}
 			\begin{flushleft}
-				\textit{Supervisor} \hfill \textit{Bachelor Candidate}\\
+				\textit{Relatore} \hfill \textit{Laureando}\\
 				\vspace{1pt}
 				\@advisor \hfill \@author\\
 				\@university \\
-				% \vspace{6pt}
-				% \textit{Co-supervisor} \\
-				% \@coadvisorOne \\
-				% \@coadvisorOneUniversity\\
+				\vspace{6pt}
+				\textit{Co-supervisor} \\
+				\@coadvisorOne \\
+				\@coadvisorOneUniversity\\
 				\vspace{30pt}
 				\centering
 				\large{\textit{Academic Year} \\ \@academicYear}
