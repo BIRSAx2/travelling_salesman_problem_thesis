@@ -1,0 +1,190 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% chapter5.tex
+%% NOVA thesis document file
+%%
+%% Chapter with lots of dummy text
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE chapter5.tex}%
+
+\chapter{Ant Colony System di Dorigo et al}\label{chapt:5}
+
+
+
+\section{Fondamenti}
+
+\subsection{Ispirazione Biologica}
+L'Ant Colony System (\gls{ACS}) trae ispirazione dal comportamento di foraggiamento delle formiche reali, che possono trovare in modo efficiente i percorsi più brevi tra le fonti di cibo e il loro nido. Questa capacità è attribuita ai sentieri di feromoni tracciati dalle formiche, facilitando una forma indiretta di comunicazione che guida altre formiche verso percorsi ottimali\cite{Dorigo1996, Dorigo1997}.
+
+La stigmergia, un meccanismo di coordinazione indiretta tra agenti, gioca un ruolo cruciale in questo processo\cite{Bonabeau1999}. Le formiche depositano feromoni mentre si muovono, creando un feedback positivo che rafforza i percorsi più efficienti nel tempo\cite{Deneubourg1990}.
+
+\subsection{Principi Algoritmici}
+L'\gls{ACS} sfrutta una colonia di formiche artificiali che lavorano cooperativamente per esplorare e sfruttare soluzioni per problemi di ottimizzazione, in particolare il \gls{TSP}. L'approccio integra sia l'esplorazione di nuove soluzioni sia lo sfruttamento di soluzioni buone conosciute attraverso un equilibrio tra l'influenza dei feromoni e la desiderabilità euristica.\cite{Dorigo1996, Dorigo1997}
+
+Dorigo et al. hanno introdotto diversi miglioramenti rispetto agli algoritmi precedenti basati sulle formiche:
+
+\begin{itemize}
+	\item Una regola di transizione dello stato più forte che bilancia meglio l'esplorazione di nuovi archi e lo sfruttamento della conoscenza accumulata sui problemi.
+	\item Una regola di aggiornamento globale dei feromoni applicata solo agli archi appartenenti al miglior tour.
+	\item L'applicazione di una regola di aggiornamento locale dei feromoni durante la costruzione delle soluzioni.
+\end{itemize}
+
+\subsection{Applicazione al \gls{TSP}}
+Il \gls{TSP} è particolarmente adatto per l'applicazione dell'\gls{ACS} a causa della sua necessità di soluzioni efficienti per la ricerca di percorsi. L'algoritmo simula il comportamento delle formiche per costruire percorsi, con il processo di ottimizzazione guidato sia da informazioni euristiche (ad es., distanze tra le città) sia da sentieri di feromoni che rappresentano una forma di esperienza appresa\cite{Dorigo1997, Gambardella1995}.
+
+Nel contesto del \gls{TSP}, ogni formica costruisce un tour visitando tutte le città esattamente una volta. La scelta della prossima città da visitare è influenzata sia dalla distanza (informazione euristica) che dalla quantità di feromoni sull'arco che collega le città (esperienza accumulata).
+
+\section{Dettagli di Implementazione}
+
+\subsection{Regole di Aggiornamento dei Feromoni}
+
+Le regole di aggiornamento dei feromoni nell'\gls{ACS} sono cruciali per guidare il processo di ricerca verso aree promettenti dello spazio delle soluzioni. Queste regole sono suddivise in aggiornamenti locali e globali.
+
+\subsubsection{Regola di Aggiornamento Locale}
+Ogni volta che una formica attraversa un arco $(i,j)$, applica la regola di aggiornamento locale dei feromoni per diminuire il livello di feromoni, incoraggiando l'esplorazione da parte di altre formiche. La regola di aggiornamento locale è data da:
+\[
+	\tau_{ij} = (1 - \rho) \cdot \tau_{ij} + \rho \cdot \tau_0
+\]
+dove $\tau_{ij}$ è la concentrazione di feromoni sull'arco $(i,j)$, $\rho$ è il tasso di evaporazione locale (0 < $\rho$ < 1) e $\tau_0$ è il livello iniziale di feromoni.
+
+L'effetto di questa regola è di ridurre la quantità di feromoni su un arco visitato, rendendo quell'arco meno desiderabile per le formiche successive. Ciò aumenta l'esplorazione di percorsi alternativi e aiuta a prevenire la stagnazione precoce su soluzioni subottimali.
+
+\subsubsection{Regola di Aggiornamento Globale}
+Dopo che tutte le formiche hanno completato i loro tour, viene applicata la regola di aggiornamento globale agli archi che appartengono al miglior tour (sia globalmente che nell'iterazione corrente). L'aggiornamento globale migliora il sentiero di feromoni sui percorsi critici, rendendoli più attraenti per le formiche future. La regola di aggiornamento globale è definita come:
+\[
+	\tau_{ij} = (1 - \alpha) \cdot \tau_{ij} + \alpha \cdot \Delta \tau_{ij}^{\text{best}}
+\]
+dove $\alpha$ è il tasso di evaporazione globale (0 < $\alpha$ < 1) e $\Delta \tau_{ij}^{\text{best}}$ rappresenta i feromoni depositati dalla migliore formica, definito come:
+\[
+	\Delta \tau_{ij}^{\text{best}} = \begin{cases}
+		(L_{\text{best}})^{-1} & \text{se }(i,j)\text{ appartiene al miglior tour} \\
+		0                      & \text{altrimenti}
+	\end{cases}
+\]
+dove $L_{\text{best}}$ è la lunghezza del miglior tour.
+
+Questa regola intensifica i feromoni sui percorsi che hanno portato alle migliori soluzioni, guidando la ricerca verso regioni promettenti dello spazio delle soluzioni.
+
+\subsection{Regole di Movimento delle Formiche}
+
+Le formiche selezionano la prossima città da visitare basandosi su una regola decisionale probabilistica che bilancia l'esplorazione di nuovi percorsi con lo sfruttamento dei sentieri di feromoni e delle informazioni euristiche.
+
+\subsubsection{Regola di Transizione}
+In \gls{ACS} la scelta della prossima città da visitare è governata dalla regola di transizione pseudo-casuale-proporzionale. Data una formica $k$ nella città $i$, la probabilità di muoversi verso la città $j$ è determinata da:
+
+\[
+	j = \begin{cases}
+		\arg\max_{l \in N_i^k} \{[\tau_{il}] \cdot [\eta_{il}]^\beta\} & \text{se }q \leq q_0 \text{ (sfruttamento)} \\
+		J                                                              & \text{altrimenti (esplorazione bilanciata)}
+	\end{cases}
+\]
+
+dove $q$ è un numero casuale uniformemente distribuito in $[0,1]$, $q_0$ è un parametro ($0 \le q_0 \le 1$) che determina il bilanciamento tra sfruttamento ed esplorazione, $\tau_{il}$ è la quantità di feromoni sull'arco $(i,l)$, $\eta_{il}$ è il valore euristico (solitamente l'inverso della distanza), $\beta$ è un parametro che controlla l'importanza relativa dell'informazione euristica, e $N_i^k$ è l'insieme delle città non ancora visitate dalla formica $k$ posizionata nella città $i$.
+
+$J$ è una città casuale scelta secondo la distribuzione di probabilità:
+
+\[
+	p_{ij}^k = \frac{[\tau_{ij}] \cdot [\eta_{ij}]^\beta}{\sum_{l \in N_i^k} [\tau_{il}] \cdot [\eta_{il}]^\beta}
+\]
+
+Questa regola di transizione favorisce lo sfruttamento delle informazioni accumulate (quando $q \leq q_0$) ma lascia spazio all'esplorazione (quando $q > q_0$).
+
+\subsection{Pseudocodice dell'Algoritmo}
+
+\begin{algorithm}
+	\caption{\gls{ACS} per il \gls{TSP}}
+	\begin{algorithmic}[1]
+		\State Inizializza i livelli di feromoni $\tau_{ij} = \tau_0$ per tutti gli archi $(i,j)$
+		\State Inizializza la migliore soluzione globale $S_{gb}$ e la sua lunghezza $L_{gb}$
+		\For{ogni iterazione}
+		\For{ogni formica $k = 1, \ldots, m$}
+		\State Posiziona la formica $k$ su una città di partenza casuale
+		\State Inizializza il tour parziale $S_k = \emptyset$
+		\Repeat
+		\State Seleziona la prossima città $j$ usando la regola di transizione
+		\State Aggiungi $(i,j)$ a $S_k$
+		\State Applica l'aggiornamento locale dei feromoni a $(i,j)$
+		\State $i \gets j$
+		\Until{il tour $S_k$ è completo}
+		\If{$L(S_k) < L_{gb}$}
+		\State $S_{gb} \gets S_k$
+		\State $L_{gb} \gets L(S_k)$
+		\EndIf
+		\EndFor
+		\State Applica l'aggiornamento globale dei feromoni al miglior tour $S_{gb}$
+		\EndFor
+		\State \Return la migliore soluzione trovata $S_{gb}$
+	\end{algorithmic}
+\end{algorithm}
+
+\section{Valutazione delle Prestazioni}
+
+L'\gls{ACS} dimostra prestazioni superiori rispetto ad altri algoritmi ispirati alla natura sia per \gls{TSP} simmetrici che asimmetrici, attribuite al suo efficace equilibrio tra esplorazione e sfruttamento e alla sua capacità di focalizzare dinamicamente gli sforzi di ricerca basati sull'apprendimento collettivo.
+
+Dorigo et al. hanno condotto esperimenti estensivi comparando l'\gls{ACS} con altri approcci metaeuristici:
+
+\begin{itemize}
+	\item Ant-Q, un precursore dell'ACS
+	\item Ant System (\gls{AS})
+	\item Elastic Net (\gls{EN})
+	\item Simulated Annealing (\gls{SA})
+	\item Self-Organizing Map (SOM)
+	\item Farthest Insertion (FI)
+	\item Genetic Algorithm (\gls{GA})
+\end{itemize}
+
+I risultati hanno mostrato che l'\gls{ACS} superava costantemente questi altri approcci in termini di qualità della soluzione e velocità di convergenza.
+
+Quando potenziato con procedure di ricerca locale, come il 3-opt, l'\gls{ACS} mostra prestazioni competitive o superiori rispetto ad alcuni dei migliori algoritmi per il \gls{TSP}, evidenziando la sua robustezza ed efficienza nella risoluzione di problemi complessi di ottimizzazione.
+
+\subsection{Analisi della Complessità}
+La complessità temporale dell'\gls{ACS} per iterazione è O($n^2m$), dove $n$ è il numero di città e $m$ è il numero di formiche. Tuttavia, il numero di iterazioni necessarie per la convergenza può variare significativamente a seconda delle caratteristiche del problema e dei parametri dell'algoritmo.
+
+\subsection{Parametri Chiave e loro Impatto}
+L'efficacia dell'\gls{ACS} dipende in modo cruciale dalla corretta impostazione di diversi parametri:
+
+\begin{itemize}
+	\item $\rho$: Tasso di evaporazione locale dei feromoni
+	\item $\alpha$: Tasso di evaporazione globale dei feromoni
+	\item $\beta$: Importanza relativa dell'informazione euristica
+	\item $q_0$: Bilanciamento tra sfruttamento ed esplorazione
+	\item $m$: Numero di formiche
+	\item $\tau_0$: Livello iniziale di feromoni
+\end{itemize}
+
+La scelta ottimale di questi parametri può variare a seconda del problema specifico e richiede spesso una fase di tuning.
+
+\section{Varianti e Estensioni}
+
+Dalla pubblicazione originale dell' \gls{ACS} sono state proposte numerose varianti e estensioni:
+
+\subsection{MAX-MIN Ant System (\gls{MMAS})}
+Introdotto da Stützle e Hoos, \gls{MMAS} limita i valori dei feromoni entro un intervallo predefinito per prevenire la stagnazione prematura. \cite{Stuetzle1997}
+
+\subsection{Rank-Based Ant System (\gls{ASrank})}
+In questa variante, le formiche sono classificate in base alla qualità delle loro soluzioni, e la quantità di feromoni depositati è proporzionale al rango.
+
+\subsection{\gls{ACS} Ibridi}
+Combinazioni dell'\gls{ACS} con altre tecniche di ottimizzazione, come algoritmi genetici o ricerca tabu, hanno mostrato risultati promettenti su vari problemi di ottimizzazione combinatoria. \cite{Dorigo2004}
+
+\section{Applicazioni oltre il \gls{TSP}}
+
+Sebbene inizialmente sviluppato per il \gls{TSP}, l'\gls{ACS} e le sue varianti hanno trovato applicazioni in una vasta gamma di domini:
+
+\begin{itemize}
+	\item Problemi di routing di veicoli
+	\item Scheduling e pianificazione
+	\item Assegnazione di frequenze nelle reti di telecomunicazione
+	\item Bioinformatica e folding delle proteine
+	\item Ottimizzazione di reti e grid computing
+	\item Problemi di ottimizzazione multi-obiettivo
+\end{itemize}
+
+La versatilità dell'\gls{ACS} lo rende un approccio potente per affrontare problemi complessi di ottimizzazione in vari campi dell'ingegneria e della scienza.
+
+\section{Conclusioni}
+
+L'Ant Colony System rappresenta un significativo avanzamento nel campo dell'ottimizzazione ispirata alla natura. La sua capacità di bilanciare efficacemente l'esplorazione e lo sfruttamento, insieme alla sua adattabilità a diversi tipi di problemi, lo rende uno strumento prezioso per risolvere problemi di ottimizzazione combinatoria. \cite{Dorigo1997}
+
+

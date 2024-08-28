@@ -1,11 +1,18 @@
-with import <nixpkgs> { };
+{ pkgs ? import <nixpkgs> {} }:
 
-mkShell {
-  nativeBuildInputs = [
-    direnv
-    texliveFull
+pkgs.mkShell {
+  buildInputs = with pkgs; [
+    # Tectonic for LaTeX compilation
+    tectonic
+    texpresso
+
+    # Biber for bibliography processing
+    biber
   ];
 
-  NIX_ENFORCE_PURITY = "1";
-
+  shellHook = ''
+    echo "Tectonic development environment loaded"
+    echo "Available tools: tectonic, biber, texlive, python3, make, ghostscript, librsvg, imagemagick, aspell"
+    fish
+  '';
 }
