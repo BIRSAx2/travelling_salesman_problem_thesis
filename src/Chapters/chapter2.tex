@@ -197,18 +197,18 @@ La dimostrazione di Karp impiega una tecnica nota come riduzione, in cui un prob
 
 Le implicazioni dell'\gls{NP}-hardness del \gls{TSP} sono di vasta portata nel campo della progettazione di algoritmi. Indica che, a meno che P=NP, non esiste un algoritmo in grado di risolvere efficientemente tutte le istanze del \gls{TSP}. Questa consapevolezza ha stimolato lo sviluppo di vari algoritmi euristici e di approssimazione, che mirano a soluzioni praticamente buone, anche se non sempre ottimali, entro limiti di tempo computazionale ragionevoli.
 
-\begin{table}[h]
+\begin{table}[htbp]
 	\centering
-	\resizebox{\textwidth}{!}{
-		\begin{tabular}{@{}lcccc@{}}
+	\tiny
+	\setlength{\tabcolsep}{4pt}
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}p{2cm}p{2cm}p{2cm}p{3.5cm}p{3cm}p{2.5cm}@{}}
 			\toprule
-			\textbf{Algoritmo} & \textbf{Complessità Temporale} & \textbf{Complessità Spaziale} & \textbf{Descrizione}                                     & \textbf{Vantaggi}                        & \textbf{Svantaggi}                     \\ \midrule
-			Held-Karp          & \(O(n^2 2^n)\)                 & \(O(n^2)\)                    & Algoritmo esatto che utilizza la programmazione dinamica & Fornisce soluzione ottimale              & Inattuabile per grandi \(n\)           \\
-			Nearest Neighbor   & \(O(n^2)\)                     & \(O(n)\)                      & Algoritmo euristico greedy                               & Semplice e veloce                        & Spesso lontano dall'ottimale           \\
-			Christofides       & \(O(n^3)\)                     & \(O(n^2)\)                    & Algoritmo di approssimazione con rapporto di 3/2         & Migliore approssimazione per TSP metrico & Ancora non esatto                      \\
-			Algoritmi Genetici & \(O(n^2)\)                     & \(O(n)\)                      & Algoritmo metaeuristico ispirato alla selezione naturale & Flessibile e adattabile                  & Nessuna garanzia di soluzione ottimale \\ \bottomrule
-		\end{tabular}
-	}
+			\textbf{Algoritmo} & \textbf{Complessità Temporale -  Spaziale} & \textbf{Descrizione} & \textbf{Vantaggi} & \textbf{Svantaggi} \\ \midrule
+			Held-Karp & \(O(n^2 2^n)\) - \(O(n^2)\) & Algoritmo esatto che utilizza la programmazione dinamica & Fornisce soluzione ottimale & Inattuabile per grandi \(n\) \\[6pt]
+			Nearest Neighbor & \(O(n^2)\) - \(O(n)\) & Algoritmo euristico greedy & Semplice e veloce & Spesso lontano dall'ottimale \\[6pt]
+			Christofides & \(O(n^3)\) - \(O(n^2)\) & Algoritmo di approssimazione con rapporto di 3/2 & Migliore approssimazione per TSP metrico & Ancora non esatto \\[6pt]
+			Algoritmi Genetici & \(O(n^2)\) - \(O(n)\) & Algoritmo metaeuristico ispirato alla selezione naturale & Flessibile e adattabile & Nessuna garanzia di soluzione ottimale \\ \bottomrule
+	\end{tabular*}
 	\caption{Confronto tra Diversi Algoritmi per TSP}
 \end{table}
 

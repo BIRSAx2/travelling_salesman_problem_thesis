@@ -30,6 +30,12 @@ Dorigo et al. hanno introdotto diversi miglioramenti rispetto agli algoritmi pre
 	\item L'applicazione di una regola di aggiornamento locale dei feromoni durante la costruzione delle soluzioni.
 \end{itemize}
 
+\begin{figure}[]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Chapters/Figures/ants_path.png}
+	\caption{1. Le formiche scelgono randomicamente tra i percorsi disponibili\\2.Poiché le formiche si muovono a una velocità approssimativamente costante, quelle che scelgono il percorso inferiore, più corto, raggiungono il punto di decisione opposto più velocemente di quelle che scelgono il percorso superiore, più lungo.\\3. Il feromone si accumula a un ritmo più elevato sul percorso più breve. Le formiche scelgono il percorso inferiore in base alla concentrazione di feromone.}
+\end{figure}
+
 \subsection{Applicazione al \gls{TSP}}
 Il \gls{TSP} è particolarmente adatto per l'applicazione dell'\gls{ACS} a causa della sua necessità di soluzioni efficienti per la ricerca di percorsi. L'algoritmo simula il comportamento delle formiche per costruire percorsi, con il processo di ottimizzazione guidato sia da informazioni euristiche (ad es., distanze tra le città) sia da sentieri di feromoni che rappresentano una forma di esperienza appresa\cite{Dorigo1997, Gambardella1995}.
 

@@ -48,6 +48,44 @@ Negli ultimi decenni, l'esplorazione di algoritmi euristici e bio-ispirati, in p
 
 \textbf{Il Problema del Viaggiatore:} Data una serie di città e le distanze tra ogni coppia di città, trovare il percorso più breve possibile che visiti ogni città esattamente una volta e torni alla città originale.
 
+\input{Chapters/Figures/USAmap.tex}
+
+\begin{figure}[h]
+	\centering
+	\scalebox{0.5}{
+		\begin{tikzpicture}
+			% \tikzset{set state val/.style args={#1/#2}{#1={fill=blue!#2}}}
+			\USA[every state={draw=white, ultra thick, fill=black!10}]
+
+			\draw[green, ultra thick] (NY.center) -- (MI.center) -- (OH.center) -- (IL.center) -- (CO.center) -- (CA.center) -- (TX.center) -- (AL.center) -- (GA.center) -- (FL.center)  -- cycle;
+			\draw[red, ultra thick] (NY.center) -- (OH.center) -- (GA.center) -- (MI.center) -- (IL.center) -- (TX.center) -- (CA.center)-- (CO.center) -- (AL.center) -- (FL.center)   -- cycle;
+
+
+			% Randomly selected states
+			\node[circle, fill=blue!50] at (CO) {CO};
+			\node[circle, fill=blue!50] at (CA) {CA};
+			\node[circle, fill=blue!50] at (NY) {NY};
+			\node[circle, fill=blue!50] at (TX) {TX};
+			\node[circle, fill=blue!50] at (AL) {AL};
+			\node[circle, fill=blue!50] at (FL) {FL};
+			\node[circle, fill=blue!50] at (GA) {GA};
+			\node[circle, fill=blue!50] at (IL) {IL};
+			\node[circle, fill=blue!50] at (MI) {MI};
+			\node[circle, fill=blue!50] at (OH) {OH};
+
+			% Red cycle
+			% \draw[red, ultra thick] (CO.center) -- (CA.center) -- (NY.center) -- (TX.center) -- (AL.center) -- (FL.center) -- (GA.center) -- (IL.center) -- (MI.center) -- (OH.center) -- cycle;
+
+			% Best TSP tour
+
+			% Blue cycle
+			% \draw[blue, ultra thick] (CO.center) -- (MI.center) -- (GA.center) -- (TX.center) -- (OH.center) -- (AL.center) -- (NY.center) -- (FL.center) -- (IL.center) -- (CA.center) -- cycle;
+		\end{tikzpicture}
+	}
+	\caption{Due possibili soluzioni per il (TSP) in un'istanza semplificata degli Stati Uniti, uno più corto(in verde) e uno più lungo(in rosso).}
+	\label{fig:us_map}
+\end{figure}
+
 \subsection{Formulazione Matematica}
 
 Dato un grafo \(G = (V, E)\), dove \(V\) è l'insieme dei vertici (città) e \(E\) è l'insieme degli archi (percorsi tra le città), con ogni arco \((i, j) \in E\) assegnato un peso \(w_{ij}\) che rappresenta il costo di viaggio dalla città \(i\) alla città \(j\), il \gls{TSP} cerca un ciclo hamiltoniano di peso minimo.
