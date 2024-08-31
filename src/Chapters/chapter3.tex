@@ -170,26 +170,26 @@ L'algoritmo di Bellman-Held-Karp rappresenta un significativo avanzamento nelle 
 
 L'algoritmo di Bellman-Held-Karp opera con una complessità temporale di $O(n^2 \cdot 2^n)$~\ref{fig:agl_complexity}, rendendolo significativamente più efficiente del metodo a forza bruta per istanze di problema di dimensioni moderate. Tuttavia, la componente esponenziale della sua complessità limita ancora la sua applicabilità pratica a istanze relativamente piccole di \gls{TSP}.
 
-\begin{figure}[htbp]
-	\centering
-	\begin{tikzpicture}[node distance=2cm]
-		\node (A) [circle,draw] {A};
-		\node (B) [circle,draw, right of=A] {B};
-		\node (C) [circle,draw, below right of=A] {C};
-		\node (D) [circle,draw, below left of=A] {D};
+% \begin{figure}[htbp]
+% 	\centering
+% 	\begin{tikzpicture}[node distance=2cm]
+% 		\node (A) [circle,draw] {A};
+% 		\node (B) [circle,draw, right of=A] {B};
+% 		\node (C) [circle,draw, below right of=A] {C};
+% 		\node (D) [circle,draw, below left of=A] {D};
 
-		\draw (A) -- (B) node [midway, above] {5};
-		\draw (A) -- (C) node [midway, right] {4};
-		\draw (A) -- (D) node [midway, left] {6};
-		\draw (B) -- (C) node [midway, right] {3};
-		\draw (B) -- (D) node [midway, above] {7};
-		\draw (C) -- (D) node [midway, below] {2};
+% 		\draw (A) -- (B) node [midway, above] {5};
+% 		\draw (A) -- (C) node [midway, right] {4};
+% 		\draw (A) -- (D) node [midway, left] {6};
+% 		\draw (B) -- (C) node [midway, right] {3};
+% 		\draw (B) -- (D) node [midway, above] {7};
+% 		\draw (C) -- (D) node [midway, below] {2};
 
-		\node [below=1cm of C] {Sottoproblema: Cammino minimo da A a D passando per B e C};
-	\end{tikzpicture}
-	\caption{Visualizzazione di un sottoproblema nella programmazione dinamica per il TSP}
-	\label{fig:dynamic-programming-subproblem}
-\end{figure}
+% 		\node [below=1cm of C] {Sottoproblema: Cammino minimo da A a D passando per B e C};
+% 	\end{tikzpicture}
+% 	\caption{Visualizzazione di un sottoproblema nella programmazione dinamica per il TSP}
+% 	\label{fig:dynamic-programming-subproblem}
+% \end{figure}
 
 \subsubsection{Branch and Bound}
 

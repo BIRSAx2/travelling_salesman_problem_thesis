@@ -30,6 +30,72 @@ Un algoritmo greedy costruisce una soluzione pezzo per pezzo, scegliendo sempre 
 
 Nel \gls{TSP}, un'applicazione classica dell'algoritmo greedy è il Nearest Neighbor Search \gls{NNS}, dove l'algoritmo costruisce un tour partendo da una città arbitraria e, ad ogni passo, estende il tour spostandosi verso la città non visitata più vicina fino a quando tutte le città sono visitate\cite{Gutin2016}.
 
+
+\newcommand{\tspnearestneighbor}[1]{%
+	\begin{figure}[htbp]
+		\centering
+		\foreach \step in {1,...,5}{%
+				\begin{subfigure}[b]{0.33\textwidth} % Adjust the width for 2 columns
+					\centering
+					\begin{tikzpicture}[scale=0.8]
+						% Define nodes
+						\node[circle,draw,fill=green!20] (A) at (1 * 3,0) {A};
+						\node[circle,draw] (B) at (0.309 * 3,0.951 * 3) {B};
+						\node[circle,draw] (C) at (-0.809*3,0.588*3) {C};
+						\node[circle,draw] (D) at (-0.809*3,-0.588*3) {D};
+						\node[circle,draw] (E) at (0.309*3,-0.951*3) {E};
+
+						% Draw all edges in light gray
+						\ifthenelse{\step < 5}{%
+							\draw[lightgray] (A) -- node[above] {\tiny 13} (B);
+							\draw[lightgray] (A) -- node[below left] {\tiny 4} (D);
+							\draw[lightgray] (A) -- node[pos = 2/3, above left] {\tiny 21} (C);
+							\ifthenelse{\step < 1}{\draw[lightgray] (A) -- node[right] {\tiny 4} (E);}{}
+							\draw[lightgray] (B) -- node[above right] {\tiny 9} (C);
+							\ifthenelse{\step < 2}{\draw[lightgray] (B) -- node[right] {\tiny 5} (E);}{}
+
+							\ifthenelse{\step < 4}{
+								\draw[lightgray] (C) -- node[above right] {\tiny 21} (E);
+								\draw[lightgray] (C) -- node[right] {\tiny 9} (D);}{}
+							\draw[lightgray] (D) -- node[pos = 1/2, above left] {\tiny 7} (E);
+							\ifthenelse{\step < 3}{\draw[lightgray] (B) -- node[pos = 1/3, above left] {\tiny 1} (D);}{}
+						}{}
+
+						% Highlight the path based on the step
+						\ifthenelse{\step > 0}{%
+							\draw[green,very thick] (A) -- node[right] {4} (E);
+							\node[circle,fill=green!20,draw] at (A) {A};
+						}{}
+						\ifthenelse{\step > 1}{%
+							\draw[green,very thick] (E) -- node[right] {5} (B);
+							\node[circle,fill=green!20,draw] at (E) {E};
+						}{}
+						\ifthenelse{\step > 2}{%
+							\draw[green,very thick] (B) -- node[above left] {1} (D);
+							\node[circle,fill=green!20,draw] at (B) {B};
+						}{} 		
+						\ifthenelse{\step > 3}{%
+							\draw[green,very thick] (D) -- node[right] {9} (C);
+							\node[circle,fill=green!20,draw] at (D) {D};
+						}{}
+						\ifthenelse{\step > 4}{%
+							\draw[green,very thick] (C) -- node[pos = 1/3, above left] {21} (A);
+							\node[circle,fill=green!20,draw] at (C) {C};
+						}{}
+					\end{tikzpicture}
+					\caption{Iterazione \step}
+				\end{subfigure}%
+				\ifnum\step>0
+					\ifnum\numexpr\step+1\relax=3\relax
+						\par\vspace{\baselineskip}
+					\fi
+				\fi
+			}%
+	\end{figure}
+}
+
+
+\tspnearestneighbor{6}
 \paragraph{Pseudocodice}
 
 \begin{algorithm}
