@@ -12,14 +12,75 @@
 \label{chapt:6}
 
 \section{Introduzione}
-Risolvere in modo efficiente istanze di grandi dimensioni del \gls{TSP} è un compito impegnativo nell'ambito dell'informatica. Il \gls{TSP} consiste nel trovare il tour più breve che visiti ciascuna città di un insieme dato esattamente una volta e ritorni alla città di partenza. Questo problema è un membro prominente della classe dei problemi di ottimizzazione combinatoria, il che lo rende computazionalmente difficile da risolvere in modo ottimale, soprattutto all'aumentare del numero di città.
-
-L'algoritmo Ant Colony System (\gls{ACS}) si è affermato come un approccio promettente per risolvere istanze del \gls{TSP}. L'\gls{ACS} è ispirato dal comportamento di foraggiamento delle formiche reali, le quali utilizzano tracce di feromoni per comunicare e trovare percorsi efficienti tra il loro nido e le fonti di cibo. Simulando questa intelligenza collettiva, l'\gls{ACS} è in grado di convergere verso soluzioni di alta qualità per il \gls{TSP}. Tuttavia, quando la dimensione del problema cresce, l'algoritmo  \gls{ACS} standard può diventare troppo lento e fatica a trovare soluzioni ottimali.
+%L'algoritmo Ant Colony System (\gls{ACS}) si è affermato come un approccio promettente per risolvere istanze del \gls{TSP}. L'\gls{ACS} è ispirato dal comportamento di foraggiamento delle formiche reali, le quali utilizzano tracce di feromoni per comunicare e trovare percorsi efficienti tra il loro nido e le fonti di cibo. Simulando questa intelligenza collettiva, l'\gls{ACS} è in grado di convergere verso soluzioni di alta qualità per il \gls{TSP}. Tuttavia, quando la dimensione del problema cresce, l'algoritmo  \gls{ACS} standard può diventare troppo lento e fatica a trovare soluzioni ottimali.
 
 Questo capitolo presenta una versione modificata dell'algoritmo \gls{ACS}, chiamata Red-Black Ant Colony System (\gls{RB-ACS}), che mira a migliorare le prestazioni dell'\gls{ACS} su istanze di grandi dimensioni del \gls{TSP}. Il \gls{RB-ACS} incorpora diverse migliorie chiave all'approccio  \gls{ACS} standard, tra cui la ricerca in parallelo, l'inizializzazione migliorata dei feromoni e l'impostazione di parametri differenziati per i due gruppi di formiche. Queste modifiche sono progettate per consentire al \gls{RB-ACS} di esplorare lo spazio di ricerca in modo più efficace e di convergere efficientemente verso soluzioni ottimali o quasi-ottimali, anche per problemi di \gls{TSP} su larga scala \cite{Hassan2013}.
 
 \section{L'Algoritmo Red-Black Ant Colony System (\gls{RB-ACS})}
 Mentre l'algoritmo  \gls{ACS} standard si è dimostrato efficace nella risoluzione di istanze del \gls{TSP}, le sue prestazioni possono peggiorare all'aumentare delle dimensioni del problema. Gli autori del presente lavoro propongono l'algoritmo Red-Black Ant Colony System (\gls{RB-ACS}), che introduce diverse modifiche chiave all'approccio  \gls{ACS} standard per migliorarne la scalabilità e la qualità delle soluzioni per problemi di \gls{TSP} su larga scala \cite{Hassan2013}.
+
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}[node distance=1.5cm]
+    % Left diagram
+    \node[circle,draw, fill=black, text=white] (A1) at (-2,0) {\tiny A1};
+    \node[circle,draw] (A2) at (-1,1) {\tiny A2};
+    \node[circle,draw] (A3) at (1,1) {\tiny A3};
+    \node[circle,draw] (A4) at (2,0) {\tiny A4};
+    \node[circle,draw] (A5) at (1,-1) {\tiny A5};
+    \node[circle, draw] (A6) at (-1, -1) {\tiny A6};
+    
+    \draw[->,thick] (A1) -- (A2);
+    \draw[->,thick] (A2) -- (A5);
+    \draw[->,thick] (A5) -- (A3);
+    \draw[->,thick] (A3) -- (A4);
+    \draw[->, thick] (A6) -- (A1);
+    \draw[->, thick] (A4) -- (A6);
+
+    % Right diagram
+
+    \node[circle,draw] (A1) at (-2 + 5,0) {\tiny A1};
+    \node[circle,draw] (A2) at (-1 + 5,1) {\tiny A2};
+    \node[circle,draw, fill=red!50, text = white] (A3) at (1+5,1) {\tiny A3};
+    \node[circle,draw] (A4) at (2+5,0) {\tiny A4};
+    \node[circle,draw] (A5) at (1+5,-1) {\tiny A5};
+    \node[circle, draw] (A6) at (-1+5, -1) {\tiny A6};
+    
+    \draw[->,thick, color = red!50] (A3) -- (A2);
+    \draw[->,thick, color = red!50] (A2) -- (A4);
+    \draw[->,thick, color = red!50] (A4) -- (A1);
+    \draw[->,thick, color = red!50] (A1) -- (A5);
+    \draw[->, thick, color = red!50] (A5) -- (A6);
+    \draw[->, thick, color = red!50] (A6) -- (A3);
+
+
+        % Connecting arrow
+    \draw[->, thick] (2.5,-2) -- (2.5,-2.5);
+
+    \node[circle,draw, fill=black, text=white] (A1) at (-2+2.5,0-4) {\tiny A1};
+    \node[circle,draw] (A2) at (-1+2.5,1-4) {\tiny A2};
+    \node[circle,draw, fill=red!50, text=white] (A3) at (1+2.5,1-4) {\tiny A3};
+    \node[circle,draw] (A4) at (2+2.5,0-4) {\tiny A4};
+    \node[circle,draw] (A5) at (1+2.5,-1-4) {\tiny A5};
+    \node[circle, draw] (A6) at (-1+2.5, -1-4) {\tiny A6};
+     
+    \draw[->,thick, color = red!50] (A3) -- (A2);
+    \draw[->,thick, color = red!50] (A2) -- (A4);
+    \draw[->,thick, color = red!50] (A4) -- (A1);
+    \draw[->,thick, color = red!50] (A1) -- (A5);
+    \draw[->, thick, color = red!50] (A5) -- (A6);
+    \draw[->, thick, color = red!50] (A6) -- (A3);
+ 
+    \draw[->,thick] (A1) -- (A2);
+    \draw[->,thick] (A2) -- (A5);
+    \draw[->,thick] (A5) -- (A3);
+    \draw[->,thick] (A3) -- (A4);
+    \draw[->, thick] (A6) -- (A1);
+    \draw[->, thick] (A4) -- (A6);
+\end{tikzpicture}
+  \caption{}\label{fig:}
+\end{figure}
+
 
 \subsection{Inizializzazione dei Feromoni}
 Nell' \gls{ACS} standard, il livello iniziale di feromone su tutti i bordi è impostato a un valore costante $\tau_0$. Nel \gls{RB-ACS}, gli autori propongono uno schema di inizializzazione dei feromoni diverso, in cui il livello iniziale di feromone su ciascun bordo $(r,s)$ è impostato secondo la seguente equazione:
