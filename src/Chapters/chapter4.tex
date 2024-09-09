@@ -16,7 +16,7 @@ Gli approcci euristici per risolvere problemi come il \gls{TSP} sono strategie p
 \subsection{Concetto e Necessità}
 Il concetto di approcci euristici si basa sull'idea di fare ipotesi educate o seguire algoritmi intuitivi che mirano a trovare soluzioni che siano vicine al miglior possibile, senza necessariamente garantire l'ottimalità \cite{Papadimitriou1998}. Le euristiche sono caratterizzate dalle loro strategie empiriche che le rendono significativamente più veloci rispetto ai metodi esatti nella pratica, sebbene a costo di potenzialmente perdere la soluzione ottimale.
 
-La necessità delle euristiche deriva dall'intrattabilità computazionale di molti problemi del mondo reale \cite{Lawler1985}. Per il \gls{TSP}, man mano che il numero di città aumenta, lo spazio di ricerca (cioè, il numero totale di possibili tour) cresce in modo fattoriale, rendendo impossibile esplorare ogni opzione direttamente attraverso metodi di forza bruta in un intervallo di tempo ragionevole\cite{Gutin2016}. Le euristiche offrono un'alternativa pragmatica fornendo soluzioni che, pur non essendo garantite come ottimali, sono sufficientemente accurate per scopi pratici e possono essere ottenute molto più rapidamente \cite{Aarts1989}.
+La necessità delle euristiche deriva dall'intrattabilità computazionale di molti problemi del mondo reale \cite{Lawler1985}. Le euristiche offrono un'alternativa pragmatica fornendo soluzioni che, pur non essendo garantite come ottimali, sono sufficientemente accurate per scopi pratici e possono essere ottenute molto più rapidamente \cite{Aarts1989}.
 
 \subsection{Algoritmi Greedy}
 
@@ -141,7 +141,7 @@ Gli algoritmi greedy, con la loro semplicità ed efficienza intrinseche, giocano
 
 \section{Algoritmi di Local Search}
 
-Gli algoritmi di ricerca locale rappresentano una classe di metodi euristici progettati per esplorare lo spazio delle soluzioni di un problema di ottimizzazione spostandosi iterativamente da una soluzione a una soluzione vicina nello spazio di ricerca. Questi algoritmi sono particolarmente efficaci per problemi come il \gls{TSP}, dove trovare una soluzione ottimale è computazionalmente impraticabile per istanze grandi. La ricerca locale fornisce un meccanismo per migliorare una soluzione iniziale attraverso piccole modifiche localizzate \cite{Johnson2002,Lawler1985}.
+Gli algoritmi di ricerca locale rappresentano una classe di metodi euristici progettati per esplorare lo spazio delle soluzioni di un problema di ottimizzazione spostandosi iterativamente da una soluzione a una soluzione vicina nello spazio di ricerca. Questi algoritmi sono particolarmente efficaci per problemi come il \gls{TSP}. La ricerca locale fornisce un meccanismo per migliorare una soluzione iniziale attraverso piccole modifiche localizzate \cite{Johnson2002,Lawler1985}.
 
 \subsection{Tecniche 2-opt e 3-opt}
 
@@ -226,11 +226,8 @@ La tecnica 3-opt estende l'idea del 2-opt considerando tre archi per la riconnes
 
 \subsection{Lin–Kernighan}
 
-L'algoritmo di Lin-Kernighan (\gls{LK}) è una delle tecniche più avanzate e potenti di ricerca locale per risolvere il \gls{TSP}. Proposto da Shen Lin e Brian W. Kernighan nel 1973, questo algoritmo estende le idee della tecnica \(k\)-opt, rendendola più flessibile e adattabile. L'algoritmo non si limita a una fissata dimensione \(k\) degli scambi, ma decide dinamicamente il numero di archi da rimuovere e ricollegare, rendendolo molto efficace nel migliorare soluzioni iniziali.
+L'algoritmo di Lin-Kernighan (\gls{LK}) è una delle tecniche più avanzate e potenti di ricerca locale per risolvere il \gls{TSP}. Proposto da Shen Lin e Brian W. Kernighan nel 1973, questo algoritmo estende le idee della tecnica \(k\)-opt, rendendola più flessibile e adattabile. L'algoritmo non si limita a una fissata dimensione \(k\) degli scambi, ma decide dinamicamente il numero di archi da rimuovere e ricollegare, rendendolo molto efficace nel migliorare soluzioni iniziali.\cite{lin1973effective}
 
-\subsubsection{Descrizione dell'Algoritmo Lin-Kernighan}
-
-L'algoritmo di \gls{LK} inizia con una soluzione iniziale e tenta di migliorare iterativamente questa soluzione tramite una serie di mosse \(k\)-opt generalizzate. Ogni mossa \(k\)-opt cerca di ridurre la lunghezza totale del tour scambiando \(k\) archi del tour attuale con nuovi archi, migliorando così il percorso complessivo.
 
 \begin{algorithm}
 	\caption{Lin-Kernighan Algorithm per il \gls{TSP}}\label{alg:lin-kernighan}
@@ -255,27 +252,30 @@ L'algoritmo di \gls{LK} inizia con una soluzione iniziale e tenta di migliorare 
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
+\subsubsection{Descrizione} 
+
+L'algoritmo di \gls{LK} inizia con una soluzione iniziale e tenta di migliorare iterativamente questa soluzione tramite una serie di mosse \(k\)-opt generalizzate. Ogni mossa \(k\)-opt cerca di ridurre la lunghezza totale del tour scambiando \(k\) archi del tour attuale con nuovi archi, migliorando così il percorso complessivo.
 
 
 L'algoritmo di \gls{LK} è stato largamente studiato e migliorato nel corso degli anni. Per un'analisi dettagliata dell'algoritmo e delle sue estensioni, si possono consultare i seguenti riferimenti \cite{Johnson2002,Lawler1985,Gutin2016}.
+\\
+
+Gli algoritmi di ricerca locale, comprese le tecniche 2-opt e 3-opt offrono metodi potenti per migliorare le soluzioni del \gls{TSP}. Affinando iterativamente una soluzione iniziale, bilanciano l'esplorazione dello spazio delle soluzioni e lo sfruttamento di configurazioni buone conosciute, fornendo mezzi efficaci per avvicinarsi a soluzioni ottimali per problemi di ottimizzazione complessi.
 
 
-Gli algoritmi di ricerca locale, comprese le tecniche 2-opt e 3-opt e il raffreddamento simulato, offrono metodi potenti per migliorare le soluzioni del \gls{TSP}. Affinando iterativamente una soluzione iniziale, bilanciano l'esplorazione dello spazio delle soluzioni e lo sfruttamento di configurazioni buone conosciute, fornendo mezzi efficaci per avvicinarsi a soluzioni ottimali per problemi di ottimizzazione complessi.
-
-
-\section{Algoritmi Metaeuristici}
+\section{Algoritmi metaeuristici}
 
 Gli algoritmi metaeuristici sono strategie di alto livello progettate per navigare nello spazio di ricerca di problemi complessi di ottimizzazione in modo efficiente. Questi algoritmi non garantiscono una soluzione ottimale, ma sono efficaci nel trovare soluzioni molto buone entro un lasso di tempo ragionevole, specialmente per problemi in cui i metodi tradizionali falliscono a causa della maledizione della dimensionalità o della presenza di numerosi ottimi locali.
 
 \subsection{Simulated Annealing}
 
-Il Simulated Annealing (\gls{SA}) si presenta come una tecnica stocastica progettata per approssimare l'ottimo globale di una data funzione obiettivo. Questo metodo trova le sue radici nel processo fisico di ricottura nella metallurgia, che comporta il riscaldamento e il raffreddamento controllato di un materiale per aumentare la dimensione dei suoi cristalli e ridurre i loro difetti. L'algoritmo SA imita questo processo introducendo una "temperatura" metaforica che diminuisce gradualmente secondo un programma prestabilito. Inizialmente, l'algoritmo è più propenso ad accettare soluzioni che sono peggiori della soluzione attuale, permettendogli di esplorare ampiamente lo spazio delle soluzioni e di evitare di rimanere intrappolato in ottimi locali prematuramente. Man mano che la temperatura diminuisce, l'algoritmo diventa più selettivo, concentrandosi sulla soluzione ottimale.
+Il Simulated Annealing (\gls{SA}) si presenta come una tecnica stocastica progettata per approssimare l'ottimo globale di una data funzione obiettivo. Questo metodo trova le sue radici nel processo fisico di tempera nella metallurgia, che comporta il riscaldamento e il raffreddamento controllato di un materiale per aumentare la dimensione dei suoi cristalli e ridurre i loro difetti. L'algoritmo SA imita questo processo introducendo una "temperatura" metaforica che diminuisce gradualmente secondo un programma prestabilito. Inizialmente, l'algoritmo è più propenso ad accettare soluzioni che sono peggiori della soluzione attuale, permettendogli di esplorare ampiamente lo spazio delle soluzioni e di evitare di rimanere intrappolato in ottimi locali prematuramente. Man mano che la temperatura diminuisce, l'algoritmo diventa più selettivo, concentrandosi sulla soluzione ottimale.
 
 \subsubsection{Applicazione al \gls{TSP}}
 
 Nel contesto del \gls{TSP}, l'algoritmo SA inizia con una soluzione arbitraria, tipicamente un tour casuale tra le città. Successivamente, affina iterativamente questo tour apportando lievi modifiche, come lo scambio di due città nella sequenza del tour. La decisione di accettare una nuova soluzione è probabilistica e dipende sia dalla differenza nella qualità della soluzione sia dalla temperatura attuale. La capacità di questo metodo di accettare soluzioni peggiori diminuisce probabilisticamente nel tempo man mano che la temperatura si abbassa, simulando il processo di raffreddamento nella ricottura.
 
-\paragraph{Pseudocodice Dettagliato}
+\paragraph{Pseudocodice}
 
 Il pseudocodice per applicare \gls{SA} per risolvere il \gls{TSP} è delineato di seguito. Questa rappresentazione algoritmica enfatizza il miglioramento iterativo di un tour, tenendo conto dell'accettazione di soluzioni subottimali basata su un programma di temperatura decrescente per sfuggire ai minimi locali.
 
@@ -304,7 +304,7 @@ Il pseudocodice per applicare \gls{SA} per risolvere il \gls{TSP} è delineato d
 	\end{algorithmic}
 \end{algorithm}
 
-In questo pseudocodice, `generateInitialSolution` crea un tour iniziale casuale delle città. `perturbSolution` altera leggermente la soluzione attuale, tipicamente scambiando due città nel tour. `calculateCost` valuta la distanza totale (o costo) di un tour. `calculateAcceptanceProbability` determina la probabilità di accettare una nuova soluzione basata sul suo costo, sul costo della soluzione attuale e sulla temperatura attuale, seguendo il criterio di Metropolis. La temperatura viene aggiornata in ogni iterazione dalla funzione `updateTemperature`, che riduce la temperatura in base al tasso di raffreddamento fino a raggiungere la temperatura di arresto.
+In questo pseudocodice, \emph{generateInitialSolution} crea un tour iniziale casuale delle città. \emph{perturbSolution} altera leggermente la soluzione attuale, tipicamente scambiando due città nel tour. \emph{calculateCost} valuta la distanza totale (o costo) di un tour. \emph{calculateAcceptanceProbability} determina la probabilità di accettare una nuova soluzione basata sul suo costo, sul costo della soluzione attuale e sulla temperatura attuale, seguendo il criterio di Metropolis\cite{metropolis1953equation}. La temperatura viene aggiornata in ogni iterazione dalla funzione \emph{updateTemperature}, che riduce la temperatura in base al tasso di raffreddamento fino a raggiungere la temperatura di arresto.
 
 \subsection{Algoritmi Genetici}
 
@@ -364,7 +364,7 @@ Nel contesto del \gls{TSP}, un algorithmo genetico tipicamente opera come segue:
 \end{algorithm}
 \pagebreak
 \subsubsection{Risultati Sperimentali}
-
+% TODO: Update this table
 \begin{table}
   \caption{Risultati Genetic Algorithm}\label{tab:}
   \begin{center}
@@ -387,42 +387,6 @@ Nel contesto del \gls{TSP}, un algorithmo genetico tipicamente opera come segue:
     \end{tabular}
   \end{center}
 \end{table}
-
-%\begin{table}
-%  \caption{Fine tuning dei parametri}\label{tab:}
-%  \begin{center}
-%    \begin{tabular}[c]{l|l|l|l|l|l}
-%      \hline
-%      \multicolumn{1}{c|}{\textbf{Istanza}} & 
-%      \multicolumn{1}{c|}{\textbf{Parametri}} &
-%      \multicolumn{1}{c|}{\textbf{Tempo}} &
-%      \multicolumn{1}{c|}{\textbf{Tour}} &
-%      \multicolumn{1}{c}{\textbf{Ottimo}} &
-%      \multicolumn{1}{c}{\textbf{Gap \%}}\\
-%      \hline
-%      gr48&GA (100;5;0.010;500)&4378&5519.00&5046.00&9.37&\\
-%      gr48&GA (200;5;0.010;500)&8740&5208.00&5046.00&3.21&\\
-%      gr48&GA (100;5;0.010;1000)&8727&5210.00&5046.00&3.25&\\
-%      gr48&GA (100;5;0.020;500)&4702&5527.00&5046.00&9.53&\\
-%      gr48&GA (200;5;0.010;1000)&18240&5144.00&5046.00&1.94&\\
-%      gr48&GA (100;5;0.020;1000)&9205&5243.00&5046.00&3.90&\\
-%      gr48&GA (200;5;0.020;500)&9207&5265.00&5046.00&4.34&\\
-%      gr48&GA (100;10;0.010;500)&9233&5236.00&5046.00&3.77&\\
-%      gr48&GA (200;5;0.020;1000)&19198&5091.00&5046.00&0.89&\\
-%      gr48&GA (100;10;0.010;1000)&19353&5282.00&5046.00&4.68&\\
-%      gr48&GA (100;10;0.020;500)&9850&5203.00&5046.00&3.11&\\
-%      gr48&GA (200;10;0.010;500)&19705&5166.00&5046.00&2.38&\\
-%      gr48&GA (100;10;0.020;1000)&19760&5132.00&5046.00&1.70&\\
-%      gr48&GA (200;10;0.010;1000)&36830&5156.00&5046.00&2.18&\\
-%      gr48&GA (200;10;0.020;500)&17800&5198.00&5046.00&3.01&\\
-%      gr48&GA (200;10;0.020;1000)&35331&5168.00&5046.00&2.42&\\
-%
-%      \hline
-%    \end{tabular}
-%  \end{center}
-%\end{table}
-
-
 
 \subsubsection{Vantaggi}
 
@@ -540,7 +504,7 @@ Nonostante i suoi punti di forza, \gls{TS} presenta anche alcune limitazioni:
 
 \section{Ant Colony Optimization}
 
-L'Ant Colony Optimization (\gls{ACO}) è un algoritmo metaeuristico ispirato al comportamento di foraggiamento delle formiche reali \cite{dorigo1996ant}. Questo approccio simula il modo in cui le formiche trovano i percorsi più brevi tra le fonti di cibo e il loro nido, applicando questo concetto alla risoluzione di problemi di ottimizzazione combinatoria come il \gls{TSP} \cite{dorigo1997ant}.
+L'Ant Colony Optimization (\gls{ACO}) è un algoritmo metaeuristico ispirato al comportamento delle colonie di formiche reali \cite{dorigo1996ant}. Questo approccio simula il modo in cui le formiche trovano i percorsi più brevi tra le fonti di cibo e il loro nido, applicando questo concetto alla risoluzione di problemi di ottimizzazione combinatoria come il \gls{TSP} \cite{dorigo1997ant}.
 
 \subsection{Principi Fondamentali dell'\gls{ACO}}
 
@@ -588,6 +552,29 @@ Nel contesto del \gls{TSP}, l'ACO opera come segue:
 Il seguente pseudocodice descrive l'implementazione di base dell'\gls{ACO} per il \gls{TSP}:
 
 \begin{algorithm}
+  \begin{algorithmic} 
+		\Procedure{CostruisciTour}{$G, \alpha, \beta$}
+		\State Scegli una città di partenza casuale
+		\While{ci sono città non visitate}
+		\State Scegli la prossima città usando la formula di probabilità
+		\EndWhile
+		\State \Return tour completo
+		\EndProcedure
+
+		\Procedure{AggiornaPheromoni}{$G, \rho, Q$}
+		\For{ogni arco $(i,j)$ in $G$}
+		\State $\tau_{ij} \gets (1-\rho)\tau_{ij}$
+		\For{$k = 1$ to $m$}
+		\If{$(i,j)$ è nel $tour_k$}
+		\State $\tau_{ij} \gets \tau_{ij} + Q/length_k$
+		\EndIf
+		\EndFor
+		\EndFor
+		\EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
 	\caption{\gls{ACO} per il \gls{TSP}}\label{alg:aco-tsp}
 	\begin{algorithmic}[1]
 		\Procedure{ACO-TSP}{$G, m, \alpha, \beta, \rho, Q, max\_iterations$}
@@ -618,28 +605,10 @@ Il seguente pseudocodice descrive l'implementazione di base dell'\gls{ACO} per i
 		\State \Return $best\_tour, best\_length$
 		\EndProcedure
 
-		\Procedure{CostruisciTour}{$G, \alpha, \beta$}
-		\State Scegli una città di partenza casuale
-		\While{ci sono città non visitate}
-		\State Scegli la prossima città usando la formula di probabilità
-		\EndWhile
-		\State \Return tour completo
-		\EndProcedure
-
-		\Procedure{AggiornaPheromoni}{$G, \rho, Q$}
-		\For{ogni arco $(i,j)$ in $G$}
-		\State $\tau_{ij} \gets (1-\rho)\tau_{ij}$
-		\For{$k = 1$ to $m$}
-		\If{$(i,j)$ è nel $tour_k$}
-		\State $\tau_{ij} \gets \tau_{ij} + Q/length_k$
-		\EndIf
-		\EndFor
-		\EndFor
-		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
 
-Questo pseudocodice fornisce una panoramica di alto livello dell'implementazione dell'ACO per il \gls{TSP}. L'algoritmo inizia inizializzando i parametri e i feromoni. Quindi, per un numero specificato di iterazioni, ogni formica costruisce un tour, viene identificato il miglior tour, e i livelli di feromoni vengono aggiornati. Le procedure \texttt{CostruisciTour} e \texttt{AggiornaPheromoni} sono rappresentate in forma semplificata e possono essere ulteriormente dettagliate in un'implementazione reale.
+Le procedure \texttt{CostruisciTour} e \texttt{AggiornaPheromoni} sono rappresentate in forma semplificata e possono essere ulteriormente dettagliate in un'implementazione reale.
 
 \subsection{Varianti e Miglioramenti}
 
@@ -657,7 +626,6 @@ L'ACO offre diversi vantaggi per la risoluzione del \gls{TSP}:
 
 \begin{itemize}
 	\item \textbf{Adattabilità}: Può facilmente adattarsi a cambiamenti nel problema, come l'aggiunta o la rimozione di città.
-	\item \textbf{Parallelizzazione}: L'algoritmo è intrinsecamente parallelo, consentendo implementazioni efficienti su hardware multicore o distribuito.
 	\item \textbf{Qualità delle soluzioni}: Spesso trova soluzioni di alta qualità, specialmente per istanze di grandi dimensioni del \gls{TSP}.
 \end{itemize}
 
