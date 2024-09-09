@@ -24,7 +24,7 @@ Gli algoritmi esatti per il \gls{TSP} sono caratterizzati dalla loro capacità d
 
 \subsection{Metodo a Brute-Force}
 
-Il metodo a forza bruta esamina sistematicamente ogni possibile tour per identificare quello con la distanza totale più bassa. Nonostante la sua semplicità, la crescita esponenziale dei calcoli lo rende impraticabile per grandi istanze.
+Il metodo a forza bruta esamina sistematicamente ogni possibile tour per identificare quello con la distanza totale più corta. Nonostante la sua semplicità, la crescita esponenziale dei calcoli lo rende impraticabile di dimensione non banale.
 
 \begin{algorithm}
 	\caption{TSP Brute Force}\label{bruteforce}
@@ -147,7 +147,7 @@ La complessità computazionale di questo metodo è $O(n!)$, che riflette il nume
 
 \subsection{Algoritmo di Bellman-Held-Karp}
 
-L'algoritmo di Bellman-Held-Karp rappresenta un significativo avanzamento nelle soluzioni esatte del \gls{TSP} sfruttando la programmazione dinamica per ridurre l'onere computazionale. Questo approccio calcola il percorso più breve dividendo il problema in sottoproblemi più piccoli e memorizzando i risultati di questi sottoproblemi per evitare calcoli ridondanti.
+L'algoritmo di Bellman-Held-Karp rappresenta un significativo avanzamento nelle soluzioni esatte del \gls{TSP} sfruttando la programmazione dinamica per ridurre l'onere computazionale. Questo approccio calcola il percorso più breve dividendo il problema in sottoproblemi più piccoli e memorizzando i risultati di questi sottoproblemi per evitare calcoli ridondanti sfruttando la programmazione dinamica.
 
 \begin{algorithm}
 	\caption{Algoritmo di Bellman-Held-Karp}\label{bellmanheldkarp}
@@ -168,7 +168,7 @@ L'algoritmo di Bellman-Held-Karp rappresenta un significativo avanzamento nelle 
 	\end{algorithmic}
 \end{algorithm}
 
-L'algoritmo di Bellman-Held-Karp opera con una complessità temporale di $O(n^2 \cdot 2^n)$~\ref{fig:agl_complexity}, rendendolo significativamente più efficiente del metodo a forza bruta per istanze di problema di dimensioni moderate. Tuttavia, la componente esponenziale della sua complessità limita ancora la sua applicabilità pratica a istanze relativamente piccole di \gls{TSP}.
+L'algoritmo di Bellman-Held-Karp opera con una complessità temporale di $O(n^2 \cdot 2^n)$~\ref{fig:agl_complexity}, rendendolo significativamente più efficiente del metodo a brute-force per istanze di problema di dimensioni moderate. Tuttavia, la componente esponenziale della sua complessità limita ancora la sua applicabilità pratica a istanze relativamente piccole di \gls{TSP}.
 
 % \begin{figure}[htbp]
 % 	\centering
@@ -224,7 +224,7 @@ L'efficienza di \gls{BnB} per il \gls{TSP} dipende in modo significativo dalla f
 
 \subsection{Fattibilità Computazionale}
 
-Gli algoritmi esatti per il \gls{TSP}, come il metodo a forza bruta, la programmazione dinamica e l'algoritmo di Held-Karp, offrono garanzie teoriche per trovare il tour ottimale. Tuttavia, la loro fattibilità computazionale è notevolmente compromessa all'aumentare del numero di città. Il tasso di crescita fattoriale della complessità del metodo a forza bruta e il tasso di crescita esponenziale della complessità della programmazione dinamica e di Held-Karp limitano la loro applicazione pratica a istanze relativamente piccole del \gls{TSP}.
+Gli algoritmi esatti per il \gls{TSP}, come il metodo a forza bruta, la programmazione dinamica e l'algoritmo di Bellman-Held-Karp, offrono garanzie teoriche per trovare il tour ottimale. Tuttavia, la loro fattibilità computazionale è notevolmente compromessa all'aumentare del numero di città. Il tasso di crescita fattoriale della complessità del metodo a forza bruta e il tasso di crescita esponenziale della complessità Bellman-Held-Karp limitano la loro applicazione pratica a istanze relativamente piccole del \gls{TSP}.
 
 \begin{center}
 	\begin{figure}[h]
@@ -295,6 +295,28 @@ Riassumendo:
 	\item Significative risorse computazionali richieste anche per problemi di dimensioni moderate.
 	\item La programmazione dinamica e Held-Karp, pur essendo più efficienti del metodo a forza bruta, affrontano ancora limitazioni a causa della loro complessità spaziale e della necessità di un calcolo estensivo.
 \end{itemize}
+
+
+\subsection{Concorde}
+
+
+Concorde è considerato uno dei risolutori esatti più efficienti per risolvere il \gls{TSP}. Sviluppato da un gruppo di ricercatori guidati da Applegate et al., questo risolutore sfrutta una combinazione di metodi avanzati come il branch-and-bound, il cutting-plane e tecniche di programmazione lineare e combinatoria~\cite{Applegate2007}. Concorde è in grado di risolvere istanze del \gls{TSP} con di migliaia di città in tempi ragionevoli, rendendolo uno strumento di riferimento per confronti sperimentali e applicazioni pratiche di grande scala.
+
+L'efficienza di Concorde è dovuta alla sua capacità di ridurre drasticamente lo spazio di ricerca mediante il branch-and-bound, migliorato con l'uso di piani di taglio per raffinare i limiti inferiori delle soluzioni. In aggiunta, Concorde implementa euristiche efficaci per identificare buone soluzioni iniziali, che aiutano a limitare l'esplorazione delle soluzioni subottimali. Concorde è anche stato utilizzato per risolvere problemi di benchmark nella letteratura del \gls{TSP}, come le istanze del problema TSPLIB \cite{TSPLIB}, dimostrando la sua efficacia per problemi di dimensioni reali~\cite{Cook2011}.
+
+\textbf{Vantaggi:}
+\begin{itemize}
+    \item Capacità di risolvere grandi istanze del \gls{TSP}.
+    \item Utilizzo combinato di tecniche avanzate di ottimizzazione.
+    \item Implementazioni efficienti e ben documentate.
+\end{itemize}
+
+\textbf{Svantaggi:}
+\begin{itemize}
+    \item Richiede elevate risorse computazionali per istanze di dimensioni estremamente grandi.
+    \item La complessità delle tecniche implementate può renderlo difficile da adattare a problemi leggermente diversi dal \gls{TSP}.
+\end{itemize}
+
 
 L'esplorazione degli algoritmi esatti getta le basi per comprendere le complessità computazionali intrinseche del \gls{TSP}. Sebbene la loro applicazione pratica sia limitata dalle loro esigenze computazionali, rimangono cruciali per l'analisi teorica e per preparare il terreno per le tecniche risolutive alternative discusse nei capitoli successivi.
 
