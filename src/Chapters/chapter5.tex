@@ -33,15 +33,15 @@ Dorigo et al. hanno introdotto diversi miglioramenti rispetto agli algoritmi pre
 \begin{figure}[]
 	\centering
 	\includegraphics[width=0.7\textwidth]{Chapters/Figures/ants_path.png}
-  \caption{Comportamento delle formiche di fronte ad un ostacolo}
-  \label{fig:obstacle}
+	\caption{Comportamento delle formiche di fronte ad un ostacolo}
+	\label{fig:obstacle}
 \end{figure}
 
-Nella figura ~\ref{fig:obsacle}
+Nella figura ~\ref{fig:obstacle}
 \begin{enumerate}
-  \item Le formiche scelgono randomicamente tra i percorsi disponibili
-  \item Poiché le formiche si muovono a una velocità approssimativamente costante, quelle che scelgono il percorso inferiore, più corto, raggiungono il punto di decisione opposto più velocemente di quelle che scelgono il percorso superiore, più lungo.
-  \item  Il feromone si accumula a un ritmo più elevato sul percorso più breve. Le formiche scelgono il percorso inferiore in base alla concentrazione di feromone.
+	\item Le formiche scelgono randomicamente tra i percorsi disponibili
+	\item Poiché le formiche si muovono a una velocità approssimativamente costante, quelle che scelgono il percorso inferiore, più corto, raggiungono il punto di decisione opposto più velocemente di quelle che scelgono il percorso superiore, più lungo.
+	\item  Il feromone si accumula a un ritmo più elevato sul percorso più breve. Le formiche scelgono il percorso inferiore in base alla concentrazione di feromone.
 \end{enumerate}
 
 
@@ -50,7 +50,7 @@ Il \gls{TSP} è particolarmente adatto per l'applicazione dell'\gls{ACS} a causa
 
 Nel contesto del \gls{TSP}, ogni formica costruisce un tour visitando tutte le città esattamente una volta. La scelta della prossima città da visitare è influenzata sia dalla distanza (informazione euristica) che dalla quantità di feromoni sull'arco che collega le città (esperienza accumulata).
 
-\section{Dettagli implementativi} 
+\section{Dettagli implementativi}
 
 \subsection{Regole di Aggiornamento dei Feromoni}
 
@@ -105,11 +105,31 @@ $J$ è una città casuale scelta secondo la distribuzione di probabilità:
 
 Questa regola di transizione favorisce lo sfruttamento delle informazioni accumulate (quando $q \leq q_0$) ma lascia spazio all'esplorazione (quando $q > q_0$).
 
-\subsection{Pseudocodice} 
 
-Fare riferimento a ~\ref{algo:ACS}
-\begin{algorithm}
-  \floatname{ACS}{}
+\begin{table}
+	\centering
+	\caption{Risultati dell'algoritmo ACS}
+	\begin{tabular}{lrrrr}
+		\toprule
+		Istanza  & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		\midrule
+		eil51    & 17083      & 434.91         & 426.00           & 2.09  \\
+		berlin52 & 18411      & 7606.66        & 7542.00          & 0.86  \\
+		eil76    & 33136      & 554.04         & 538.00           & 2.98  \\
+		d198     & 94445      & 16584.44       & 15780.00         & 5.10  \\
+		lin105   & 123877     & 14981.78       & 14379.00         & 4.19  \\
+		pr124    & 292446     & 60760.86       & 59030.00         & 2.93  \\
+		lin318   & 338493     & 46646.52       & 42029.00         & 10.99 \\
+		u574     & 452117     & 42512.54       & 36905.00         & 15.19 \\
+		fl1577   & 2880286    & 25939.85       & 22249.00         & 16.59 \\
+		rl5915   & 35872198   & 706188.19      & 565530.00        & 24.87 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+\subsection{Pseudocodice}
+
+\begin{algorithm}[H]
+	\floatname{ACS}{}
 	\caption{\gls{ACS} per il \gls{TSP}}
 	\begin{algorithmic}[1]
 		\State Inizializza i livelli di feromoni $\tau_{ij} = \tau_0$ per tutti gli archi $(i,j)$
@@ -133,8 +153,10 @@ Fare riferimento a ~\ref{algo:ACS}
 		\EndFor
 		\State \Return la migliore soluzione trovata $S_{gb}$
 	\end{algorithmic}
-  \label{alg:acs}
+	\label{alg:acs}
 \end{algorithm}
+
+
 
 \subsection{Analisi della Complessità}
 La complessità temporale dell'\gls{ACS} per iterazione è O($n^2m$), dove $n$ è il numero di città e $m$ è il numero di formiche. Tuttavia, il numero di iterazioni necessarie per la convergenza può variare significativamente a seconda delle caratteristiche del problema e dei parametri dell'algoritmo.
@@ -157,9 +179,9 @@ La scelta ottimale di questi parametri può variare a seconda del problema speci
 
 Dalla pubblicazione originale dell' \gls{ACS} sono state proposte numerose varianti e estensioni:
 \begin{itemize}
-  \item MAX-MIN Ant System (\gls{MMAS}): Introdotto da Stützle e Hoos, \gls{MMAS} limita i valori dei feromoni entro un intervallo predefinito per prevenire la stagnazione prematura. \cite{Stuetzle1997}
-  \item Rank-Base Ant System (\gls{ASrank}): In questa variante, le formiche sono classificate in base alla qualità delle loro soluzioni, e la quanità dei fermoni depositati è proporzionale al rango.
-  \item ACS Ibridi: Combinazioni dell'ACS con altre tecniche di ottimizzazione, come algoritmi genetici o Tabu Search, hanno mostrato risultati promettenti su vari problemi di ottimizzazione combinatoria. 
+	\item MAX-MIN Ant System (\gls{MMAS}): Introdotto da Stützle e Hoos, \gls{MMAS} limita i valori dei feromoni entro un intervallo predefinito per prevenire la stagnazione prematura. \cite{Stuetzle1997}
+	\item Rank-Base Ant System (\gls{ASrank}): In questa variante, le formiche sono classificate in base alla qualità delle loro soluzioni, e la quanità dei fermoni depositati è proporzionale al rango.
+	\item ACS Ibridi: Combinazioni dell'ACS con altre tecniche di ottimizzazione, come algoritmi genetici o Tabu Search, hanno mostrato risultati promettenti su vari problemi di ottimizzazione combinatoria.
 \end{itemize}
 
 \section{Applicazioni oltre il \gls{TSP}}

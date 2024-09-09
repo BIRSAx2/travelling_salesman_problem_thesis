@@ -73,7 +73,7 @@ Nel \gls{TSP}, un'applicazione classica dell'algoritmo greedy è il Nearest Neig
 						\ifthenelse{\step > 2}{%
 							\draw[green,very thick] (B) -- node[above left] {1} (D);
 							\node[circle,fill=green!20,draw] at (B) {B};
-						}{} 		
+						}{}
 						\ifthenelse{\step > 3}{%
 							\draw[green,very thick] (D) -- node[right] {9} (C);
 							\node[circle,fill=green!20,draw] at (D) {D};
@@ -138,6 +138,29 @@ Questa strategia greedy assicura che ad ogni passo, il tour cresca aggiungendo l
 \end{itemize}
 
 Gli algoritmi greedy, con la loro semplicità ed efficienza intrinseche, giocano un ruolo cruciale nella risoluzione euristica dei problemi, specialmente nei casi in cui ottenere una soluzione esatta è computazionalmente impraticabile. La loro applicazione al \gls{TSP} evidenzia l'equilibrio tra efficienza computazionale e qualità della soluzione, un tema che risuona attraverso lo studio degli algoritmi euristici e metaeuristici.
+
+
+\begin{table}
+	\centering
+	\caption{Risultati dell'algoritmo Nearest Neighbour}
+	\begin{tabular}{lrrrr}
+		\toprule
+		Istanza  & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		\midrule
+		berlin52 & 14         & 8980.92        & 7542.00          & 19.08 \\
+		eil51    & 15         & 513.61         & 426.00           & 20.57 \\
+		eil76    & 17         & 711.99         & 538.00           & 32.34 \\
+		lin105   & 43         & 20362.76       & 14379.00         & 41.61 \\
+		pr124    & 136        & 69299.43       & 59030.00         & 17.40 \\
+		d198     & 183        & 18620.07       & 15780.00         & 18.00 \\
+		lin318   & 466        & 54033.58       & 42029.00         & 28.56 \\
+		u574     & 1295       & 46881.87       & 36905.00         & 27.03 \\
+		fl1577   & 9547       & 27940.91       & 22249.00         & 25.58 \\
+		rl5915   & 236473     & 707498.63      & 565530.00        & 25.10 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
 
 \section{Algoritmi di Local Search}
 
@@ -218,6 +241,29 @@ L'algoritmo 2-opt controlla sistematicamente ogni coppia di archi nel tour e det
 	\end{algorithmic}
 \end{algorithm}
 
+
+\begin{table}
+	\centering
+	\caption{Risultati dell'algoritmo Nearest Neighbour con ottimizzazione 2-opt}
+	\begin{tabular}{lrrrr}
+		\toprule
+		Istanza  & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		\midrule
+		berlin52 & 124        & 8060.65        & 7542.00          & 6.88  \\
+		eil51    & 284        & 440.90         & 426.00           & 3.50  \\
+		eil76    & 313        & 599.05         & 538.00           & 11.35 \\
+		lin105   & 2959       & 16199.70       & 14379.00         & 12.66 \\
+		pr124    & 3268       & 62757.01       & 59030.00         & 6.31  \\
+		d198     & 4443       & 16165.31       & 15780.00         & 2.44  \\
+		lin318   & 9562       & 46408.41       & 42029.00         & 10.42 \\
+		u574     & 26923      & 39896.00       & 36905.00         & 8.10  \\
+		fl1577   & 200151     & 24214.30       & 22249.00         & 8.83  \\
+		rl5915   & 6327036    & 620822.08      & 565530.00        & 9.78  \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+
 \subsubsection{Tecnica 3-opt}
 
 La tecnica 3-opt estende l'idea del 2-opt considerando tre archi per la riconnessione. Questo consente una gamma più ampia di riarrangiamenti ad ogni passo, potenzialmente portando a miglioramenti più significativi a scapito di una maggiore complessità computazionale.
@@ -252,7 +298,7 @@ L'algoritmo di Lin-Kernighan (\gls{LK}) è una delle tecniche più avanzate e po
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
-\subsubsection{Descrizione} 
+\subsubsection{Descrizione}
 
 L'algoritmo di \gls{LK} inizia con una soluzione iniziale e tenta di migliorare iterativamente questa soluzione tramite una serie di mosse \(k\)-opt generalizzate. Ogni mossa \(k\)-opt cerca di ridurre la lunghezza totale del tour scambiando \(k\) archi del tour attuale con nuovi archi, migliorando così il percorso complessivo.
 
@@ -273,7 +319,29 @@ Il Simulated Annealing (\gls{SA}) si presenta come una tecnica stocastica proget
 
 \subsubsection{Applicazione al \gls{TSP}}
 
-Nel contesto del \gls{TSP}, l'algoritmo SA inizia con una soluzione arbitraria, tipicamente un tour casuale tra le città. Successivamente, affina iterativamente questo tour apportando lievi modifiche, come lo scambio di due città nella sequenza del tour. La decisione di accettare una nuova soluzione è probabilistica e dipende sia dalla differenza nella qualità della soluzione sia dalla temperatura attuale. La capacità di questo metodo di accettare soluzioni peggiori diminuisce probabilisticamente nel tempo man mano che la temperatura si abbassa, simulando il processo di raffreddamento nella ricottura.
+Nel contesto del \gls{TSP}, l'algoritmo SA inizia con una soluzione arbitraria, tipicamente un tour casuale tra le città. Successivamente, affina iterativamente questo tour apportando lievi modifiche, come lo scambio di due città nella sequenza del tour. La decisione di accettare una nuova soluzione è probabilistica e dipende sia dalla differenza nella qualità della soluzione sia dalla temperatura attuale. La capacità di questo metodo di accettare soluzioni peggiori diminuisce probabilisticamente nel tempo man mano che la temperatura si abbassa, simulando il processo di raffreddamento nella tempera.
+
+
+\begin{table}[H] 
+  \centering
+	\caption{Risultati dell'algoritmo Simulated Annealing}
+	\begin{tabular}{lrrrr}
+		\toprule
+		Istanza  & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		\midrule
+		berlin52 & 28982      & 7544.37        & 7542.00          & 0.03  \\
+		87eil76  & 39587      & 572.81         & 538.00           & 6.47  \\
+		29lin105 & 52928      & 14993.92       & 14379.00         & 4.28  \\
+		44d198   & 102362     & 16318.76       & 15780.00         & 3.41  \\
+		49eil51  & 131542     & 434.25         & 426.00           & 1.94  \\
+		pr124    & 207125     & 60675.98       & 59030.00         & 2.79  \\
+		67u574   & 398181     & 43936.09       & 36905.00         & 19.05 \\
+		lin318   & 506369     & 47651.44       & 42029.00         & 13.38 \\
+		fl1577   & 1514830    & 27584.16       & 22249.00         & 23.98 \\
+		rl5915   & 22563370   & 680777.61      & 565530.00        & 20.38 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
 
 \paragraph{Pseudocodice}
 
@@ -335,6 +403,26 @@ Nel contesto del \gls{TSP}, un algorithmo genetico tipicamente opera come segue:
 	\item \textbf{Sostituzione}: Creazione di una nuova generazione combinando genitori e figli.
 	\item \textbf{Iterazione}: Ripetizione del processo per un numero prefissato di generazioni o fino al raggiungimento di un criterio di arresto.
 \end{enumerate}
+\begin{table}[H]
+	\centering
+	\caption{Risultati dell'algoritmo Genetico}
+	\begin{tabular}{lrrrr}
+		\toprule
+		Istanza  & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		\midrule
+		eil51    & 22815      & 440.85         & 426.00           & 3.49  \\
+		berlin52 & 26104      & 7918.09        & 7542.00          & 4.99  \\
+		eil76    & 44547      & 570.63         & 538.00           & 6.06  \\
+		d198     & 108498     & 16548.42       & 15780.00         & 4.87  \\
+		lin105   & 109871     & 14573.34       & 14379.00         & 1.35  \\
+		pr124    & 137120     & 61453.95       & 59030.00         & 4.11  \\
+		lin318   & 320190     & 45165.59       & 42029.00         & 7.46  \\
+		u574     & 1260895    & 40516.22       & 36905.00         & 9.79  \\
+		fl1577   & 4033113    & 24024.81       & 22249.00         & 7.98  \\
+		rl5915   & 33367821   & 648205.16      & 565530.00        & 14.62 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
 
 \subsubsection{Pseudocodice}
 
@@ -362,31 +450,6 @@ Nel contesto del \gls{TSP}, un algorithmo genetico tipicamente opera come segue:
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
-\pagebreak
-\subsubsection{Risultati Sperimentali}
-% TODO: Update this table
-\begin{table}
-  \caption{Risultati Genetic Algorithm}\label{tab:}
-  \begin{center}
-    \begin{tabular}[c]{l|l|l|l|l|l|}
-      \hline
-      \multicolumn{1}{c|}{\textbf{Istanza}} & 
-      \multicolumn{1}{c|}{\textbf{Parametri}} &
-      \multicolumn{1}{c|}{\textbf{Tempo}} &
-      \multicolumn{1}{c|}{\textbf{Tour}} &
-      \multicolumn{1}{c}{\textbf{Ottimo}} &
-      \multicolumn{1}{c}{\textbf{Gap \%}}
-      \\
-      \hline
-      gr17 & (100;5;0.010;500) & 2039 & 2090 & 2085 & 0.24 \\
-      gr21&(100;5;0.010;500)&2376&2707.00&2707.00&0.00 \\
-      gr24&(100;5;0.010;500)&2606&1272.00&1272.00&0.00\\
-      gr48&(200;5;0.020;1000)&19198&5091.00&5046.00&0.89\\
-      
-      \hline
-    \end{tabular}
-  \end{center}
-\end{table}
 
 \subsubsection{Vantaggi}
 
@@ -552,7 +615,7 @@ Nel contesto del \gls{TSP}, l'ACO opera come segue:
 Il seguente pseudocodice descrive l'implementazione di base dell'\gls{ACO} per il \gls{TSP}:
 
 \begin{algorithm}
-  \begin{algorithmic} 
+	\begin{algorithmic}[1]
 		\Procedure{CostruisciTour}{$G, \alpha, \beta$}
 		\State Scegli una città di partenza casuale
 		\While{ci sono città non visitate}
@@ -571,7 +634,7 @@ Il seguente pseudocodice descrive l'implementazione di base dell'\gls{ACO} per i
 		\EndFor
 		\EndFor
 		\EndProcedure
-  \end{algorithmic}
+	\end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}

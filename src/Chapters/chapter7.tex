@@ -17,8 +17,8 @@ In questo capitolo, viene presentata un'analisi approfondita dei risultati speri
 \section{Metodologia Sperimentale}
 \label{sec:metodologia}
 
-\subsection{Setup Sperimentale}
-Gli esperimenti sono stati eseguiti su un cluster di calcolo (DEI Blade) con nodi equipaggiati con processori ntel Xeon Gold 5118 CPU @ 2.30/3.20GHz e 128 GB di RAM. Tutti gli algoritmi sono stati implementati in Rust.
+\subsection{Setup}
+Gli esperimenti sono stati eseguiti su un cluster di calcolo (DEI Blade) con nodi equipaggiati con processori Intel Xeon Gold 5118 CPU @ 2.30/3.20GHz e 128 GB di RAM. Tutti gli algoritmi sono stati implementati in Rust.
 
 \subsection{Istanze del Problema}
 È stato utilizzato un insieme diversificato di istanze del TSP, tratte principalmente dalla TSPLIB \cite{TSPLIB}. Le istanze variano da problemi di piccole dimensioni (51 città) a problemi di grande scala (fino a 5915 città). Alcune delle istanze utilizzate includono:
@@ -65,7 +65,7 @@ Dall'analisi dei dati sperimentali, emergono alcune tendenze generali:
 
 
 \begin{itemize}
-	\item Gli algoritmi di base (NN, SA, GA, ACS, RBACS) mostrano prestazioni significativamente migliorate quando combinati con la procedura di ottimizzazione locale 2-Opt.
+	\item Gli algoritmi di base (NN, SA, GA, ACS, RB-ACS) mostrano prestazioni significativamente migliorate quando combinati con la procedura di ottimizzazione locale 2-Opt.
 	\item ACS e RBACS, insieme alle loro varianti 2-Opt, tendono a produrre soluzioni di qualità superiore rispetto agli altri approcci, specialmente per istanze di grandi dimensioni.
 	\item GA mostra prestazioni altamente variabili, con alcuni risultati eccellenti ma anche alcuni estremamente scarsi, soprattutto su istanze di grandi dimensioni.
 \end{itemize}
@@ -80,60 +80,173 @@ Dall'analisi dei dati sperimentali, emergono alcune tendenze generali:
 	\caption{Heatmap del gap di ottimilità}\label{fig:heatmap_full}
 \end{figure}
 
-\subsubsection{Nearest Neighbor (NN e NN2Opt)}
+\subsubsection{Nearest Neighbor (NN e NN+2Opt)}
 NN è l'algoritmo più veloce, con tempi di esecuzione che vanno da pochi millisecondi per istanze piccole a pochi secondi per istanze molto grandi. Tuttavia, la qualità delle soluzioni è generalmente inferiore rispetto agli altri approcci:
 
-\begin{itemize}
-	\item Per eil51: NN ha un gap del 20.57\%, mentre NN2Opt lo riduce al 3.50\%.
-	\item Per rl5915: NN ha un gap del 25.10\%, mentre NN2Opt lo riduce al 9.78\%.
-\end{itemize}
+\begin{table}
+	\centering
+	\caption{Risultati NN vs NN+2Opt}
+	\begin{tabular}{lllrrrr}
+		\toprule
+		   & Istanza  & algorithm & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		\midrule
+		0  & berlin52 & NN        & 14         & 8980.92        & 7542.00          & 19.08 \\
+		1  & berlin52 & NN2Opt    & 124        & 8060.65        & 7542.00          & 6.88  \\
+		2  & d198     & NN        & 183        & 18620.07       & 15780.00         & 18.00 \\
+		3  & d198     & NN2Opt    & 4443       & 16165.31       & 15780.00         & 2.44  \\
+		4  & eil76    & NN        & 17         & 711.99         & 538.00           & 32.34 \\
+		5  & eil76    & NN2Opt    & 313        & 599.05         & 538.00           & 11.35 \\
+		6  & fl1577   & NN        & 9547       & 27940.91       & 22249.00         & 25.58 \\
+		7  & fl1577   & NN2Opt    & 200151     & 24214.30       & 22249.00         & 8.83  \\
+		8  & lin105   & NN        & 43         & 20362.76       & 14379.00         & 41.61 \\
+		9  & lin105   & NN2Opt    & 2959       & 16199.70       & 14379.00         & 12.66 \\
+		10 & lin318   & NN        & 466        & 54033.58       & 42029.00         & 28.56 \\
+		11 & lin318   & NN2Opt    & 9562       & 46408.41       & 42029.00         & 10.42 \\
+		12 & rl5915   & NN        & 236473     & 707498.63      & 565530.00        & 25.10 \\
+		13 & rl5915   & NN2Opt    & 6327036    & 620822.08      & 565530.00        & 9.78  \\
+		14 & u574     & NN        & 1295       & 46881.87       & 36905.00         & 27.03 \\
+		15 & u574     & NN2Opt    & 26923      & 39896.00       & 36905.00         & 8.10  \\
+		\bottomrule
+	\end{tabular}
+\end{table}
 
 L'aggiunta di 2-Opt migliora significativamente la qualità delle soluzioni, ma aumenta il tempo di calcolo di un ordine di grandezza o più.
 
 \subsubsection{Simulated Annealing (SA e SA2Opt)}
 SA offre un buon compromesso tra qualità della soluzione e tempo di calcolo:
 
-\begin{itemize}
-	\item Per berlin52: SA raggiunge la soluzione ottima (gap 0.03\%) in 28.982 ms.
-	\item Per d2103: SA2Opt ottiene un gap del 2.72\% in 7067.677 secondi.
-\end{itemize}
+
+\begin{table}[H]
+	\centering
+	\caption{Risultati SA vs SA2Opt}
+	\begin{tabular}{lllrrrr}
+		\toprule
+		   & Istanza  & algorithm & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		\midrule
+		0  & berlin52 & SA        & 28982      & 7544.37        & 7542.00          & 0.03  \\
+		1  & berlin52 & SA2Opt    & 49481      & 7544.37        & 7542.00          & 0.03  \\
+		2  & d198     & SA2Opt    & 93813      & 16118.48       & 15780.00         & 2.14  \\
+		3  & d198     & SA        & 102362     & 16318.76       & 15780.00         & 3.41  \\
+		4  & eil76    & SA        & 39587      & 572.81         & 538.00           & 6.47  \\
+		5  & eil76    & SA2Opt    & 45721      & 569.29         & 538.00           & 5.82  \\
+		6  & fl1577   & SA        & 1514830    & 27584.16       & 22249.00         & 23.98 \\
+		7  & fl1577   & SA2Opt    & 2391057    & 23489.49       & 22249.00         & 5.58  \\
+		8  & lin105   & SA        & 52928      & 14993.92       & 14379.00         & 4.28  \\
+		9  & lin105   & SA2Opt    & 54366      & 14882.69       & 14379.00         & 3.50  \\
+		10 & lin318   & SA2Opt    & 392433     & 45444.25       & 42029.00         & 8.13  \\
+		11 & lin318   & SA        & 506369     & 47651.44       & 42029.00         & 13.38 \\
+		12 & rl5915   & SA2Opt    & 18690779   & 615257.00      & 565530.00        & 8.79  \\
+		13 & rl5915   & SA        & 22563370   & 680777.61      & 565530.00        & 20.38 \\
+		14 & u574     & SA2Opt    & 369840     & 39443.68       & 36905.00         & 6.88  \\
+		15 & u574     & SA        & 398181     & 43936.09       & 36905.00         & 19.05 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
 
 SA2Opt generalmente produce soluzioni migliori di SA, ma con tempi di calcolo significativamente più lunghi.
 
-\subsubsection{Genetic Algorithm (GA e GA2Opt)}
+\subsubsection{Genetic Algorithm (GA e GA+2Opt)}
 GA mostra le prestazioni più variabili tra tutti gli algoritmi testati:
 
-\begin{itemize}
-	\item Per alcune istanze piccole, come eil51, GA produce risultati scarsi (gap 41.67\%).
-	\item Per istanze più grandi, come u2319, GA produce risultati estremamente scarsi (gap 2103.99\%).
-	\item GA2Opt migliora significativamente le prestazioni, ma rimane meno competitivo rispetto ad ACS e RBACS per istanze di grandi dimensioni.
-\end{itemize}
+\begin{table}[H]
+	\centering
 
-\subsubsection{Ant Colony System (ACS e ACS2Opt)}
-ACS e ACS2Opt mostrano prestazioni molto buone su tutta la gamma di istanze:
+	\caption{Risultati GA vs GA+2Opt}
+	\begin{tabular}{lllrrrr}
+		\toprule
+		   & Istanza  & algorithm & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap     \\
+		\midrule
+		0  & berlin52 & GA2Opt    & 26104      & 7918.09        & 7542.00          & 4.99    \\
+		1  & berlin52 & GA        & 29932      & 11009.32       & 7542.00          & 45.97   \\
+		2  & d198     & GA2Opt    & 108498     & 16548.42       & 15780.00         & 4.87    \\
+		3  & d198     & GA        & 137106     & 66868.76       & 15780.00         & 323.76  \\
+		4  & eil76    & GA2Opt    & 44547      & 570.63         & 538.00           & 6.06    \\
+		5  & eil76    & GA        & 45556      & 977.18         & 538.00           & 81.63   \\
+		6  & fl1577   & GA        & 2264528    & 1116417.45     & 22249.00         & 4917.83 \\
+		7  & fl1577   & GA2Opt    & 4033113    & 24024.81       & 22249.00         & 7.98    \\
+		8  & lin105   & GA2Opt    & 109871     & 14573.34       & 14379.00         & 1.35    \\
+		9  & lin105   & GA        & 164073     & 44653.50       & 14379.00         & 210.55  \\
+		10 & lin318   & GA2Opt    & 320190     & 45165.59       & 42029.00         & 7.46    \\
+		11 & lin318   & GA        & 429314     & 363904.18      & 42029.00         & 765.84  \\
+		12 & rl5915   & GA        & 20712540   & 38904633.04    & 565530.00        & 6779.32 \\
+		13 & rl5915   & GA2Opt    & 33367821   & 648205.16      & 565530.00        & 14.62   \\
+		14 & u574     & GA        & 471427     & 457563.15      & 36905.00         & 1139.84 \\
+		15 & u574     & GA2Opt    & 1260895    & 40516.22       & 36905.00         & 9.79    \\
+		\bottomrule
+	\end{tabular}
+\end{table}
 
-\begin{itemize}
-	\item Per berlin52: ACS ottiene un gap dello 0.86\% in 18.411 secondi, mentre ACS2Opt lo riduce allo 0.75\% in 20.289 secondi.
-	\item Per fl1577: ACS2Opt ottiene un gap del 2.99\% in 3852.624 secondi.
-\end{itemize}
+\subsubsection{Ant Colony System (ACS e ACS+2Opt)}
+ACS e ACS+2Opt mostrano prestazioni molto buone su tutta la gamma di istanze:
+
+
+\begin{table}[H]
+	\centering
+	\caption{Risultati ACS vs ACS+2Opt}
+	\begin{tabular}{lllrrrr}
+		\toprule
+		   & Istanza  & algorithm & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		\midrule
+		0  & berlin52 & ACS       & 18411      & 7606.66        & 7542.00          & 0.86  \\
+		1  & berlin52 & ACS2Opt   & 20289      & 7598.44        & 7542.00          & 0.75  \\
+		2  & d198     & ACS       & 94445      & 16584.44       & 15780.00         & 5.10  \\
+		3  & d198     & ACS2Opt   & 101484     & 16079.65       & 15780.00         & 1.90  \\
+		4  & eil76    & ACS2Opt   & 27703      & 558.76         & 538.00           & 3.86  \\
+		5  & eil76    & ACS       & 33136      & 554.04         & 538.00           & 2.98  \\
+		6  & fl1577   & ACS       & 2880286    & 25939.85       & 22249.00         & 16.59 \\
+		7  & fl1577   & ACS2Opt   & 3852624    & 22914.07       & 22249.00         & 2.99  \\
+		8  & lin105   & ACS2Opt   & 80683      & 14605.88       & 14379.00         & 1.58  \\
+		9  & lin105   & ACS       & 123877     & 14981.78       & 14379.00         & 4.19  \\
+		10 & lin318   & ACS2Opt   & 202670     & 43556.33       & 42029.00         & 3.63  \\
+		11 & lin318   & ACS       & 338493     & 46646.52       & 42029.00         & 10.99 \\
+		12 & rl5915   & ACS2Opt   & 34991642   & 612104.64      & 565530.00        & 8.24  \\
+		13 & rl5915   & ACS       & 35872198   & 706188.19      & 565530.00        & 24.87 \\
+		14 & u574     & ACS       & 452117     & 42512.54       & 36905.00         & 15.19 \\
+		15 & u574     & ACS2Opt   & 490206     & 39051.51       & 36905.00         & 5.82  \\
+		\bottomrule
+	\end{tabular}
+\end{table}
 
 ACS2Opt tende a produrre soluzioni di qualità leggermente superiore rispetto ad ACS, ma con tempi di calcolo più lunghi.
 
 \subsubsection{Red-Black Ant Colony System (RBACS e RBACS2Opt)}
 RBACS e RBACS2Opt mostrano prestazioni competitive e talvolta superiori rispetto ad ACS e ACS2Opt:
 
-\begin{itemize}
-	\item Per berlin52: RBACS2Opt ottiene un gap dello 0.03\% in 34.159 secondi.
-	\item Per d2103: RBACS2Opt ottiene un gap del 6.47\% in 5855.328 secondi, superando ACS2Opt che ottiene un gap del 4.84\% in 4419.537 secondi.
-\end{itemize}
 
-RBACS2Opt sembra particolarmente efficace su istanze di grandi dimensioni, offrendo un buon compromesso tra qualità della soluzione e tempo di calcolo.
+\begin{table}[H]
+	\centering
+	\caption{Risultati RB-ACS vs RB-ACS+2Opt}
+	\begin{tabular}{lllrrrr}
+		\toprule
+		   & Istanza  & algorithm & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		\midrule
+		0  & berlin52 & RBACS     & 34002      & 7681.45        & 7542.00          & 1.85  \\
+		1  & berlin52 & RBACS2Opt & 34159      & 7544.37        & 7542.00          & 0.03  \\
+		2  & d198     & RBACS     & 136998     & 17097.74       & 15780.00         & 8.35  \\
+		3  & d198     & RBACS2Opt & 283417     & 16076.46       & 15780.00         & 1.88  \\
+		4  & eil76    & RBACS     & 40567      & 562.41         & 538.00           & 4.54  \\
+		5  & eil76    & RBACS2Opt & 40672      & 557.14         & 538.00           & 3.56  \\
+		6  & fl1577   & RBACS     & 4210934    & 26788.92       & 22249.00         & 20.41 \\
+		7  & fl1577   & RBACS2Opt & 6887456    & 23236.46       & 22249.00         & 4.44  \\
+		8  & lin105   & RBACS     & 77720      & 14785.44       & 14379.00         & 2.83  \\
+		9  & lin105   & RBACS2Opt & 262217     & 14489.08       & 14379.00         & 0.77  \\
+		10 & lin318   & RBACS     & 469358     & 46823.70       & 42029.00         & 11.41 \\
+		11 & lin318   & RBACS2Opt & 603140     & 43421.71       & 42029.00         & 3.31  \\
+		12 & rl5915   & RBACS     & 21861319   & 716108.43      & 565530.00        & 26.63 \\
+		13 & rl5915   & RBACS2Opt & 28403435   & 608329.94      & 565530.00        & 7.57  \\
+		14 & u574     & RBACS     & 826684     & 43702.95       & 36905.00         & 18.42 \\
+		15 & u574     & RBACS2Opt & 899785     & 39219.59       & 36905.00         & 6.27  \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+RB-ACS2+Opt sembra particolarmente efficace su istanze di grandi dimensioni, offrendo un buon compromesso tra qualità della soluzione e tempo di calcolo.
 
 \subsection{Analisi della Scalabilità}
 Per valutare la scalabilità degli algoritmi, è stato analizzato come il tempo di esecuzione e la qualità della soluzione variano al crescere della dimensione del problema:
 
-\begin{figure}[h]
-	\makebox[\textwidth][c]{%
+\begin{figure}[h]	\makebox[\textwidth][c]{%
 		\includegraphics[width=1.2\textwidth]{analysis/time_vs_size.pdf}
 	}
 	\caption{Esecuzione per dimensione del problema}
@@ -177,18 +290,18 @@ I risultati sperimentali evidenziano diversi punti chiave:
 
 RBACS e RBACS2Opt emergono come approcci promettenti, offrendo prestazioni competitive e talvolta superiori rispetto ad ACS e ACS2Opt, specialmente su istanze di grandi dimensioni. Tuttavia, la scelta dell'algoritmo ottimale dipende dalle specifiche esigenze dell'applicazione, bilanciando la necessità di soluzioni di alta qualità con i vincoli di tempo di calcolo.
 
-\begin{figure}[h]
-	\makebox[\textwidth][c]{%
-		\includegraphics[width=1\textwidth]{analysis/heatmap.pdf}
-	}
-	\caption{Confronto tra top 3 algoritmi}
-	\label{fig:alg_comparison_heatmap}
-\end{figure}
+%\begin{figure}[h]
+%	\makebox[\textwidth][c]{%
+%		\includegraphics[width=1\textwidth]{analysis/heatmap.pdf}
+%	}
+%	\caption{Confronto tra top 3 algoritmi}
+%	\label{fig:alg_comparison_heatmap}
+%\end{figure}
 
 
 \chapter{Conclusioni}
 \label{chapt:8}
-In conclusione, questa tesi ha fornito un'analisi approfondita e comparativa di diversi approcci algoritmici per la risoluzione del Problema del Commesso Viaggiatore, con particolare attenzione alle prestazioni su istanze di grandi dimensioni. I risultati ottenuti non solo confermano l'efficacia di approcci metaeuristici consolidati come l'Ant Colony System, ma introducono anche un nuovo algoritmo promettente, il Red-Black Ant Colony System, che mostra potenziale per ulteriori miglioramenti e applicazioni.
+In conclusione, questa tesi ha fornito un'analisi approfondita e comparativa di diversi approcci algoritmici per la risoluzione del Problema del Commesso Viaggiatore, con particolare attenzione alle prestazioni su istanze di grandi dimensioni. I risultati ottenuti non solo confermano l'efficacia di approcci metaeuristici consolidati come l'Ant Colony System, ma introducono anche una sua variante, il Red-Black Ant Colony System, che mostra potenziale per ulteriori miglioramenti e applicazioni.
 
 \section{Riflessioni Finali}
 L'evoluzione degli algoritmi per il TSP riflette una tendenza più ampia nel campo dell'ottimizzazione combinatoria: la ricerca di un equilibrio tra la qualità della soluzione e l'efficienza computazionale. Questa tesi ha dimostrato che:
