@@ -15,17 +15,17 @@
 \section{Fondamenti}
 
 \subsection{Ispirazione Biologica}
-L'Ant Colony System (\gls{ACS}) trae ispirazione dal comportamento di foraggiamento delle formiche reali, che possono trovare in modo efficiente i percorsi più brevi tra le fonti di cibo e il loro nido. Questa capacità è attribuita ai sentieri di feromoni tracciati dalle formiche, facilitando una forma indiretta di comunicazione che guida altre formiche verso percorsi ottimali\cite{Dorigo1996, Dorigo1997}.
+L'Ant Colony System (\gls{ACS}) trae ispirazione delle formiche reali, che possono trovare in modo efficiente i percorsi più brevi tra le fonti di cibo e il loro nido. Questa capacità è attribuita ai sentieri di feromoni tracciati dalle formiche, facilitando una forma indiretta di comunicazione che guida altre formiche verso percorsi ottimali\cite{Dorigo1996, Dorigo1997}.
 
 La stigmergia, un meccanismo di coordinazione indiretta tra agenti, gioca un ruolo cruciale in questo processo\cite{Bonabeau1999}. Le formiche depositano feromoni mentre si muovono, creando un feedback positivo che rafforza i percorsi più efficienti nel tempo\cite{Deneubourg1990}.
 
 \subsection{Principi Algoritmici}
-L'\gls{ACS} sfrutta una colonia di formiche artificiali che lavorano cooperativamente per esplorare e sfruttare soluzioni per problemi di ottimizzazione, in particolare il \gls{TSP}. L'approccio integra sia l'esplorazione di nuove soluzioni sia lo sfruttamento di soluzioni buone conosciute attraverso un equilibrio tra l'influenza dei feromoni e la desiderabilità euristica.\cite{Dorigo1996, Dorigo1997}
+L'\gls{ACS} sfrutta una colonia di formiche artificiali che lavorano cooperativamente per esplorare e sfruttare soluzioni per problemi di ottimizzazione. L'approccio integra sia l'esplorazione di nuove soluzioni sia lo sfruttamento di soluzioni buone conosciute attraverso un equilibrio tra l'influenza dei feromoni e la desiderabilità euristica.\cite{Dorigo1996, Dorigo1997}
 
 Dorigo et al. hanno introdotto diversi miglioramenti rispetto agli algoritmi precedenti basati sulle formiche:
 
 \begin{itemize}
-	\item Una regola di transizione dello stato più forte che bilancia meglio l'esplorazione di nuovi archi e lo sfruttamento della conoscenza accumulata sui problemi.
+	\item Una regola di transizione di stato più forte che bilancia meglio l'esplorazione di nuovi archi e lo sfruttamento della conoscenza accumulata sui problemi.
 	\item Una regola di aggiornamento globale dei feromoni applicata solo agli archi appartenenti al miglior tour.
 	\item L'applicazione di una regola di aggiornamento locale dei feromoni durante la costruzione delle soluzioni.
 \end{itemize}
@@ -33,15 +33,24 @@ Dorigo et al. hanno introdotto diversi miglioramenti rispetto agli algoritmi pre
 \begin{figure}[]
 	\centering
 	\includegraphics[width=0.7\textwidth]{Chapters/Figures/ants_path.png}
-	\caption{1. Le formiche scelgono randomicamente tra i percorsi disponibili\\2.Poiché le formiche si muovono a una velocità approssimativamente costante, quelle che scelgono il percorso inferiore, più corto, raggiungono il punto di decisione opposto più velocemente di quelle che scelgono il percorso superiore, più lungo.\\3. Il feromone si accumula a un ritmo più elevato sul percorso più breve. Le formiche scelgono il percorso inferiore in base alla concentrazione di feromone.}
+  \caption{Comportamento delle formiche di fronte ad un ostacolo}
+  \label{fig:obstacle}
 \end{figure}
+
+Nella figura ~\ref{fig:obsacle}
+\begin{enumerate}
+  \item Le formiche scelgono randomicamente tra i percorsi disponibili
+  \item Poiché le formiche si muovono a una velocità approssimativamente costante, quelle che scelgono il percorso inferiore, più corto, raggiungono il punto di decisione opposto più velocemente di quelle che scelgono il percorso superiore, più lungo.
+  \item  Il feromone si accumula a un ritmo più elevato sul percorso più breve. Le formiche scelgono il percorso inferiore in base alla concentrazione di feromone.
+\end{enumerate}
+
 
 \subsection{Applicazione al \gls{TSP}}
 Il \gls{TSP} è particolarmente adatto per l'applicazione dell'\gls{ACS} a causa della sua necessità di soluzioni efficienti per la ricerca di percorsi. L'algoritmo simula il comportamento delle formiche per costruire percorsi, con il processo di ottimizzazione guidato sia da informazioni euristiche (ad es., distanze tra le città) sia da sentieri di feromoni che rappresentano una forma di esperienza appresa\cite{Dorigo1997, Gambardella1995}.
 
 Nel contesto del \gls{TSP}, ogni formica costruisce un tour visitando tutte le città esattamente una volta. La scelta della prossima città da visitare è influenzata sia dalla distanza (informazione euristica) che dalla quantità di feromoni sull'arco che collega le città (esperienza accumulata).
 
-\section{Dettagli di Implementazione}
+\section{Dettagli implementativi} 
 
 \subsection{Regole di Aggiornamento dei Feromoni}
 
@@ -96,9 +105,11 @@ $J$ è una città casuale scelta secondo la distribuzione di probabilità:
 
 Questa regola di transizione favorisce lo sfruttamento delle informazioni accumulate (quando $q \leq q_0$) ma lascia spazio all'esplorazione (quando $q > q_0$).
 
-\subsection{Pseudocodice dell'Algoritmo}
+\subsection{Pseudocodice} 
 
+Fare riferimento a ~\ref{algo:ACS}
 \begin{algorithm}
+  \floatname{ACS}{}
 	\caption{\gls{ACS} per il \gls{TSP}}
 	\begin{algorithmic}[1]
 		\State Inizializza i livelli di feromoni $\tau_{ij} = \tau_0$ per tutti gli archi $(i,j)$
@@ -122,27 +133,8 @@ Questa regola di transizione favorisce lo sfruttamento delle informazioni accumu
 		\EndFor
 		\State \Return la migliore soluzione trovata $S_{gb}$
 	\end{algorithmic}
+  \label{alg:acs}
 \end{algorithm}
-
-\section{Valutazione delle Prestazioni}
-
-L'\gls{ACS} dimostra prestazioni superiori rispetto ad altri algoritmi ispirati alla natura sia per \gls{TSP} simmetrici che asimmetrici, attribuite al suo efficace equilibrio tra esplorazione e sfruttamento e alla sua capacità di focalizzare dinamicamente gli sforzi di ricerca basati sull'apprendimento collettivo.
-
-Dorigo et al. hanno condotto esperimenti estensivi comparando l'\gls{ACS} con altri approcci metaeuristici:
-
-\begin{itemize}
-	\item Ant-Q, un precursore dell'ACS
-	\item Ant System (\gls{AS})
-	\item Elastic Net (\gls{EN})
-	\item Simulated Annealing (\gls{SA})
-	\item Self-Organizing Map (SOM)
-	\item Farthest Insertion (FI)
-	\item Genetic Algorithm (\gls{GA})
-\end{itemize}
-
-I risultati hanno mostrato che l'\gls{ACS} superava costantemente questi altri approcci in termini di qualità della soluzione e velocità di convergenza.
-
-Quando potenziato con procedure di ricerca locale, come il 3-opt, l'\gls{ACS} mostra prestazioni competitive o superiori rispetto ad alcuni dei migliori algoritmi per il \gls{TSP}, evidenziando la sua robustezza ed efficienza nella risoluzione di problemi complessi di ottimizzazione.
 
 \subsection{Analisi della Complessità}
 La complessità temporale dell'\gls{ACS} per iterazione è O($n^2m$), dove $n$ è il numero di città e $m$ è il numero di formiche. Tuttavia, il numero di iterazioni necessarie per la convergenza può variare significativamente a seconda delle caratteristiche del problema e dei parametri dell'algoritmo.
@@ -184,9 +176,3 @@ Sebbene inizialmente sviluppato per il \gls{TSP}, l'\gls{ACS} e le sue varianti 
 \end{itemize}
 
 La versatilità dell'\gls{ACS} lo rende un approccio potente per affrontare problemi complessi di ottimizzazione in vari campi dell'ingegneria e della scienza.
-
-\section{Conclusioni}
-
-L'Ant Colony System rappresenta un significativo avanzamento nel campo dell'ottimizzazione ispirata alla natura. La sua capacità di bilanciare efficacemente l'esplorazione e lo sfruttamento, insieme alla sua adattabilità a diversi tipi di problemi, lo rende uno strumento prezioso per risolvere problemi di ottimizzazione combinatoria. \cite{Dorigo1997}
-
-
