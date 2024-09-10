@@ -42,7 +42,7 @@
 % DEFAULT cover
 \thesiscover(1-1,image):={unipd-dei-bsc-cover}
 \thesiscover(N-2,image):={unipd-dei-bsc-cover-back}
-\thesiscover(spine,image):={nova-fct-red-spine}
+\thesiscover(spine,image):={unipd-dei-spine-red}
 
 % PhD cover
 \thesiscover(phd,1-1,image):={unipd-dei-bsc-cover}
@@ -56,8 +56,8 @@
 
 % BSc cover
 \thesiscover(bsc,1-1,image):={unipd-dei-bsc-cover}
-\thesiscover(bsc,N-2,image):={unipd-dei-bsc-cover}
-\thesiscover(bsc,spine,image):={nova-fct-red-spine}
+\thesiscover(bsc,N-2,image):={unipd-dei-bsc-cover-back}
+\thesiscover(bsc,spine,image):={unipd-dei-spine-red}
 
 
 
