@@ -13,10 +13,10 @@
 
 \section{Introduzione}
 
-Questo capitolo presenta una versione modificata dell'algoritmo \gls{ACS}, chiamata Red-Black Ant Colony System (\gls{RB-ACS}), che mira a migliorare le prestazioni dell'\gls{ACS} su istanze di grandi dimensioni del \gls{TSP}. Il \gls{RB-ACS} incorpora diverse migliorie chiave all'approccio  \gls{ACS} standard, tra cui la ricerca in parallelo, l'inizializzazione migliorata dei feromoni e l'impostazione di parametri differenziati per i due gruppi di formiche. Queste modifiche sono progettate per consentire al \gls{RB-ACS} di esplorare lo spazio di ricerca in modo più efficace e di convergere efficientemente verso soluzioni ottimali o quasi-ottimali, anche per problemi di \gls{TSP} su larga scala \cite{Hassan2013}.
+Questo capitolo presenta una versione modificata dell'algoritmo \Gls{ACS}, chiamata Red-Black Ant Colony System (\Gls{RB-ACS}), che mira a migliorare le prestazioni dell'\Gls{ACS} su istanze di grandi dimensioni del \Gls{TSP}. Il \Gls{RB-ACS} incorpora diverse migliorie chiave all'approccio  \Gls{ACS} standard, tra cui la ricerca in parallelo, l'inizializzazione migliorata dei feromoni e l'impostazione di parametri differenziati per i due gruppi di formiche. Queste modifiche sono progettate per consentire al \Gls{RB-ACS} di esplorare lo spazio di ricerca in modo più efficace e di convergere efficientemente verso soluzioni ottimali o quasi-ottimali, anche per problemi di \Gls{TSP} su larga scala \cite{Hassan2013}.
 
-\section{L'Algoritmo Red-Black Ant Colony System (\gls{RB-ACS})}
-Mentre l'algoritmo  \gls{ACS} standard si è dimostrato efficace nella risoluzione di istanze del \gls{TSP}, le sue prestazioni possono peggiorare all'aumentare delle dimensioni del problema. Il Red-Black Ant Colony System (\gls{RB-ACS})  introduce diverse modifiche chiave all'approccio  \gls{ACS} standard per migliorarne la scalabilità e la qualità delle soluzioni per problemi di \gls{TSP} su larga scala \cite{Hassan2013}.
+\section{L'Algoritmo Red-Black Ant Colony System (\Gls{RB-ACS})}
+Mentre l'algoritmo  \Gls{ACS} standard si è dimostrato efficace nella risoluzione di istanze del \Gls{TSP}, le sue prestazioni possono peggiorare all'aumentare delle dimensioni del problema. Il Red-Black Ant Colony System (\Gls{RB-ACS})  introduce diverse modifiche chiave all'approccio  \Gls{ACS} standard per migliorarne la scalabilità e la qualità delle soluzioni per problemi di \Gls{TSP} su larga scala \cite{Hassan2013}.
 
 \begin{figure}[h!]
 	\centering
@@ -78,36 +78,36 @@ Mentre l'algoritmo  \gls{ACS} standard si è dimostrato efficace nella risoluzio
 		\draw[->, thick] (A4) -- (A6);
 	\end{tikzpicture}
 	\caption{
-		Un esempio di tour costruito da formiche rosse e nere nell'algoritmo \gls{RB-ACS}.
+		Un esempio di tour costruito da formiche rosse e nere nell'algoritmo \Gls{RB-ACS}.
 	}\label{fig:red-black-acs}
 \end{figure}
 
 
 \subsection{Inizializzazione dei Feromoni}
-Nell' \gls{ACS} standard, il livello iniziale di feromone su tutti i archi è impostato a un valore costante $\tau_0$. Nel \gls{RB-ACS}, gli autori propongono uno schema di inizializzazione dei feromoni diverso, in cui il livello iniziale di feromone su ciascun bordo $(r,s)$ è impostato secondo la seguente equazione:
+Nell' \Gls{ACS} standard, il livello iniziale di feromone su tutti i archi è impostato a un valore costante $\tau_0$. Nel \Gls{RB-ACS}, gli autori propongono uno schema di inizializzazione dei feromoni diverso, in cui il livello iniziale di feromone su ciascun bordo $(r,s)$ è impostato secondo la seguente equazione:
 \begin{equation}
 	\tau_\text{init}(r,s) = \frac{C}{\text{costo}(r,s)}
 \end{equation}
 dove $C$ è una costante e $\text{costo}(r,s)$ è la distanza tra le città $r$ e $s$. Questa inizializzazione modificata dei feromoni incoraggia le formiche a esplorare i archi più corti, che sono più desiderabili per il tour ottimale, assegnando loro livelli di feromone iniziali più alti \cite{Hassan2013}.
 
 \subsection{Ricerca in Parallelo con Gruppi di Formiche Rosse e Nere}
-Un'altra modifica chiave nell'algoritmo \gls{RB-ACS} è l'utilizzo di due gruppi separati di formiche, chiamati "rosse" e "nere", che esplorano lo spazio di ricerca in parallelo. Nell'\gls{ACS} standard, un singolo gruppo di formiche costruisce i tour e le formiche possono seguire i percorsi di altre formiche, il che può portare a una convergenza prematura e a rimanere bloccati in minimi locali.
+Un'altra modifica chiave nell'algoritmo \Gls{RB-ACS} è l'utilizzo di due gruppi separati di formiche, chiamati "rosse" e "nere", che esplorano lo spazio di ricerca in parallelo. Nell'\Gls{ACS} standard, un singolo gruppo di formiche costruisce i tour e le formiche possono seguire i percorsi di altre formiche, il che può portare a una convergenza prematura e a rimanere bloccati in minimi locali.
 
-Nel \gls{RB-ACS}, i gruppi di formiche rosse e nere operano in modo indipendente, mantenendo ciascuno i propri sentieri di feromoni e cercando soluzioni senza essere influenzati dall'altro gruppo. Questo approccio di ricerca parallela riduce la probabilità che l'algoritmo rimanga bloccato in minimi locali, poiché i due gruppi di formiche possono esplorare regioni diverse dello spazio di ricerca simultaneamente \cite{Hassan2013}.
+Nel \Gls{RB-ACS}, i gruppi di formiche rosse e nere operano in modo indipendente, mantenendo ciascuno i propri sentieri di feromoni e cercando soluzioni senza essere influenzati dall'altro gruppo. Questo approccio di ricerca parallela riduce la probabilità che l'algoritmo rimanga bloccato in minimi locali, poiché i due gruppi di formiche possono esplorare regioni diverse dello spazio di ricerca simultaneamente \cite{Hassan2013}.
 
 \subsection{Impostazioni di Parametri Differenziate}
-Oltre al processo di ricerca separato, l'algoritmo \gls{RB-ACS} impiega anche diverse impostazioni dei parametri per i gruppi di formiche rosse e nere. In particolare, la regola di aggiornamento locale dei feromoni e il tasso di evaporazione dei feromoni possono essere impostati su valori diversi per i due gruppi. Questa differenziazione è ispirata al comportamento osservato delle formiche reali, in cui colonie o gruppi diversi possono presentare caratteristiche distinte, come i tassi di deposizione e di evaporazione dei feromoni \cite{Hassan2013}.
+Oltre al processo di ricerca separato, l'algoritmo \Gls{RB-ACS} impiega anche diverse impostazioni dei parametri per i gruppi di formiche rosse e nere. In particolare, la regola di aggiornamento locale dei feromoni e il tasso di evaporazione dei feromoni possono essere impostati su valori diversi per i due gruppi. Questa differenziazione è ispirata al comportamento osservato delle formiche reali, in cui colonie o gruppi diversi possono presentare caratteristiche distinte, come i tassi di deposizione e di evaporazione dei feromoni \cite{Hassan2013}.
 
-Utilizzando impostazioni di parametri separate per le formiche rosse e nere, l'algoritmo \gls{RB-ACS} può ulteriormente migliorare la diversificazione del processo di ricerca, permettendo ai due gruppi di esplorare lo spazio di soluzione in modo più complementare.
+Utilizzando impostazioni di parametri separate per le formiche rosse e nere, l'algoritmo \Gls{RB-ACS} può ulteriormente migliorare la diversificazione del processo di ricerca, permettendo ai due gruppi di esplorare lo spazio di soluzione in modo più complementare.
 
 \subsection{Aggiornamento Globale dei Feromoni Migliorato}
-Nell' \gls{ACS} standard, solo la formica globalmente migliore è autorizzata a depositare feromoni durante la fase di aggiornamento globale. Nel \gls{RB-ACS}, gli autori propongono una regola di aggiornamento globale modificata, in cui le due migliori formiche di ciascuno dei gruppi rosso e nero sono autorizzate ad aggiornare i livelli di feromone. Questo aggiornamento globale parallelo rafforza ulteriormente la ricerca verso soluzioni di alta qualità, poiché vengono rinforzati simultaneamente diversi percorsi promettenti \cite{Hassan2013}.
+Nell' \Gls{ACS} standard, solo la formica globalmente migliore è autorizzata a depositare feromoni durante la fase di aggiornamento globale. Nel \Gls{RB-ACS}, gli autori propongono una regola di aggiornamento globale modificata, in cui le due migliori formiche di ciascuno dei gruppi rosso e nero sono autorizzate ad aggiornare i livelli di feromone. Questo aggiornamento globale parallelo rafforza ulteriormente la ricerca verso soluzioni di alta qualità, poiché vengono rinforzati simultaneamente diversi percorsi promettenti \cite{Hassan2013}.
 
 \subsection{Pseudocodice}
 
-% TODO: Inserire il pseudocodice dell'algoritmo \gls{RB-ACS}
+% TODO: Inserire il pseudocodice dell'algoritmo \Gls{RB-ACS}
 \begin{algorithm}
-	\caption{Red-Black Ant Colony System (\gls{RB-ACS}) per il \gls{TSP}}
+	\caption{Red-Black Ant Colony System (\Gls{RB-ACS}) per il \Gls{TSP}}
 	\begin{algorithmic}[1]
 		\State Inizializza i livelli di feromoni $\tau_{ij} = \tau_{\text{init}}(i,j)$ per tutti gli archi $(i,j)$
 		\State Inizializza la migliore soluzione globale $S_{gb}$ e la sua lunghezza $L_{gb}$
@@ -161,7 +161,7 @@ Nell' \gls{ACS} standard, solo la formica globalmente migliore è autorizzata a 
 
 \section{Conclusione}
 
-L'algoritmo \gls{RB-ACS} presentato in questo capitolo può essere considerato un approccio promettente per risolvere problemi di ottimizzazione combinatoria
-complessi oltre il  \gls{TSP}, come il bilanciamento del carico nelle reti di telecomunicazioni,
-il dispacciamento economico del carico, la schedulazione dei processi e vari altri campi. I principi generali del \gls{RB-ACS}, tra cui la ricerca parallela, le impostazioni dei parametri differenziate e le strategie di aggiornamento migliorato dei feromoni, possono essere potenzialmente applicati a una vasta gamma di problemi di ottimizzazione, rendendolo un contributo prezioso nel campo dell'intelligenza di sciame e degli algoritmi metaeuristici.
+L'algoritmo \Gls{RB-ACS} presentato in questo capitolo può essere considerato un approccio promettente per risolvere problemi di ottimizzazione combinatoria
+complessi oltre il  \Gls{TSP}, come il bilanciamento del carico nelle reti di telecomunicazioni,
+il dispacciamento economico del carico, la schedulazione dei processi e vari altri campi. I principi generali del \Gls{RB-ACS}, tra cui la ricerca parallela, le impostazioni dei parametri differenziate e le strategie di aggiornamento migliorato dei feromoni, possono essere potenzialmente applicati a una vasta gamma di problemi di ottimizzazione, rendendolo un contributo prezioso nel campo dell'intelligenza di sciame e degli algoritmi metaeuristici.
 

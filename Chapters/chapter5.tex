@@ -15,12 +15,12 @@
 \section{Fondamenti}
 
 \subsection{Ispirazione Biologica}
-L'Ant Colony System (\gls{ACS}) trae ispirazione delle formiche reali, che possono trovare in modo efficiente i percorsi più brevi tra le fonti di cibo e il loro nido. Questa capacità è attribuita ai sentieri di feromoni tracciati dalle formiche, facilitando una forma indiretta di comunicazione che guida altre formiche verso percorsi ottimali\cite{Dorigo1996, Dorigo1997}.
+L'Ant Colony System (\Gls{ACS}) trae ispirazione delle formiche reali, che possono trovare in modo efficiente i percorsi più brevi tra le fonti di cibo e il loro nido. Questa capacità è attribuita ai sentieri di feromoni tracciati dalle formiche, facilitando una forma indiretta di comunicazione che guida altre formiche verso percorsi ottimali\cite{Dorigo1996, Dorigo1997}.
 
 La stigmergia, un meccanismo di coordinazione indiretta tra agenti, gioca un ruolo cruciale in questo processo\cite{Bonabeau1999}. Le formiche depositano feromoni mentre si muovono, creando un feedback positivo che rafforza i percorsi più efficienti nel tempo\cite{Deneubourg1990}.
 
 \subsection{Principi Algoritmici}
-L'\gls{ACS} sfrutta una colonia di formiche artificiali che lavorano cooperativamente per esplorare e sfruttare soluzioni per problemi di ottimizzazione. L'approccio integra sia l'esplorazione di nuove soluzioni sia lo sfruttamento di soluzioni buone conosciute attraverso un equilibrio tra l'influenza dei feromoni e la desiderabilità euristica.\cite{Dorigo1996, Dorigo1997}
+L'\Gls{ACS} sfrutta una colonia di formiche artificiali che lavorano cooperativamente per esplorare e sfruttare soluzioni per problemi di ottimizzazione. L'approccio integra sia l'esplorazione di nuove soluzioni sia lo sfruttamento di soluzioni buone conosciute attraverso un equilibrio tra l'influenza dei feromoni e la desiderabilità euristica.\cite{Dorigo1996, Dorigo1997}
 
 Dorigo et al. hanno introdotto diversi miglioramenti rispetto agli algoritmi precedenti basati sulle formiche:
 
@@ -45,16 +45,16 @@ Nella figura ~\ref{fig:obstacle}
 \end{enumerate}
 
 
-\subsection{Applicazione al \gls{TSP}}
-Il \gls{TSP} è particolarmente adatto per l'applicazione dell'\gls{ACS} a causa della sua necessità di soluzioni efficienti per la ricerca di percorsi. L'algoritmo simula il comportamento delle formiche per costruire percorsi, con il processo di ottimizzazione guidato sia da informazioni euristiche (ad es., distanze tra le città) sia da sentieri di feromoni che rappresentano una forma di esperienza appresa\cite{Dorigo1997, Gambardella1995}.
+\subsection{Applicazione al \Gls{TSP}}
+Il \Gls{TSP} è particolarmente adatto per l'applicazione dell'\Gls{ACS} a causa della sua necessità di soluzioni efficienti per la ricerca di percorsi. L'algoritmo simula il comportamento delle formiche per costruire percorsi, con il processo di ottimizzazione guidato sia da informazioni euristiche (ad es., distanze tra le città) sia da sentieri di feromoni che rappresentano una forma di esperienza appresa\cite{Dorigo1997, Gambardella1995}.
 
-Nel contesto del \gls{TSP}, ogni formica costruisce un tour visitando tutte le città esattamente una volta. La scelta della prossima città da visitare è influenzata sia dalla distanza (informazione euristica) che dalla quantità di feromoni sull'arco che collega le città (esperienza accumulata).
+Nel contesto del \Gls{TSP}, ogni formica costruisce un tour visitando tutte le città esattamente una volta. La scelta della prossima città da visitare è influenzata sia dalla distanza (informazione euristica) che dalla quantità di feromoni sull'arco che collega le città (esperienza accumulata).
 
 \section{Dettagli implementativi}
 
 \subsection{Regole di Aggiornamento dei Feromoni}
 
-Le regole di aggiornamento dei feromoni nell'\gls{ACS} sono cruciali per guidare il processo di ricerca verso aree promettenti dello spazio delle soluzioni. Queste regole sono suddivise in aggiornamenti locali e globali.
+Le regole di aggiornamento dei feromoni nell'\Gls{ACS} sono cruciali per guidare il processo di ricerca verso aree promettenti dello spazio delle soluzioni. Queste regole sono suddivise in aggiornamenti locali e globali.
 
 \subsubsection{Regola di Aggiornamento Locale}
 Ogni volta che una formica attraversa un arco $(i,j)$, applica la regola di aggiornamento locale dei feromoni per diminuire il livello di feromoni, incoraggiando l'esplorazione da parte di altre formiche. La regola di aggiornamento locale è data da:
@@ -86,7 +86,7 @@ Questa regola intensifica i feromoni sui percorsi che hanno portato alle miglior
 Le formiche selezionano la prossima città da visitare basandosi su una regola decisionale probabilistica che bilancia l'esplorazione di nuovi percorsi con lo sfruttamento dei sentieri di feromoni e delle informazioni euristiche.
 
 \subsubsection{Regola di Transizione}
-In \gls{ACS} la scelta della prossima città da visitare è governata dalla regola di transizione pseudo-casuale-proporzionale. Data una formica $k$ nella città $i$, la probabilità di muoversi verso la città $j$ è determinata da:
+In \Gls{ACS} la scelta della prossima città da visitare è governata dalla regola di transizione pseudo-casuale-proporzionale. Data una formica $k$ nella città $i$, la probabilità di muoversi verso la città $j$ è determinata da:
 
 \[
 	j = \begin{cases}
@@ -130,7 +130,7 @@ Questa regola di transizione favorisce lo sfruttamento delle informazioni accumu
 
 \begin{algorithm}[H]
 	\floatname{ACS}{}
-	\caption{\gls{ACS} per il \gls{TSP}}
+	\caption{\Gls{ACS} per il \Gls{TSP}}
 	\begin{algorithmic}[1]
 		\State Inizializza i livelli di feromoni $\tau_{ij} = \tau_0$ per tutti gli archi $(i,j)$
 		\State Inizializza la migliore soluzione globale $S_{gb}$ e la sua lunghezza $L_{gb}$
@@ -159,10 +159,10 @@ Questa regola di transizione favorisce lo sfruttamento delle informazioni accumu
 
 
 \subsection{Analisi della Complessità}
-La complessità temporale dell'\gls{ACS} per iterazione è O($n^2m$), dove $n$ è il numero di città e $m$ è il numero di formiche. Tuttavia, il numero di iterazioni necessarie per la convergenza può variare significativamente a seconda delle caratteristiche del problema e dei parametri dell'algoritmo.
+La complessità temporale dell'\Gls{ACS} per iterazione è O($n^2m$), dove $n$ è il numero di città e $m$ è il numero di formiche. Tuttavia, il numero di iterazioni necessarie per la convergenza può variare significativamente a seconda delle caratteristiche del problema e dei parametri dell'algoritmo.
 
 \subsection{Parametri Chiave e loro Impatto}
-L'efficacia dell'\gls{ACS} dipende in modo cruciale dalla corretta impostazione di diversi parametri:
+L'efficacia dell'\Gls{ACS} dipende in modo cruciale dalla corretta impostazione di diversi parametri:
 
 \begin{itemize}
 	\item $\rho$: Tasso di evaporazione locale dei feromoni
@@ -177,16 +177,16 @@ La scelta ottimale di questi parametri può variare a seconda del problema speci
 
 \section{Varianti e Estensioni}
 
-Dalla pubblicazione originale dell' \gls{ACS} sono state proposte numerose varianti e estensioni:
+Dalla pubblicazione originale dell' \Gls{ACS} sono state proposte numerose varianti e estensioni:
 \begin{itemize}
-	\item MAX-MIN Ant System (\gls{MMAS}): Introdotto da Stützle e Hoos, \gls{MMAS} limita i valori dei feromoni entro un intervallo predefinito per prevenire la stagnazione prematura. \cite{Stuetzle1997}
-	\item Rank-Base Ant System (\gls{ASrank}): In questa variante, le formiche sono classificate in base alla qualità delle loro soluzioni, e la quanità dei fermoni depositati è proporzionale al rango.
+	\item MAX-MIN Ant System (\Gls{MMAS}): Introdotto da Stützle e Hoos, \Gls{MMAS} limita i valori dei feromoni entro un intervallo predefinito per prevenire la stagnazione prematura. \cite{Stuetzle1997}
+	\item Rank-Base Ant System (\Gls{ASrank}): In questa variante, le formiche sono classificate in base alla qualità delle loro soluzioni, e la quanità dei fermoni depositati è proporzionale al rango.
 	\item ACS Ibridi: Combinazioni dell'ACS con altre tecniche di ottimizzazione, come algoritmi genetici o Tabu Search, hanno mostrato risultati promettenti su vari problemi di ottimizzazione combinatoria.
 \end{itemize}
 
-\section{Applicazioni oltre il \gls{TSP}}
+\section{Applicazioni oltre il \Gls{TSP}}
 
-Sebbene inizialmente sviluppato per il \gls{TSP}, l'\gls{ACS} e le sue varianti hanno trovato applicazioni in una vasta gamma di domini:
+Sebbene inizialmente sviluppato per il \Gls{TSP}, l'\Gls{ACS} e le sue varianti hanno trovato applicazioni in una vasta gamma di domini:
 
 \begin{itemize}
 	\item Problemi di routing di veicoli
@@ -197,4 +197,4 @@ Sebbene inizialmente sviluppato per il \gls{TSP}, l'\gls{ACS} e le sue varianti 
 	\item Problemi di ottimizzazione multi-obiettivo
 \end{itemize}
 
-La versatilità dell'\gls{ACS} lo rende un approccio potente per affrontare problemi complessi di ottimizzazione in vari campi dell'ingegneria e della scienza.
+La versatilità dell'\Gls{ACS} lo rende un approccio potente per affrontare problemi complessi di ottimizzazione in vari campi dell'ingegneria e della scienza.

@@ -22,26 +22,26 @@
 
 \subsection{Definizione e Importanza del TSP}
 
-L'importanza del \gls{TSP} va oltre la sua formulazione apparentemente semplice, ramificandosi in vari campi e applicazioni. In logistica e trasporti, le
-soluzioni al \gls{TSP} consentono un routing ottimale in grado di portare a
+L'importanza del \Gls{TSP} va oltre la sua formulazione apparentemente semplice, ramificandosi in vari campi e applicazioni. In logistica e trasporti, le
+soluzioni al \Gls{TSP} consentono un routing ottimale in grado di portare a
 significativi risparmi di costi e miglioramenti di efficienza. Nella
-produzione, gli algoritmi di risoluzione per \gls{TSP} vengono utilizzati per ottimizzare i
+produzione, gli algoritmi di risoluzione per \Gls{TSP} vengono utilizzati per ottimizzare i
 movimenti di trapani nella produzione di circuiti stampati o di bracci
 robotici nelle linee di assemblaggio per ridurre i tempi di produzione.
-Oltre a questi, gli algoritmi per \gls{TSP} vengono impiegati nel sequenziamento del
+Oltre a questi, gli algoritmi per \Gls{TSP} vengono impiegati nel sequenziamento del
 DNA, nell'astronomia e persino nella creazione di opere d'arte, mostrando
 la sua versatilità e importanza nel risolvere problemi del mondo reale.
 
 \subsection{Panoramica Storica}
 
-Il Travelling Salesman Problem (\gls{TSP}) rappresenta una delle sfide più studiate nella matematica computazionale e nell'ottimizzazione, con una storia che si intreccia con lo sviluppo della ricerca matematica e operativa. La sua evoluzione dalle prime esplorazioni concettuali a un problema cruciale nella progettazione degli algoritmi è una testimonianza della sua complessità e della sua ampia applicabilità.
-Lo studio del \gls{TSP} può essere fatto risalire ai lavori di Sir William Rowan Hamilton e Thomas Penyngton Kirkman nel XIX secolo, incentrati sui cicli e sui percorsi hamiltoniani. Karl Menger, negli anni '20, ha introdotto il "Problema del Messaggero", gettando le basi per la formulazione moderna del \gls{TSP} e sottolineando la ricerca di un routing efficiente.
+Il Travelling Salesman Problem (\Gls{TSP}) rappresenta una delle sfide più studiate nella matematica computazionale e nell'ottimizzazione, con una storia che si intreccia con lo sviluppo della ricerca matematica e operativa. La sua evoluzione dalle prime esplorazioni concettuali a un problema cruciale nella progettazione degli algoritmi è una testimonianza della sua complessità e della sua ampia applicabilità.
+Lo studio del \Gls{TSP} può essere fatto risalire ai lavori di Sir William Rowan Hamilton e Thomas Penyngton Kirkman nel XIX secolo, incentrati sui cicli e sui percorsi hamiltoniani. Karl Menger, negli anni '20, ha introdotto il "Problema del Messaggero", gettando le basi per la formulazione moderna del \Gls{TSP} e sottolineando la ricerca di un routing efficiente.
 
-L'avvento dei computer e delle tecniche di ricerca operativa ha segnato una fase significativa nella ricerca sul \gls{TSP}. I primi pionieri come George Dantzig e Delbert Ray Fulkerson hanno applicato la programmazione lineare e i metodi dei piani di taglio, illustrando la complessità computazionale del problema e il suo potenziale per le applicazioni pratiche.
+L'avvento dei computer e delle tecniche di ricerca operativa ha segnato una fase significativa nella ricerca sul \Gls{TSP}. I primi pionieri come George Dantzig e Delbert Ray Fulkerson hanno applicato la programmazione lineare e i metodi dei piani di taglio, illustrando la complessità computazionale del problema e il suo potenziale per le applicazioni pratiche.
 
-Negli anni '40, il \gls{TSP} ha iniziato a trovare rilevanza in agricoltura e statistica, con i ricercatori che utilizzavano gli algoritmi risolutivi del problema per ottimizzare i processi di rilevamento e raccolta dei dati, mostrando la versatilità del \gls{TSP} oltre la matematica teorica.
+Negli anni '40, il \Gls{TSP} ha iniziato a trovare rilevanza in agricoltura e statistica, con i ricercatori che utilizzavano gli algoritmi risolutivi del problema per ottimizzare i processi di rilevamento e raccolta dei dati, mostrando la versatilità del \Gls{TSP} oltre la matematica teorica.
 
-Negli ultimi decenni, l'esplorazione di algoritmi euristici e bio-ispirati, in particolare il lavoro di Marco Dorigo sull'ottimizzazione combinatoria mediante colonie di formiche, ha aperto nuove vie per risolvere il \gls{TSP}, evidenziando l'innovazione continua nell'affrontare la sua NP-hardness.
+Negli ultimi decenni, l'esplorazione di algoritmi euristici e bio-ispirati, in particolare il lavoro di Marco Dorigo sull'ottimizzazione combinatoria mediante colonie di formiche, ha aperto nuove vie per risolvere il \Gls{TSP}, evidenziando l'innovazione continua nell'affrontare la sua NP-hardness.
 
 
 \section{Il Problema}
@@ -87,7 +87,7 @@ Negli ultimi decenni, l'esplorazione di algoritmi euristici e bio-ispirati, in p
 
 \subsection{Formulazione Matematica}
 
-Dato un grafo \(G = (V, E)\), dove \(V\) è l'insieme dei vertici (città) e \(E\) è l'insieme degli archi (percorsi tra le città), con ogni arco \((i, j) \in E\) assegnato un peso \(w_{ij}\) che rappresenta il costo di viaggio dalla città \(i\) alla città \(j\), il \gls{TSP} cerca un ciclo hamiltoniano di peso minimo.
+Dato un grafo \(G = (V, E)\), dove \(V\) è l'insieme dei vertici (città) e \(E\) è l'insieme degli archi (percorsi tra le città), con ogni arco \((i, j) \in E\) assegnato un peso \(w_{ij}\) che rappresenta il costo di viaggio dalla città \(i\) alla città \(j\), il \Gls{TSP} cerca un ciclo hamiltoniano di peso minimo.
 La funzione obiettivo da minimizzare è:
 \[
 	\min \sum_{i=1}^{n} \sum_{j \ne i, j=1}^{n} w_{ij} x_{ij},
@@ -105,7 +105,7 @@ insieme ai vincoli di eliminazione dei sottoitinerari, assicurando che ogni citt
 
 \subsubsection{Formulazione di Miller–Tucker–Zemlin}
 
-La formulazione \gls{MTZ} introduce variabili ausiliarie \(u_i\) per l'ordinamento, insieme alle variabili binarie \(x_{ij}\):
+La formulazione \Gls{MTZ} introduce variabili ausiliarie \(u_i\) per l'ordinamento, insieme alle variabili binarie \(x_{ij}\):
 
 Obiettivo:
 \[
@@ -200,23 +200,23 @@ Questa formulazione combatte i sottoitinerari assicurando che almeno un arco esc
 
 \subsection{Varianti e Applicazioni}
 
-Il \gls{TSP} si adatta a un'ampia gamma di sfide pratiche, dimostrando la sua versatilità. Le varianti chiave includono:
+Il \Gls{TSP} si adatta a un'ampia gamma di sfide pratiche, dimostrando la sua versatilità. Le varianti chiave includono:
 
 \begin{itemize}
 	\item \textbf{TSP Simmetrico vs. Asimmetrico (sTSP vs. aTSP):} sTSP implica che il peso di un arco tra due nodi è uguale indipendentemente dal verso di percorrenza, mentre aTSP consente pesi distinti, riflettendo la complessità delle rotte del mondo reale.
 	\item \textbf{TSP Euclideo:} Questa variante posiziona le città in un piano euclideo, enfatizzando le distanze dirette e in linea retta, fondamentale per la navigazione dei droni e la pianificazione delle infrastrutture.
 	\item \textbf{TSP con Finestre Temporali:} Aggiunge specifici intervalli di tempo entro i quali ogni città deve essere visitata, cruciale per la pianificazione nei servizi di consegna e nelle operazioni di manutenzione.
-	\item \textbf{Problema di Routing dei Veicoli (VRP):} Un'estensione del \gls{TSP} che coinvolge più veicoli, centrale per ottimizzare la logistica della flotta e le reti di distribuzione.
+	\item \textbf{Problema di Routing dei Veicoli (VRP):} Un'estensione del \Gls{TSP} che coinvolge più veicoli, centrale per ottimizzare la logistica della flotta e le reti di distribuzione.
 \end{itemize}
 
-L'applicazione del \gls{TSP} e delle sue varianti si estende a vari campi, mostrando la sua utilità nell'affrontare complessi problemi di ottimizzazione:
+L'applicazione del \Gls{TSP} e delle sue varianti si estende a vari campi, mostrando la sua utilità nell'affrontare complessi problemi di ottimizzazione:
 
 \begin{itemize}
-	\item \textbf{Ottimizzazione Logistica:} Il \gls{TSP} euclideo e il VRP sono essenziali per ridurre il costo  le rotte di consegna e migliorare l'efficienza logistica.
-	\item \textbf{Produzione:} Il \gls{TSP} aiuta a ottimizzare i processi produttivi, riducendo i tempi di fermo e migliorando i flussi di lavoro complessivi.
-	\item \textbf{Pianificazione e Scheduling:} Il \gls{TSP} con Finestre Temporali garantisce operazioni tempestive, ottimizzando l'allocazione delle risorse per i servizi con requisiti di tempistica critici.
-	\item \textbf{Progettazione di Reti:} Gli algoritmi \gls{TSP} facilitano lo sviluppo di reti di telecomunicazioni e trasporti economiche ed efficienti.
-	\item \textbf{Genomica:} In genetica, il \gls{TSP} supporta i progressi nel sequenziamento del genoma, offrendo informazioni sulle strutture e sui processi biologici complessi.
+	\item \textbf{Ottimizzazione Logistica:} Il \Gls{TSP} euclideo e il VRP sono essenziali per ridurre il costo  le rotte di consegna e migliorare l'efficienza logistica.
+	\item \textbf{Produzione:} Il \Gls{TSP} aiuta a ottimizzare i processi produttivi, riducendo i tempi di fermo e migliorando i flussi di lavoro complessivi.
+	\item \textbf{Pianificazione e Scheduling:} Il \Gls{TSP} con Finestre Temporali garantisce operazioni tempestive, ottimizzando l'allocazione delle risorse per i servizi con requisiti di tempistica critici.
+	\item \textbf{Progettazione di Reti:} Gli algoritmi \Gls{TSP} facilitano lo sviluppo di reti di telecomunicazioni e trasporti economiche ed efficienti.
+	\item \textbf{Genomica:} In genetica, il \Gls{TSP} supporta i progressi nel sequenziamento del genoma, offrendo informazioni sulle strutture e sui processi biologici complessi.
 \end{itemize}
 
 % \begin{tikzpicture}
@@ -253,16 +253,16 @@ L'applicazione del \gls{TSP} e delle sue varianti si estende a vari campi, mostr
 
 
 
-Questa tesi mira ad esplorare il Problema del Viaggiatore (TSP) sia da un punto di vista teorico che pratico. L'attenzione è rivolta all'esame del Red-Black Ant Colony System \gls{RB-ACS}, una variante dell'algoritmo Ant Colony System \gls{ACS}, con alcune modifiche, per comprenderne l'efficacia nell'affrontare le sfide del \gls{TSP}.  Lo studio ha due obiettivi: migliorare la comprensione del \gls{TSP} nell'ottimizzazione computazionale e valutare le prestazioni di \gls{RB-ACS} modificato rispetto alle soluzioni convenzionali.
+Questa tesi mira ad esplorare il Problema del Viaggiatore (TSP) sia da un punto di vista teorico che pratico. L'attenzione è rivolta all'esame del Red-Black Ant Colony System \Gls{RB-ACS}, una variante dell'algoritmo Ant Colony System \Gls{ACS}, con alcune modifiche, per comprenderne l'efficacia nell'affrontare le sfide del \Gls{TSP}.  Lo studio ha due obiettivi: migliorare la comprensione del \Gls{TSP} nell'ottimizzazione computazionale e valutare le prestazioni di \Gls{RB-ACS} modificato rispetto alle soluzioni convenzionali.
 
 \subsection{Obiettivi Principali}
 
 La tesi è guidata dai seguenti obiettivi:
 
 \begin{itemize}
-	\item Esaminare il corpus esistente di lavori sul \gls{TSP}, raccogliendo le sue basi matematiche, l'evoluzione e l'insieme di strategie precedentemente ideate per la sua risoluzione.
-  \item Dettagliare il funzionamento del \gls{RB-ACS}, enfatizzandone le basi teoriche, la meccanica operativa e le sue distinzioni rispetto agli approcci più tradizionali.
-  \item Effettuare un confronto sperimentale sistematico del \gls{RB-ACS} contro gli algoritmi standard di risoluzione del \gls{TSP} su una gamma di insiemi di problemi, mirando a discernerne l'efficacia operativa e la scalabilità.
+	\item Esaminare il corpus esistente di lavori sul \Gls{TSP}, raccogliendo le sue basi matematiche, l'evoluzione e l'insieme di strategie precedentemente ideate per la sua risoluzione.
+  \item Dettagliare il funzionamento del \Gls{RB-ACS}, enfatizzandone le basi teoriche, la meccanica operativa e le sue distinzioni rispetto agli approcci più tradizionali.
+  \item Effettuare un confronto sperimentale sistematico del \Gls{RB-ACS} contro gli algoritmi standard di risoluzione del \Gls{TSP} su una gamma di insiemi di problemi, mirando a discernerne l'efficacia operativa e la scalabilità.
 	\item Identificare gli scenari pratici in cui l'algoritmo modificato potrebbe essere applicato, mostrando la sua rilevanza e i potenziali benefici in contesti tangibili.
 \end{itemize}
 
@@ -308,13 +308,13 @@ La tesi è guidata dai seguenti obiettivi:
 %La ricerca approfondisce aree di interesse specifiche:
 %
 %\begin{itemize}
-	%\item Una panoramica analitica del \gls{TSP}, che copre le sue definizioni, implicazioni e varianti, gettando le basi per le successive indagini algoritmiche.
+	%\item Una panoramica analitica del \Gls{TSP}, che copre le sue definizioni, implicazioni e varianti, gettando le basi per le successive indagini algoritmiche.
 	%\item Una revisione approfondita degli algoritmi euristici e meteuristici, concentrandosi in particolare sull'Ottimizzazione della Colonia di Formiche come fondamento per il Sistema di Colonie di Formiche Red-Black.
 %	\item L'adattamento e l'applicazione del Sistema di Colonie di Formiche Red-Black, illustrando gli aspetti innovativi introdotti e le loro giustificazioni teoriche.
-%	\item Un confronto complessivo delle prestazioni degli algoritmi, utilizzando diverse istanze di \gls{TSP} per valutare l'efficacia e la qualità delle soluzioni.
+%	\item Un confronto complessivo delle prestazioni degli algoritmi, utilizzando diverse istanze di \Gls{TSP} per valutare l'efficacia e la qualità delle soluzioni.
 %\end{itemize}
 
-%Attraverso questa indagine, la tesi si sforza di offrire contributi significativi allo studio del \gls{TSP}, dimostrando l'utilità del Sistema di Colonie di Formiche Red-Black nella risoluzione di problemi di ottimizzazione e aprendo la strada a future ricerche.
+%Attraverso questa indagine, la tesi si sforza di offrire contributi significativi allo studio del \Gls{TSP}, dimostrando l'utilità del Sistema di Colonie di Formiche Red-Black nella risoluzione di problemi di ottimizzazione e aprendo la strada a future ricerche.
 
 %\section{Ambito e Limitazioni}
 
@@ -322,17 +322,17 @@ La tesi è guidata dai seguenti obiettivi:
 
 \subsection{Vincoli Teorici}
 
-L'esplorazione all'interno di questa tesi è adattata per adattarsi alle risorse computazionali disponibili, concentrandosi su istanze di \gls{TSP} che bilanciano la presentazione di una sfida notevole e la fattibilità dell'analisi entro i vincoli della nostra configurazione computazionale. Un aspetto notevole di questa ricerca riguarda la reimplementazione in Rust di tutti gli algoritmi discussi, a causa della non disponibilità del codice sorgente originale per alcuni di questi algoritmi. Questa necessità mette in luce una possibile variazione nelle metriche di prestazione, che potrebbero non allinearsi completamente con quelle derivate dalle implementazioni originali degli autori. Tali differenze potrebbero derivare da vari fattori, tra cui le caratteristiche intrinseche di Rust come linguaggio di programmazione e le complessità coinvolte nel tradurre la logica algoritemica complessa in codice. Di conseguenza, mentre si mira a fornire un'analisi comparativa delle prestazioni algoritmiche, è imperativo considerare questi fattori di reimplementazione come potenziali variabili che influenzano i risultati.
+L'esplorazione all'interno di questa tesi è adattata per adattarsi alle risorse computazionali disponibili, concentrandosi su istanze di \Gls{TSP} che bilanciano la presentazione di una sfida notevole e la fattibilità dell'analisi entro i vincoli della nostra configurazione computazionale. Un aspetto notevole di questa ricerca riguarda la reimplementazione in Rust di tutti gli algoritmi discussi, a causa della non disponibilità del codice sorgente originale per alcuni di questi algoritmi. Questa necessità mette in luce una possibile variazione nelle metriche di prestazione, che potrebbero non allinearsi completamente con quelle derivate dalle implementazioni originali degli autori. Tali differenze potrebbero derivare da vari fattori, tra cui le caratteristiche intrinseche di Rust come linguaggio di programmazione e le complessità coinvolte nel tradurre la logica algoritemica complessa in codice. Di conseguenza, mentre si mira a fornire un'analisi comparativa delle prestazioni algoritmiche, è imperativo considerare questi fattori di reimplementazione come potenziali variabili che influenzano i risultati.
 
-Inoltre, mentre si riconosce il potenziale di applicazioni del mondo reale degli algoritmi in studio, gli studi approfonditi di casi che vadano oltre l'esplorazione teorica e la sperimentazione computazionale esulano dall'ambito di questa tesi di laurea. L'attenzione principale rimane sulle basi teoriche e sulla valutazione computazionale delle soluzioni \gls{TSP}.
+Inoltre, mentre si riconosce il potenziale di applicazioni del mondo reale degli algoritmi in studio, gli studi approfonditi di casi che vadano oltre l'esplorazione teorica e la sperimentazione computazionale esulano dall'ambito di questa tesi di laurea. L'attenzione principale rimane sulle basi teoriche e sulla valutazione computazionale delle soluzioni \Gls{TSP}.
 
 \subsection{Considerazioni Pratiche}
 
 La praticità di questa tesi è influenzata da diverse limitazioni che guidano il suo approccio sperimentale e la metodologia di valutazione:
 
 \begin{itemize}
-  \item La valutazione delle prestazioni del \gls{RB-ACS} viene condotta attraverso un sottoinsieme attentamente scelto di istanze di \gls{TSP}.  Queste istanze mirano a fornire una rappresentazione diversificata ma non esaustiva di potenziali scenari problematici, evidenziando il limite intrinseco nella cattura dell'intero spettro delle configurazioni di \gls{TSP}.
-	\item A causa di limiti di risorse di calcolo, la scalabilità dell'algoritmo proposto viene testata in un ambiente vincolato. Questa limitazione potrebbe ostacolare l'estrapolazione dei risultati delle prestazioni a istanze di \gls{TSP} significativamente più grandi o complesse.
+  \item La valutazione delle prestazioni del \Gls{RB-ACS} viene condotta attraverso un sottoinsieme attentamente scelto di istanze di \Gls{TSP}.  Queste istanze mirano a fornire una rappresentazione diversificata ma non esaustiva di potenziali scenari problematici, evidenziando il limite intrinseco nella cattura dell'intero spettro delle configurazioni di \Gls{TSP}.
+	\item A causa di limiti di risorse di calcolo, la scalabilità dell'algoritmo proposto viene testata in un ambiente vincolato. Questa limitazione potrebbe ostacolare l'estrapolazione dei risultati delle prestazioni a istanze di \Gls{TSP} significativamente più grandi o complesse.
 	\item La tesi considera le implicazioni pratiche delle sue scoperte in un contesto teorico e computazionale, senza addentrarsi in test sul campo o in studi di casi specifici per applicazioni.
 \end{itemize}
 
@@ -342,11 +342,11 @@ La praticità di questa tesi è influenzata da diverse limitazioni che guidano i
 
 \subsection{Panoramica dei Capitoli}
 Il Capitolo \ref{chapt:1} introduce il Problema del Viaggiatore (TSP), coprendo cosa sia, perché sia importante e un po' della sua storia. Esso delinea le principali domande a cui questa tesi mira a rispondere e delinea brevemente i metodi utilizzati.
-Il Capitolo \ref{chapt:2} analizza il quadro generale della complessità computazionale, concentrandosi sulla famosa questione P vs. NP, per aiutare a capire perché risolvere il \gls{TSP} può essere così impegnativo.
-La discussione prosegue nei Capitoli \ref{chapt:3} e \ref{chapt:4} per esplorare i diversi modi di affrontare il \gls{TSP}.  Il Capitolo \ref{chapt:3} esamina le soluzioni esatte mentre il Capitolo \ref{chapt:4} discute i metodi euristici e meteuristici, incluse le ben note strategie come gli algoritmi genetici e il simulated annealing.
-Il Capitolo \ref{chapt:5} si concentra sul \gls{ACS}, spiegando come funziona, perché è ispirato dalla natura e come si applica alla risoluzione del \gls{TSP}.
-Quindi, il Capitolo \ref{chapt:6} introduce una variante dell'\gls{ACS}, il \gls{RB-ACS}. Questo capitolo spiega come è stato sviluppato, le nuove idee che porta e come i test dimostrano che potrebbe offrire un vantaggio nella risoluzione delle istanze di \gls{TSP}.
-% Il Capitolo~\ref{chapt:7} presenta "Ibn-Battuta", uno strumento creato per visualizzare come diversi algoritmi \gls{TSP}, incluso il Sistema di Colonie di Formiche Red-Black, risolvono i problemi. Questo rende più facile vedere come funzionano gli algoritmi nella pratica
+Il Capitolo \ref{chapt:2} analizza il quadro generale della complessità computazionale, concentrandosi sulla famosa questione P vs. NP, per aiutare a capire perché risolvere il \Gls{TSP} può essere così impegnativo.
+La discussione prosegue nei Capitoli \ref{chapt:3} e \ref{chapt:4} per esplorare i diversi modi di affrontare il \Gls{TSP}.  Il Capitolo \ref{chapt:3} esamina le soluzioni esatte mentre il Capitolo \ref{chapt:4} discute i metodi euristici e meteuristici, incluse le ben note strategie come gli algoritmi genetici e il simulated annealing.
+Il Capitolo \ref{chapt:5} si concentra sul \Gls{ACS}, spiegando come funziona, perché è ispirato dalla natura e come si applica alla risoluzione del \Gls{TSP}.
+Quindi, il Capitolo \ref{chapt:6} introduce una variante dell'\Gls{ACS}, il \Gls{RB-ACS}. Questo capitolo spiega come è stato sviluppato, le nuove idee che porta e come i test dimostrano che potrebbe offrire un vantaggio nella risoluzione delle istanze di \Gls{TSP}.
+% Il Capitolo~\ref{chapt:7} presenta "Ibn-Battuta", uno strumento creato per visualizzare come diversi algoritmi \Gls{TSP}, incluso il Sistema di Colonie di Formiche Red-Black, risolvono i problemi. Questo rende più facile vedere come funzionano gli algoritmi nella pratica
 Il Capitolo ~\ref{chapt:7} presenta i risultati sperimentali ottenuti.
 Infine, il Capitolo \ref{chapt:8} conclude la tesi riassumendo i punti salienti di questa tesi.
-Questa tesi mira a contribuire alla conversazione sulla risoluzione del \gls{TSP}, cercando di colmare il divario tra le sfide teoriche e le soluzioni del mondo reale, e aprire la porta a ulteriori indagini sui problemi di ottimizzazione.
+Questa tesi mira a contribuire alla conversazione sulla risoluzione del \Gls{TSP}, cercando di colmare il divario tra le sfide teoriche e le soluzioni del mondo reale, e aprire la porta a ulteriori indagini sui problemi di ottimizzazione.

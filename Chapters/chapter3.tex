@@ -14,13 +14,13 @@
 }
 \makeatother
 
-\chapter{Algoritmi esatti per il \gls{TSP}} \label{chapt:3}
+\chapter{Algoritmi esatti per il \Gls{TSP}} \label{chapt:3}
 
-Questo capitolo fornisce un esame approfondito degli algoritmi esatti per risolvere il \gls{TSP}, incorporando pseudocodice dettagliato per chiarire i principi operativi di ciascun metodo. Attraverso questi algoritmi, esploriamo il panorama computazionale della ricerca di soluzioni ottimali al \gls{TSP}.
+Questo capitolo fornisce un esame approfondito degli algoritmi esatti per risolvere il \Gls{TSP}, incorporando pseudocodice dettagliato per chiarire i principi operativi di ciascun metodo. Attraverso questi algoritmi, esploriamo il panorama computazionale della ricerca di soluzioni ottimali al \Gls{TSP}.
 
 \section{Panoramica degli Algoritmi Esatti}
 
-Gli algoritmi esatti per il \gls{TSP} sono caratterizzati dalla loro capacità di trovare invariabilmente la soluzione ottimale, sebbene con costi computazionali che possono diventare proibitivi man mano che il numero di città aumenta. Questi algoritmi servono come base teorica e pratica per comprendere i limiti della risoluzione computazionale del \gls{TSP}.
+Gli algoritmi esatti per il \Gls{TSP} sono caratterizzati dalla loro capacità di trovare invariabilmente la soluzione ottimale, sebbene con costi computazionali che possono diventare proibitivi man mano che il numero di città aumenta. Questi algoritmi servono come base teorica e pratica per comprendere i limiti della risoluzione computazionale del \Gls{TSP}.
 
 \subsection{Metodo a Brute-Force}
 
@@ -147,7 +147,7 @@ La complessità computazionale di questo metodo è $O(n!)$, che riflette il nume
 
 \subsection{Algoritmo di Bellman-Held-Karp}
 
-L'algoritmo di Bellman-Held-Karp rappresenta un significativo avanzamento nelle soluzioni esatte del \gls{TSP} sfruttando la programmazione dinamica per ridurre l'onere computazionale. Questo approccio calcola il percorso più breve dividendo il problema in sottoproblemi più piccoli e memorizzando i risultati di questi sottoproblemi per evitare calcoli ridondanti sfruttando la programmazione dinamica.
+L'algoritmo di Bellman-Held-Karp rappresenta un significativo avanzamento nelle soluzioni esatte del \Gls{TSP} sfruttando la programmazione dinamica per ridurre l'onere computazionale. Questo approccio calcola il percorso più breve dividendo il problema in sottoproblemi più piccoli e memorizzando i risultati di questi sottoproblemi per evitare calcoli ridondanti sfruttando la programmazione dinamica.
 
 \begin{algorithm}
 	\caption{Algoritmo di Bellman-Held-Karp}\label{bellmanheldkarp}
@@ -168,7 +168,7 @@ L'algoritmo di Bellman-Held-Karp rappresenta un significativo avanzamento nelle 
 	\end{algorithmic}
 \end{algorithm}
 
-L'algoritmo di Bellman-Held-Karp opera con una complessità temporale di $O(n^2 \cdot 2^n)$~\ref{fig:agl_complexity}, rendendolo significativamente più efficiente del metodo a brute-force per istanze di problema di dimensioni moderate. Tuttavia, la componente esponenziale della sua complessità limita ancora la sua applicabilità pratica a istanze relativamente piccole di \gls{TSP}.
+L'algoritmo di Bellman-Held-Karp opera con una complessità temporale di $O(n^2 \cdot 2^n)$~\ref{fig:agl_complexity}, rendendolo significativamente più efficiente del metodo a brute-force per istanze di problema di dimensioni moderate. Tuttavia, la componente esponenziale della sua complessità limita ancora la sua applicabilità pratica a istanze relativamente piccole di \Gls{TSP}.
 
 % \begin{figure}[htbp]
 % 	\centering
@@ -193,10 +193,10 @@ L'algoritmo di Bellman-Held-Karp opera con una complessità temporale di $O(n^2 
 
 \subsubsection{Branch and Bound}
 
-Branch and Bound (\gls{BnB}) è una tecnica algoritmica generale che può essere applicata a vari problemi di ottimizzazione combinatoria, incluso il \gls{TSP}. Esplora sistematicamente lo spazio delle soluzioni dividendolo in sottoinsiemi più piccoli (branching) e utilizzando limiti per eliminare i sottoinsiemi che non contengono la soluzione ottimale, riducendo così lo spazio di ricerca.
+Branch and Bound (\Gls{BnB}) è una tecnica algoritmica generale che può essere applicata a vari problemi di ottimizzazione combinatoria, incluso il \Gls{TSP}. Esplora sistematicamente lo spazio delle soluzioni dividendolo in sottoinsiemi più piccoli (branching) e utilizzando limiti per eliminare i sottoinsiemi che non contengono la soluzione ottimale, riducendo così lo spazio di ricerca.
 
 \begin{algorithm}
-	\caption{\gls{BnB} per il \gls{TSP}}\label{branchbound}
+	\caption{\Gls{BnB} per il \Gls{TSP}}\label{branchbound}
 	\begin{algorithmic}[1]
 		\Procedure{BranchAndBoundTSP}{$cities$}
 		\State Inizializza una coda di priorità $Q$ con una soluzione parziale che parte dalla prima città
@@ -218,13 +218,13 @@ Branch and Bound (\gls{BnB}) è una tecnica algoritmica generale che può essere
 	\end{algorithmic}
 \end{algorithm}
 
-L'efficienza di \gls{BnB} per il \gls{TSP} dipende in modo significativo dalla funzione di limite utilizzata per stimare il limite inferiore delle soluzioni parziali. Un limite efficace può portare a riduzioni sostanziali dello spazio di ricerca, consentendo all'algoritmo di trovare la soluzione ottimale più rapidamente rispetto ai metodi di ricerca esaustiva. Tuttavia, la sua complessità temporale peggiore rimane $O(n!)$~\ref{fig:agl_complexity}, il che significa che per istanze molto grandi del problema, anche questo approccio sofisticato potrebbe non essere pratico.
+L'efficienza di \Gls{BnB} per il \Gls{TSP} dipende in modo significativo dalla funzione di limite utilizzata per stimare il limite inferiore delle soluzioni parziali. Un limite efficace può portare a riduzioni sostanziali dello spazio di ricerca, consentendo all'algoritmo di trovare la soluzione ottimale più rapidamente rispetto ai metodi di ricerca esaustiva. Tuttavia, la sua complessità temporale peggiore rimane $O(n!)$~\ref{fig:agl_complexity}, il che significa che per istanze molto grandi del problema, anche questo approccio sofisticato potrebbe non essere pratico.
 
 \section{Analisi degli Algoritmi Esatti}
 
 \subsection{Fattibilità Computazionale}
 
-Gli algoritmi esatti per il \gls{TSP}, come il metodo a forza bruta, la programmazione dinamica e l'algoritmo di Bellman-Held-Karp, offrono garanzie teoriche per trovare il tour ottimale. Tuttavia, la loro fattibilità computazionale è notevolmente compromessa all'aumentare del numero di città. Il tasso di crescita fattoriale della complessità del metodo a forza bruta e il tasso di crescita esponenziale della complessità Bellman-Held-Karp limitano la loro applicazione pratica a istanze relativamente piccole del \gls{TSP}.
+Gli algoritmi esatti per il \Gls{TSP}, come il metodo a forza bruta, la programmazione dinamica e l'algoritmo di Bellman-Held-Karp, offrono garanzie teoriche per trovare il tour ottimale. Tuttavia, la loro fattibilità computazionale è notevolmente compromessa all'aumentare del numero di città. Il tasso di crescita fattoriale della complessità del metodo a forza bruta e il tasso di crescita esponenziale della complessità Bellman-Held-Karp limitano la loro applicazione pratica a istanze relativamente piccole del \Gls{TSP}.
 
 \begin{center}
 	\begin{figure}[h]
@@ -300,13 +300,13 @@ Riassumendo:
 \subsection{Concorde}
 
 
-Concorde è considerato uno dei risolutori esatti più efficienti per risolvere il \gls{TSP}. Sviluppato da un gruppo di ricercatori guidati da Applegate et al., questo risolutore sfrutta una combinazione di metodi avanzati come il branch-and-bound, il cutting-plane e tecniche di programmazione lineare e combinatoria~\cite{Applegate2007}. Concorde è in grado di risolvere istanze del \gls{TSP} con di migliaia di città in tempi ragionevoli, rendendolo uno strumento di riferimento per confronti sperimentali e applicazioni pratiche di grande scala.
+Concorde è considerato uno dei risolutori esatti più efficienti per risolvere il \Gls{TSP}. Sviluppato da un gruppo di ricercatori guidati da Applegate et al., questo risolutore sfrutta una combinazione di metodi avanzati come il branch-and-bound, il cutting-plane e tecniche di programmazione lineare e combinatoria~\cite{Applegate2007}. Concorde è in grado di risolvere istanze del \Gls{TSP} con di migliaia di città in tempi ragionevoli, rendendolo uno strumento di riferimento per confronti sperimentali e applicazioni pratiche di grande scala.
 
-L'efficienza di Concorde è dovuta alla sua capacità di ridurre drasticamente lo spazio di ricerca mediante il branch-and-bound, migliorato con l'uso di piani di taglio per raffinare i limiti inferiori delle soluzioni. In aggiunta, Concorde implementa euristiche efficaci per identificare buone soluzioni iniziali, che aiutano a limitare l'esplorazione delle soluzioni subottimali. Concorde è anche stato utilizzato per risolvere problemi di benchmark nella letteratura del \gls{TSP}, come le istanze del problema TSPLIB \cite{TSPLIB}, dimostrando la sua efficacia per problemi di dimensioni reali~\cite{Cook2011}.
+L'efficienza di Concorde è dovuta alla sua capacità di ridurre drasticamente lo spazio di ricerca mediante il branch-and-bound, migliorato con l'uso di piani di taglio per raffinare i limiti inferiori delle soluzioni. In aggiunta, Concorde implementa euristiche efficaci per identificare buone soluzioni iniziali, che aiutano a limitare l'esplorazione delle soluzioni subottimali. Concorde è anche stato utilizzato per risolvere problemi di benchmark nella letteratura del \Gls{TSP}, come le istanze del problema TSPLIB \cite{TSPLIB}, dimostrando la sua efficacia per problemi di dimensioni reali~\cite{Cook2011}.
 
 \textbf{Vantaggi:}
 \begin{itemize}
-    \item Capacità di risolvere grandi istanze del \gls{TSP}.
+    \item Capacità di risolvere grandi istanze del \Gls{TSP}.
     \item Utilizzo combinato di tecniche avanzate di ottimizzazione.
     \item Implementazioni efficienti e ben documentate.
 \end{itemize}
@@ -314,9 +314,9 @@ L'efficienza di Concorde è dovuta alla sua capacità di ridurre drasticamente l
 \textbf{Svantaggi:}
 \begin{itemize}
     \item Richiede elevate risorse computazionali per istanze di dimensioni estremamente grandi.
-    \item La complessità delle tecniche implementate può renderlo difficile da adattare a problemi leggermente diversi dal \gls{TSP}.
+    \item La complessità delle tecniche implementate può renderlo difficile da adattare a problemi leggermente diversi dal \Gls{TSP}.
 \end{itemize}
 
 
-L'esplorazione degli algoritmi esatti getta le basi per comprendere le complessità computazionali intrinseche del \gls{TSP}. Sebbene la loro applicazione pratica sia limitata dalle loro esigenze computazionali, rimangono cruciali per l'analisi teorica e per preparare il terreno per le tecniche risolutive alternative discusse nei capitoli successivi.
+L'esplorazione degli algoritmi esatti getta le basi per comprendere le complessità computazionali intrinseche del \Gls{TSP}. Sebbene la loro applicazione pratica sia limitata dalle loro esigenze computazionali, rimangono cruciali per l'analisi teorica e per preparare il terreno per le tecniche risolutive alternative discusse nei capitoli successivi.
 
