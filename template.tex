@@ -118,6 +118,11 @@
 %%  options, edit “Config/0_memoir.tex”.
 \RequirePackage{NOVAthesisFiles/fix-profiling}
 \benchmarktic
+\PassOptionsToPackage{table,svgnames, rgb}{xcolor}
+\PassOptionsToPackage{pdftex,pdfa,bookmarksnumbered=true, breaklinks=true, colorlinks=true, pdfdisplaydoctitle=true, unicode=true}{hyperref}
+%\pdfobjcompresslevel=0
+\pdfminorversion=7
+\pdfinclusioncopyfonts=1
 \documentclass{novathesis}
 
 

@@ -86,6 +86,7 @@
 %% SOME ESSENTIAL PACKAGES
 %%    Others will be loaded later, in the file “packages.tex”
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[a-1b]{pdfx} % Add PDF/A support
 \RequirePackage[table,svgnames]{xcolor}%
 % \RequirePackage{tabularray}
 % \UseTblrLibrary{booktabs}
