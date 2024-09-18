@@ -26,7 +26,7 @@
 \school(pt):={Department of Information Engineering}
 \school(en):={Department of Information Engineering}
 \school(fr):={Faculté de génie}
-\school(it):={Dipartimenti di Ingegneria dell'Informazione}
+\school(it):={Dipartimento di Ingegneria dell'Informazione}
 \school(logo):={unipd-dei-logo}
 \school(logo,neg):={unipd-dei-logo}
 
@@ -35,12 +35,12 @@
 \committeeorder():={c,r,a,ca,m}%
 
 % Cover background images
-\thesiscover(1-1,bgcolor):={black}
-\thesiscover(1-1,textcolor):={white}
+\thesiscover(1-1,bgcolor):={white}
+\thesiscover(1-1,textcolor):={black}
 \thesiscover(2-1,textcolor):={black}
 
 % DEFAULT cover
-\thesiscover(1-1,image):={unipd-dei-bsc-cover}
+\thesiscover(1-1,image):={unipd-dei-bsc-cover-bw}
 \thesiscover(N-2,image):={unipd-dei-bsc-cover-back}
 \thesiscover(spine,image):={unipd-dei-spine-red}
 
@@ -55,7 +55,7 @@
 \thesiscover(msc,spine,image):={nova-fct-msc-spine}
 
 % BSc cover
-\thesiscover(bsc,1-1,image):={unipd-dei-bsc-cover}
+\thesiscover(bsc,1-1,image):={unipd-dei-bsc-cover-bw}
 \thesiscover(bsc,N-2,image):={unipd-dei-bsc-cover-back}
 \thesiscover(bsc,spine,image):={unipd-dei-spine-red}
 
@@ -134,11 +134,12 @@
 \ntaddtocover[vspace=1.25mm,halign=l,hspace=6.1cm,height=2.0cm,valign=t]{1-1}{%
   % \ntcoverbackground%
   \fontsize{14}{14}\selectfont%
-  \THEdepartment(\@LANG@COVER)%
+  %\THEdepartment(\@LANG@COVER)%
 }
 
 % Title of Dissertation (PhD) / The author name (MSc)
 \ntaddtocover[vspace=5.3cm,halign=l,height=3.0cm,valign=c]{1-1}{%
+  \color{black}%
   \ifphddoc{%
     \fontsize{22}{21}\selectfont%
     \textbf{\THEdoctitle(\@LANG@COVER,main,cover)}%
@@ -186,8 +187,8 @@
   \theuniversity(\@LANG@COVER)\\[1pt]%
   \iftoggle{/novathesis/print/timestamp}{%
     \ifdocworking{\emph{\color{yellow}\textbf{Bozza:} \today}}%
-                 {\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
-  }{\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
+                 {Settembre, \thentdocdate(submission,year)}%
+  }{Settembre, \thentdocdate(submission,year)}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -267,8 +268,8 @@
   \theuniversity(\@LANG@COVER)\\[1pt]%
   \iftoggle{/novathesis/print/timestamp}{%
     \ifdocworking{\emph{\color{blue}\textbf{Bozza:} \today}}%
-                 {\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
-  }{\thentdocdate(submission,month,text), \thentdocdate(submission,year)}%
+                 {Settembre, \thentdocdate(submission,year)}%
+  }{Settembre, \thentdocdate(submission,year)}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
