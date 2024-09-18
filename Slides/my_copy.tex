@@ -12,7 +12,10 @@
 \author{Mouhieddine Sabir}
 \institute[UniPD]{Università degli Studi di Padova}
 \date{Settembre 2024}
-
+\mail{mouhieddine.sabir@studenti.unipd.it}
+\webpage{www.mouhieddine.dev}
+\titlegraphic{\includegraphics[width=4cm]{logo-dei.pdf}}
+\usefonttheme{serif}
 
 \begin{document}
 
@@ -67,7 +70,6 @@
 
     \begin{table}
         \centering
-        \caption{Risultati NN vs NN+2Opt}
         \begin{tabular}{lllrrrr}
             \toprule
                & Istanza  & algorithm & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
@@ -109,7 +111,6 @@
     \end{itemize}
     \begin{table}[H]
         \centering
-        \caption{Risultati SA vs SA2Opt}
         \begin{tabular}{lllrrrr}
             \toprule
                & Istanza  & algorithm & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
@@ -152,7 +153,6 @@
     \begin{table}[H]
         \centering
 
-        \caption{Risultati GA vs GA+2Opt}
         \begin{tabular}{lllrrrr}
             \toprule
                & Istanza  & algorithm & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap     \\
@@ -192,16 +192,11 @@
         \item La probabilità che una formica scelga una determinata città è basata su due fattori: la quantità di feromone su quell’arco e l'inverso della distanza (euristica).
         \item Dopo che tutte le formiche hanno completato il loro tour, si aggiorna il feromone sugli archi. I percorsi migliori vengono rinforzati con più feromone.
         \item Viene utilizzato un meccanismo di evaporazione per evitare che i feromoni si accumulino troppo e bloccano l'esplorazione di nuove soluzioni.
-    \end{itemize}
-
-    \textbf{Regole di Aggiornamento}
-    \begin{itemize}
         \item \textbf{Aggiornamento locale}: Durante la costruzione del tour, una formica aggiorna localmente il livello di feromone dell’arco che attraversa.
         \item \textbf{Aggiornamento globale}: Solo la formica con il miglior tour globale aggiorna il livello di feromone sull’intero percorso.
     \end{itemize}
     \begin{table}[H]
         \centering
-        \caption{Risultati ACS vs ACS+2Opt}
         \begin{tabular}{lllrrrr}
             \toprule
                & Istanza  & algorithm & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
@@ -253,7 +248,6 @@
 
     \begin{table}[H]
         \centering
-        \caption{Risultati RB-ACS vs RB-ACS+2Opt}
         \begin{tabular}{lllrrrr}
             \toprule
                & Istanza  & algorithm & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
