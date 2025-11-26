@@ -9,86 +9,86 @@
 \typeout{NT FILE chapter7.tex}%
 
 %!TEX root = ../dissertation.tex
-\chapter{Risultati Sperimentali}
+\chapter{Experimental Results}
 \label{chapt:7}
 
-In questo capitolo, viene presentata un'analisi approfondita dei risultati sperimentali ottenuti dall'implementazione e valutazione di diversi algoritmi risolutivi per il \textit{Travelling Salesman Problem} (TSP). Gli esperimenti sono stati condotti su una vasta gamma di istanze del problema, variando in dimensione e complessità, al fine di valutare le prestazioni degli algoritmi in termini di qualità della soluzione, tempo di esecuzione e scalabilità.
+In this chapter, an in-depth analysis of the experimental results obtained from the implementation and evaluation of different solution algorithms for the \textit{Travelling Salesman Problem} (TSP) is presented. The experiments were conducted on a wide range of problem instances, varying in size and complexity, to assess the performance of the algorithms in terms of solution quality, execution time, and scalability.
 
-\section{Metodologia Sperimentale}
+\section{Experimental Methodology}
 \label{sec:metodologia}
 
 \subsection{Setup}
-Gli esperimenti sono stati eseguiti su un cluster di calcolo (DEI Blade) con nodi equipaggiati con processori Intel Xeon Gold 5118 CPU @ 2.30/3.20GHz e 128 GB di RAM. Tutti gli algoritmi sono stati implementati in Rust.
+The experiments were executed on a computing cluster (DEI Blade) with nodes equipped with Intel Xeon Gold 5118 CPU @ 2.30/3.20GHz processors and 128 GB of RAM. All algorithms were implemented in Rust.
 
-\subsection{Istanze del Problema}
-È stato utilizzato un insieme diversificato di istanze del TSP, tratte principalmente dalla TSPLIB \cite{TSPLIB}. Le istanze variano da problemi di piccole dimensioni (51 città) a problemi di grande scala (fino a 5915 città). Alcune delle istanze utilizzate includono:
-
-\begin{itemize}
-	\item eil51, berlin52, st70, eil76, pr76 (problemi di piccole dimensioni)
-	\item lin105, pr124, lin318, rat575 (problemi di medie dimensioni)
-	\item rat783, pr1002, pcb1173, d1655, fl1577, u2319 (problemi di grandi dimensioni)
-	\item rl5915 (problema di grandissima scala)
-\end{itemize}
-
-\subsection{Algoritmi Implementati}
-Sono stati implementati e valutati i seguenti algoritmi:
+\subsection{Problem Instances}
+A diversified set of TSP instances was used, primarily drawn from TSPLIB \cite{TSPLIB}. The instances range from small-sized problems (51 cities) to large-scale problems (up to 5915 cities). Some of the instances used include:
 
 \begin{itemize}
-	\item Nearest Neighbor (NN) e NN con 2-Opt (NN2Opt)
-	\item Simulated Annealing (SA) e SA con 2-Opt (SA2Opt)
-	\item Genetic Algorithm (GA) e GA con 2-Opt (GA2Opt)
-	\item Ant Colony System (ACS) e ACS con 2-Opt (ACS2Opt)
-	\item Red-Black Ant Colony System (RBACS) e RBACS con 2-Opt (RBACS2Opt)
+	\item eil51, berlin52, st70, eil76, pr76 (small-sized problems)
+	\item lin105, pr124, lin318, rat575 (medium-sized problems)
+	\item rat783, pr1002, pcb1173, d1655, fl1577, u2319 (large-sized problems)
+	\item rl5915 (very large-scale problem)
 \end{itemize}
 
-\subsection{Metriche di Valutazione}
-Le principali metriche utilizzate per valutare le prestazioni degli algoritmi sono:
+\subsection{Implemented Algorithms}
+The following algorithms were implemented and evaluated:
 
 \begin{itemize}
-	\item \textbf{Tempo di esecuzione}: misurato in millisecondi.
-	\item \textbf{Qualità della soluzione}: lunghezza del tour trovato.
-	\item \textbf{Gap percentuale}: calcolato come $(lunghezza - ottimo) / ottimo * 100\%$, dove "ottimo" è la lunghezza del tour ottimo noto per l'istanza.
+	\item Nearest Neighbor (NN) and NN with 2-Opt (NN2Opt)
+	\item Simulated Annealing (SA) and SA with 2-Opt (SA2Opt)
+	\item Genetic Algorithm (GA) and GA with 2-Opt (GA2Opt)
+	\item Ant Colony System (ACS) and ACS with 2-Opt (ACS2Opt)
+	\item Red-Black Ant Colony System (RBACS) and RBACS with 2-Opt (RBACS2Opt)
 \end{itemize}
 
-\section{Analisi dei Risultati}
+\subsection{Evaluation Metrics}
+The main metrics used to evaluate algorithm performance are:
+
+\begin{itemize}
+	\item \textbf{Execution time}: measured in milliseconds.
+	\item \textbf{Solution quality}: length of the found tour.
+	\item \textbf{Percentage gap}: calculated as $(length - optimum) / optimum * 100\%$, where "optimum" is the length of the known optimal tour for the instance.
+\end{itemize}
+
+\section{Results Analysis}
 \label{sec:analisi}
 
-\subsection{Prestazioni Generali}
-Dall'analisi dei dati sperimentali, emergono alcune tendenze generali:
+\subsection{General Performance}
+From the analysis of the experimental data, some general trends emerge:
 
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=1\textwidth]{analysis/gap_dist}
 	\end{center}
-	\caption{Distribuzione del gap di ottimalità per algoritmo}\label{fig:}
+	\caption{Distribution of optimality gap per algorithm}\label{fig:}
 \end{figure}
 
 
 \begin{itemize}
-	\item Gli algoritmi di base (NN, SA, GA, ACS, RB-ACS) mostrano prestazioni significativamente migliorate quando combinati con la procedura di ottimizzazione locale 2-Opt.
-	\item ACS e RBACS, insieme alle loro varianti 2-Opt, tendono a produrre soluzioni di qualità superiore rispetto agli altri approcci, specialmente per istanze di grandi dimensioni.
-	\item GA mostra prestazioni altamente variabili, con alcuni risultati eccellenti ma anche alcuni estremamente scarsi, soprattutto su istanze di grandi dimensioni.
+	\item The basic algorithms (NN, SA, GA, ACS, RB-ACS) show significantly improved performance when combined with the 2-Opt local optimization procedure.
+	\item ACS and RBACS, together with their 2-Opt variants, tend to produce higher quality solutions compared to other approaches, especially for large-sized instances.
+	\item GA shows highly variable performance, with some excellent results but also some extremely poor ones, especially on large-sized instances.
 \end{itemize}
 
-\subsection{Analisi Dettagliata per Algoritmo}
+\subsection{Detailed Analysis by Algorithm}
 
 
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=1\textwidth]{analysis/heatmap_full}
 	\end{center}
-	\caption{Heatmap del gap di ottimilità}\label{fig:heatmap_full}
+	\caption{Heatmap of optimality gap}\label{fig:heatmap_full}
 \end{figure}
 
-\subsubsection{Nearest Neighbor (NN e NN+2Opt)}
-NN è l'algoritmo più veloce, con tempi di esecuzione che vanno da pochi millisecondi per istanze piccole a pochi secondi per istanze molto grandi. Tuttavia, la qualità delle soluzioni è generalmente inferiore rispetto agli altri approcci:
+\subsubsection{Nearest Neighbor (NN and NN+2Opt)}
+NN is the fastest algorithm, with execution times ranging from a few milliseconds for small instances to a few seconds for very large instances. However, solution quality is generally lower compared to other approaches:
 
 \begin{table}
 	\centering
-	\caption{Risultati NN vs NN+2Opt}
+	\caption{Results NN vs NN+2Opt}
 	\begin{tabular}{lllrrrr}
 		\toprule
-		   & Istanza  & algorithm & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		   & Instance & algorithm & Time (ms) & Tour Length & Optimal Length & Gap   \\
 		\midrule
 		0  & berlin52 & NN        & 14         & 8980.92        & 7542.00          & 19.08 \\
 		1  & berlin52 & NN2Opt    & 124        & 8060.65        & 7542.00          & 6.88  \\
@@ -110,18 +110,18 @@ NN è l'algoritmo più veloce, con tempi di esecuzione che vanno da pochi millis
 	\end{tabular}
 \end{table}
 
-L'aggiunta di 2-Opt migliora significativamente la qualità delle soluzioni, ma aumenta il tempo di calcolo di un ordine di grandezza o più.
+The addition of 2-Opt significantly improves solution quality, but increases computation time by an order of magnitude or more.
 
-\subsubsection{Simulated Annealing (SA e SA2Opt)}
-SA offre un buon compromesso tra qualità della soluzione e tempo di calcolo:
+\subsubsection{Simulated Annealing (SA and SA2Opt)}
+SA offers a good compromise between solution quality and computation time:
 
 
 \begin{table}[H]
 	\centering
-	\caption{Risultati SA vs SA2Opt}
+	\caption{Results SA vs SA2Opt}
 	\begin{tabular}{lllrrrr}
 		\toprule
-		   & Istanza  & algorithm & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		   & Instance & algorithm & Time (ms) & Tour Length & Optimal Length & Gap   \\
 		\midrule
 		0  & berlin52 & SA        & 28982      & 7544.37        & 7542.00          & 0.03  \\
 		1  & berlin52 & SA2Opt    & 49481      & 7544.37        & 7542.00          & 0.03  \\
@@ -144,18 +144,18 @@ SA offre un buon compromesso tra qualità della soluzione e tempo di calcolo:
 \end{table}
 
 
-SA2Opt generalmente produce soluzioni migliori di SA, ma con tempi di calcolo significativamente più lunghi.
+SA2Opt generally produces better solutions than SA, but with significantly longer computation times.
 
-\subsubsection{Genetic Algorithm (GA e GA+2Opt)}
-GA mostra le prestazioni più variabili tra tutti gli algoritmi testati:
+\subsubsection{Genetic Algorithm (GA and GA+2Opt)}
+GA shows the most variable performance among all tested algorithms:
 
 \begin{table}[H]
 	\centering
 
-	\caption{Risultati GA vs GA+2Opt}
+	\caption{Results GA vs GA+2Opt}
 	\begin{tabular}{lllrrrr}
 		\toprule
-		   & Istanza  & algorithm & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap     \\
+		   & Instance & algorithm & Time (ms) & Tour Length & Optimal Length & Gap     \\
 		\midrule
 		0  & berlin52 & GA2Opt    & 26104      & 7918.09        & 7542.00          & 4.99    \\
 		1  & berlin52 & GA        & 29932      & 11009.32       & 7542.00          & 45.97   \\
@@ -177,16 +177,16 @@ GA mostra le prestazioni più variabili tra tutti gli algoritmi testati:
 	\end{tabular}
 \end{table}
 
-\subsubsection{Ant Colony System (ACS e ACS+2Opt)}
-ACS e ACS+2Opt mostrano prestazioni molto buone su tutta la gamma di istanze:
+\subsubsection{Ant Colony System (ACS and ACS+2Opt)}
+ACS and ACS+2Opt show very good performance across the entire range of instances:
 
 
 \begin{table}[H]
 	\centering
-	\caption{Risultati ACS vs ACS+2Opt}
+	\caption{Results ACS vs ACS+2Opt}
 	\begin{tabular}{lllrrrr}
 		\toprule
-		   & Istanza  & algorithm & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		   & Instance & algorithm & Time (ms) & Tour Length & Optimal Length & Gap   \\
 		\midrule
 		0  & berlin52 & ACS       & 18411      & 7606.66        & 7542.00          & 0.86  \\
 		1  & berlin52 & ACS2Opt   & 20289      & 7598.44        & 7542.00          & 0.75  \\
@@ -208,18 +208,18 @@ ACS e ACS+2Opt mostrano prestazioni molto buone su tutta la gamma di istanze:
 	\end{tabular}
 \end{table}
 
-ACS2Opt tende a produrre soluzioni di qualità leggermente superiore rispetto ad ACS, ma con tempi di calcolo più lunghi.
+ACS2Opt tends to produce slightly higher quality solutions compared to ACS, but with longer computation times.
 
-\subsubsection{Red-Black Ant Colony System (RBACS e RBACS2Opt)}
-RBACS e RBACS2Opt mostrano prestazioni competitive e talvolta superiori rispetto ad ACS e ACS2Opt:
+\subsubsection{Red-Black Ant Colony System (RBACS and RBACS2Opt)}
+RBACS and RBACS2Opt show competitive and sometimes superior performance compared to ACS and ACS2Opt:
 
 
 \begin{table}[H]
 	\centering
-	\caption{Risultati RB-ACS vs RB-ACS+2Opt}
+	\caption{Results RB-ACS vs RB-ACS+2Opt}
 	\begin{tabular}{lllrrrr}
 		\toprule
-		   & Istanza  & algorithm & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		   & Instance & algorithm & Time (ms) & Tour Length & Optimal Length & Gap   \\
 		\midrule
 		0  & berlin52 & RBACS     & 34002      & 7681.45        & 7542.00          & 1.85  \\
 		1  & berlin52 & RBACS2Opt & 34159      & 7544.37        & 7542.00          & 0.03  \\
@@ -241,54 +241,54 @@ RBACS e RBACS2Opt mostrano prestazioni competitive e talvolta superiori rispetto
 	\end{tabular}
 \end{table}
 
-RB-ACS2+Opt sembra particolarmente efficace su istanze di grandi dimensioni, offrendo un buon compromesso tra qualità della soluzione e tempo di calcolo.
+RB-ACS2+Opt appears particularly effective on large-sized instances, offering a good compromise between solution quality and computation time.
 
-\subsection{Analisi della Scalabilità}
-Per valutare la scalabilità degli algoritmi, è stato analizzato come il tempo di esecuzione e la qualità della soluzione variano al crescere della dimensione del problema:
+\subsection{Scalability Analysis}
+To evaluate the scalability of the algorithms, we analyzed how execution time and solution quality vary as problem size increases:
 
 \begin{figure}[h]	\makebox[\textwidth][c]{%
 		\includegraphics[width=1.2\textwidth]{analysis/time_vs_size.pdf}
 	}
-	\caption{Esecuzione per dimensione del problema}
+	\caption{Execution time by problem size}
 	\label{fig:time_vs_size}
 \end{figure}
 
 \begin{itemize}
-	\item NN e NN2Opt mostrano la migliore scalabilità in termini di tempo di esecuzione, ma la qualità della soluzione degrada rapidamente per istanze più grandi.
-	\item SA e SA2Opt mantengono una buona qualità della soluzione anche per istanze grandi, ma il tempo di calcolo cresce rapidamente.
-	\item GA e GA2Opt mostrano una scalabilità scarsa sia in termini di tempo che di qualità della soluzione per istanze molto grandi.
-	\item ACS, ACS2Opt, RBACS e RBACS2Opt offrono il miglior compromesso tra scalabilità del tempo di esecuzione e mantenimento della qualità della soluzione per istanze di grandi dimensioni.
+	\item NN and NN2Opt show the best scalability in terms of execution time, but solution quality degrades rapidly for larger instances.
+	\item SA and SA2Opt maintain good solution quality even for large instances, but computation time grows rapidly.
+	\item GA and GA2Opt show poor scalability both in terms of time and solution quality for very large instances.
+	\item ACS, ACS2Opt, RBACS and RBACS2Opt offer the best compromise between execution time scalability and maintaining solution quality for large-sized instances.
 \end{itemize}
 
 \begin{figure}[h]
 	\makebox[\textwidth][c]{%
 		\includegraphics[width=1.2\textwidth]{analysis/time_vs_gap.pdf}
 	}
-	\caption{Gap per dimensione del problema}
+	\caption{Gap by problem size}
 	\label{fig:time_vs_gap}
 \end{figure}
 
-\section{Discussione}
+\section{Discussion}
 \label{sec:discussione}
 
-I risultati sperimentali evidenziano diversi punti chiave:
+The experimental results highlight several key points:
 
 \begin{enumerate}
-	\item L'importanza dell'ottimizzazione locale: l'aggiunta di 2-Opt migliora consistentemente le prestazioni di tutti gli algoritmi testati.
-	\item La superiorità degli approcci basati su colonie di formiche (ACS e RBACS) per istanze di medie e grandi dimensioni.
-	\item La variabilità delle prestazioni dell'algoritmo genetico, che suggerisce la necessità di un'attenta calibrazione dei parametri per ottenere buoni risultati.
-	\item Il compromesso tra tempo di calcolo e qualità della soluzione, con algoritmi più sofisticati che richiedono più tempo ma producono soluzioni migliori.
+	\item The importance of local optimization: the addition of 2-Opt consistently improves the performance of all tested algorithms.
+	\item The superiority of ant colony-based approaches (ACS and RBACS) for medium and large-sized instances.
+	\item The variability of genetic algorithm performance, which suggests the need for careful parameter calibration to obtain good results.
+	\item The trade-off between computation time and solution quality, with more sophisticated algorithms requiring more time but producing better solutions.
 \end{enumerate}
 
 \begin{figure}[h]
 	\makebox[\textwidth][c]{%
 		\includegraphics[width=0.75\textwidth]{analysis/alg_comparison.pdf}
 	}
-	\caption{Confronto tra top 3 algoritmi: Gap}
+	\caption{Comparison of top 3 algorithms: Gap}
 	\label{fig:alg_comparison_gap}
 \end{figure}
 
-RBACS e RBACS2Opt emergono come approcci promettenti, offrendo prestazioni competitive e talvolta superiori rispetto ad ACS e ACS2Opt, specialmente su istanze di grandi dimensioni. Tuttavia, la scelta dell'algoritmo ottimale dipende dalle specifiche esigenze dell'applicazione, bilanciando la necessità di soluzioni di alta qualità con i vincoli di tempo di calcolo.
+RBACS and RBACS2Opt emerge as promising approaches, offering competitive and sometimes superior performance compared to ACS and ACS2Opt, especially on large-sized instances. However, the choice of the optimal algorithm depends on the specific requirements of the application, balancing the need for high-quality solutions with computation time constraints.
 
 %\begin{figure}[h]
 %	\makebox[\textwidth][c]{%
@@ -299,22 +299,22 @@ RBACS e RBACS2Opt emergono come approcci promettenti, offrendo prestazioni compe
 %\end{figure}
 
 
-\chapter{Conclusioni}
+\chapter{Conclusions}
 \label{chapt:8}
-In conclusione, questa tesi ha fornito un'analisi approfondita e comparativa di diversi approcci algoritmici per la risoluzione del Problema del Commesso Viaggiatore, con particolare attenzione alle prestazioni su istanze di grandi dimensioni. I risultati ottenuti non solo confermano l'efficacia di approcci metaeuristici consolidati come l'Ant Colony System, ma introducono anche una sua variante, il Red-Black Ant Colony System, che mostra potenziale per ulteriori miglioramenti e applicazioni.
+In conclusion, this thesis has provided an in-depth and comparative analysis of different algorithmic approaches for solving the Travelling Salesman Problem, with particular attention to performance on large-sized instances. The results obtained not only confirm the effectiveness of well-established metaheuristic approaches such as Ant Colony System, but also introduce a variant, the Red-Black Ant Colony System, which shows potential for further improvements and applications.
 
-\section{Riflessioni Finali}
-L'evoluzione degli algoritmi per il TSP riflette una tendenza più ampia nel campo dell'ottimizzazione combinatoria: la ricerca di un equilibrio tra la qualità della soluzione e l'efficienza computazionale. Questa tesi ha dimostrato che:
+\section{Final Reflections}
+The evolution of algorithms for the TSP reflects a broader trend in the field of combinatorial optimization: the search for a balance between solution quality and computational efficiency. This thesis has demonstrated that:
 
 \begin{itemize}
-	\item Non esiste un "algoritmo migliore" universale per il TSP. La scelta dell'approccio ottimale dipende dalle caratteristiche specifiche del problema, dalle dimensioni dell'istanza e dai vincoli computazionali.
+	\item There is no universally "best algorithm" for the TSP. The choice of the optimal approach depends on the specific characteristics of the problem, the instance size, and computational constraints.
 
-	\item L'ibridazione di tecniche, come l'integrazione di procedure di ricerca locale (2-Opt) in metaeuristiche basate su popolazione, può portare a miglioramenti significativi nelle prestazioni.
+	\item The hybridization of techniques, such as integrating local search procedures (2-Opt) into population-based metaheuristics, can lead to significant performance improvements.
 
-	\item La scalabilità rimane una sfida cruciale, specialmente per problemi di grandissima scala (oltre 10,000 città). In questo contesto, approcci come RBACS che offrono maggiori opportunità di parallelizzazione diventano particolarmente rilevanti.
+	\item Scalability remains a crucial challenge, especially for very large-scale problems (over 10,000 cities). In this context, approaches like RBACS that offer greater parallelization opportunities become particularly relevant.
 
-	\item La robustezza degli algoritmi, ovvero la loro capacità di mantenere buone prestazioni su una vasta gamma di istanze diverse, è un fattore critico per le applicazioni pratiche.
+	\item Algorithm robustness, that is their ability to maintain good performance across a wide range of different instances, is a critical factor for practical applications.
 \end{itemize}
 
-\section{Osservazioni Conclusive}
-Il Problema del Commesso Viaggiatore, nonostante la sua apparente semplicità, continua a sfidare ricercatori e professionisti, spingendo i confini dell'ottimizzazione combinatoria e dell'informatica teorica.
+\section{Concluding Remarks}
+The Travelling Salesman Problem, despite its apparent simplicity, continues to challenge researchers and practitioners, pushing the boundaries of combinatorial optimization and theoretical computer science.

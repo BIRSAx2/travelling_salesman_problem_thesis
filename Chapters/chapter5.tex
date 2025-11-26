@@ -8,110 +8,110 @@
 
 \typeout{NT FILE chapter5.tex}%
 
-\chapter{Ant Colony System di Dorigo et al}\label{chapt:5}
+\chapter{Ant Colony System by Dorigo et al}\label{chapt:5}
 
 
 
-\section{Fondamenti}
+\section{Fundamentals}
 
-\subsection{Ispirazione Biologica}
-L'Ant Colony System (\Gls{ACS}) trae ispirazione delle formiche reali, che possono trovare in modo efficiente i percorsi più brevi tra le fonti di cibo e il loro nido. Questa capacità è attribuita ai sentieri di feromoni tracciati dalle formiche, facilitando una forma indiretta di comunicazione che guida altre formiche verso percorsi ottimali\cite{Dorigo1996, Dorigo1997}.
+\subsection{Biological Inspiration}
+The Ant Colony System (\Gls{ACS}) draws inspiration from real ants, which can efficiently find the shortest paths between food sources and their nest. This ability is attributed to the pheromone trails laid down by ants, facilitating an indirect form of communication that guides other ants towards optimal paths\cite{Dorigo1996, Dorigo1997}.
 
-La stigmergia, un meccanismo di coordinazione indiretta tra agenti, gioca un ruolo cruciale in questo processo\cite{Bonabeau1999}. Le formiche depositano feromoni mentre si muovono, creando un feedback positivo che rafforza i percorsi più efficienti nel tempo\cite{Deneubourg1990}.
+Stigmergy, a mechanism of indirect coordination between agents, plays a crucial role in this process\cite{Bonabeau1999}. Ants deposit pheromones as they move, creating positive feedback that reinforces the most efficient paths over time\cite{Deneubourg1990}.
 
-\subsection{Principi Algoritmici}
-L'\Gls{ACS} sfrutta una colonia di formiche artificiali che lavorano cooperativamente per esplorare e sfruttare soluzioni per problemi di ottimizzazione. L'approccio integra sia l'esplorazione di nuove soluzioni sia lo sfruttamento di soluzioni buone conosciute attraverso un equilibrio tra l'influenza dei feromoni e la desiderabilità euristica.\cite{Dorigo1996, Dorigo1997}
+\subsection{Algorithmic Principles}
+The \Gls{ACS} leverages a colony of artificial ants that work cooperatively to explore and exploit solutions to optimization problems. The approach integrates both the exploration of new solutions and the exploitation of known good solutions through a balance between pheromone influence and heuristic desirability.\cite{Dorigo1996, Dorigo1997}
 
-Dorigo et al. hanno introdotto diversi miglioramenti rispetto agli algoritmi precedenti basati sulle formiche:
+Dorigo et al. introduced several improvements over previous ant-based algorithms:
 
 \begin{itemize}
-	\item Una regola di transizione di stato più forte che bilancia meglio l'esplorazione di nuovi archi e lo sfruttamento della conoscenza accumulata sui problemi.
-	\item Una regola di aggiornamento globale dei feromoni applicata solo agli archi appartenenti al miglior tour.
-	\item L'applicazione di una regola di aggiornamento locale dei feromoni durante la costruzione delle soluzioni.
+	\item A stronger state transition rule that better balances the exploration of new edges and the exploitation of accumulated knowledge about the problem.
+	\item A global pheromone update rule applied only to edges belonging to the best tour.
+	\item The application of a local pheromone update rule during solution construction.
 \end{itemize}
 
 \begin{figure}[]
 	\centering
 	\includegraphics[width=0.7\textwidth]{Chapters/Figures/ants_path.png}
-	\caption{Comportamento delle formiche di fronte ad un ostacolo}
+	\caption{Ant behavior when facing an obstacle}
 	\label{fig:obstacle}
 \end{figure}
 
-Nella figura ~\ref{fig:obstacle}
+In Figure ~\ref{fig:obstacle}
 \begin{enumerate}
-	\item Le formiche scelgono randomicamente tra i percorsi disponibili
-	\item Poiché le formiche si muovono a una velocità approssimativamente costante, quelle che scelgono il percorso inferiore, più corto, raggiungono il punto di decisione opposto più velocemente di quelle che scelgono il percorso superiore, più lungo.
-	\item  Il feromone si accumula a un ritmo più elevato sul percorso più breve. Le formiche scelgono il percorso inferiore in base alla concentrazione di feromone.
+	\item Ants randomly choose among the available paths
+	\item Since ants move at an approximately constant speed, those that choose the lower, shorter path reach the opposite decision point faster than those that choose the upper, longer path.
+	\item  Pheromone accumulates at a higher rate on the shorter path. Ants choose the lower path based on pheromone concentration.
 \end{enumerate}
 
 
-\subsection{Applicazione al \Gls{TSP}}
-Il \Gls{TSP} è particolarmente adatto per l'applicazione dell'\Gls{ACS} a causa della sua necessità di soluzioni efficienti per la ricerca di percorsi. L'algoritmo simula il comportamento delle formiche per costruire percorsi, con il processo di ottimizzazione guidato sia da informazioni euristiche (ad es., distanze tra le città) sia da sentieri di feromoni che rappresentano una forma di esperienza appresa\cite{Dorigo1997, Gambardella1995}.
+\subsection{Application to \Gls{TSP}}
+The \Gls{TSP} is particularly well-suited for the application of \Gls{ACS} due to its need for efficient path-finding solutions. The algorithm simulates ant behavior to construct paths, with the optimization process guided by both heuristic information (e.g., distances between cities) and pheromone trails that represent a form of learned experience\cite{Dorigo1997, Gambardella1995}.
 
-Nel contesto del \Gls{TSP}, ogni formica costruisce un tour visitando tutte le città esattamente una volta. La scelta della prossima città da visitare è influenzata sia dalla distanza (informazione euristica) che dalla quantità di feromoni sull'arco che collega le città (esperienza accumulata).
+In the context of the \Gls{TSP}, each ant constructs a tour by visiting all cities exactly once. The choice of the next city to visit is influenced by both the distance (heuristic information) and the amount of pheromones on the edge connecting the cities (accumulated experience).
 
-\section{Dettagli implementativi}
+\section{Implementation Details}
 
-\subsection{Regole di Aggiornamento dei Feromoni}
+\subsection{Pheromone Update Rules}
 
-Le regole di aggiornamento dei feromoni nell'\Gls{ACS} sono cruciali per guidare il processo di ricerca verso aree promettenti dello spazio delle soluzioni. Queste regole sono suddivise in aggiornamenti locali e globali.
+The pheromone update rules in \Gls{ACS} are crucial for guiding the search process towards promising areas of the solution space. These rules are divided into local and global updates.
 
-\subsubsection{Regola di Aggiornamento Locale}
-Ogni volta che una formica attraversa un arco $(i,j)$, applica la regola di aggiornamento locale dei feromoni per diminuire il livello di feromoni, incoraggiando l'esplorazione da parte di altre formiche. La regola di aggiornamento locale è data da:
+\subsubsection{Local Update Rule}
+Each time an ant traverses an edge $(i,j)$, it applies the local pheromone update rule to decrease the pheromone level, encouraging exploration by other ants. The local update rule is given by:
 \[
 	\tau_{ij} = (1 - \rho) \cdot \tau_{ij} + \rho \cdot \tau_0
 \]
-dove $\tau_{ij}$ è la concentrazione di feromoni sull'arco $(i,j)$, $\rho$ è il tasso di evaporazione locale (0 < $\rho$ < 1) e $\tau_0$ è il livello iniziale di feromoni.
+where $\tau_{ij}$ is the pheromone concentration on edge $(i,j)$, $\rho$ is the local evaporation rate (0 < $\rho$ < 1) and $\tau_0$ is the initial pheromone level.
 
-L'effetto di questa regola è di ridurre la quantità di feromoni su un arco visitato, rendendo quell'arco meno desiderabile per le formiche successive. Ciò aumenta l'esplorazione di percorsi alternativi e aiuta a prevenire la stagnazione precoce su soluzioni subottimali.
+The effect of this rule is to reduce the amount of pheromone on a visited edge, making that edge less desirable for subsequent ants. This increases the exploration of alternative paths and helps prevent premature stagnation on suboptimal solutions.
 
-\subsubsection{Regola di Aggiornamento Globale}
-Dopo che tutte le formiche hanno completato i loro tour, viene applicata la regola di aggiornamento globale agli archi che appartengono al miglior tour (sia globalmente che nell'iterazione corrente). L'aggiornamento globale migliora il sentiero di feromoni sui percorsi critici, rendendoli più attraenti per le formiche future. La regola di aggiornamento globale è definita come:
+\subsubsection{Global Update Rule}
+After all ants have completed their tours, the global update rule is applied to edges that belong to the best tour (either globally or in the current iteration). The global update enhances the pheromone trail on critical paths, making them more attractive for future ants. The global update rule is defined as:
 \[
 	\tau_{ij} = (1 - \alpha) \cdot \tau_{ij} + \alpha \cdot \Delta \tau_{ij}^{\text{best}}
 \]
-dove $\alpha$ è il tasso di evaporazione globale (0 < $\alpha$ < 1) e $\Delta \tau_{ij}^{\text{best}}$ rappresenta i feromoni depositati dalla migliore formica, definito come:
+where $\alpha$ is the global evaporation rate (0 < $\alpha$ < 1) and $\Delta \tau_{ij}^{\text{best}}$ represents the pheromones deposited by the best ant, defined as:
 \[
 	\Delta \tau_{ij}^{\text{best}} = \begin{cases}
-		(L_{\text{best}})^{-1} & \text{se }(i,j)\text{ appartiene al miglior tour} \\
-		0                      & \text{altrimenti}
+		(L_{\text{best}})^{-1} & \text{if }(i,j)\text{ belongs to the best tour} \\
+		0                      & \text{otherwise}
 	\end{cases}
 \]
-dove $L_{\text{best}}$ è la lunghezza del miglior tour.
+where $L_{\text{best}}$ is the length of the best tour.
 
-Questa regola intensifica i feromoni sui percorsi che hanno portato alle migliori soluzioni, guidando la ricerca verso regioni promettenti dello spazio delle soluzioni.
+This rule intensifies pheromones on paths that have led to the best solutions, guiding the search towards promising regions of the solution space.
 
-\subsection{Regole di Movimento delle Formiche}
+\subsection{Ant Movement Rules}
 
-Le formiche selezionano la prossima città da visitare basandosi su una regola decisionale probabilistica che bilancia l'esplorazione di nuovi percorsi con lo sfruttamento dei sentieri di feromoni e delle informazioni euristiche.
+Ants select the next city to visit based on a probabilistic decision rule that balances the exploration of new paths with the exploitation of pheromone trails and heuristic information.
 
-\subsubsection{Regola di Transizione}
-In \Gls{ACS} la scelta della prossima città da visitare è governata dalla regola di transizione pseudo-casuale-proporzionale. Data una formica $k$ nella città $i$, la probabilità di muoversi verso la città $j$ è determinata da:
+\subsubsection{Transition Rule}
+In \Gls{ACS} the choice of the next city to visit is governed by the pseudo-random-proportional transition rule. Given an ant $k$ in city $i$, the probability of moving to city $j$ is determined by:
 
 \[
 	j = \begin{cases}
-		\arg\max_{l \in N_i^k} \{[\tau_{il}] \cdot [\eta_{il}]^\beta\} & \text{se }q \leq q_0 \text{ (sfruttamento)} \\
-		J                                                              & \text{altrimenti (esplorazione bilanciata)}
+		\arg\max_{l \in N_i^k} \{[\tau_{il}] \cdot [\eta_{il}]^\beta\} & \text{if }q \leq q_0 \text{ (exploitation)} \\
+		J                                                              & \text{otherwise (balanced exploration)}
 	\end{cases}
 \]
 
-dove $q$ è un numero casuale uniformemente distribuito in $[0,1]$, $q_0$ è un parametro ($0 \le q_0 \le 1$) che determina il bilanciamento tra sfruttamento ed esplorazione, $\tau_{il}$ è la quantità di feromoni sull'arco $(i,l)$, $\eta_{il}$ è il valore euristico (solitamente l'inverso della distanza), $\beta$ è un parametro che controlla l'importanza relativa dell'informazione euristica, e $N_i^k$ è l'insieme delle città non ancora visitate dalla formica $k$ posizionata nella città $i$.
+where $q$ is a random number uniformly distributed in $[0,1]$, $q_0$ is a parameter ($0 \le q_0 \le 1$) that determines the balance between exploitation and exploration, $\tau_{il}$ is the amount of pheromone on edge $(i,l)$, $\eta_{il}$ is the heuristic value (usually the inverse of the distance), $\beta$ is a parameter that controls the relative importance of heuristic information, and $N_i^k$ is the set of cities not yet visited by ant $k$ positioned in city $i$.
 
-$J$ è una città casuale scelta secondo la distribuzione di probabilità:
+$J$ is a random city chosen according to the probability distribution:
 
 \[
 	p_{ij}^k = \frac{[\tau_{ij}] \cdot [\eta_{ij}]^\beta}{\sum_{l \in N_i^k} [\tau_{il}] \cdot [\eta_{il}]^\beta}
 \]
 
-Questa regola di transizione favorisce lo sfruttamento delle informazioni accumulate (quando $q \leq q_0$) ma lascia spazio all'esplorazione (quando $q > q_0$).
+This transition rule favors the exploitation of accumulated information (when $q \leq q_0$) but leaves room for exploration (when $q > q_0$).
 
 
 \begin{table}
 	\centering
-	\caption{Risultati dell'algoritmo ACS}
+	\caption{Results of the ACS algorithm}
 	\begin{tabular}{lrrrr}
 		\toprule
-		Istanza  & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		Instance & Time (ms) & Tour Length & Optimal Length & Gap   \\
 		\midrule
 		eil51    & 17083      & 434.91         & 426.00           & 2.09  \\
 		berlin52 & 18411      & 7606.66        & 7542.00          & 0.86  \\
@@ -126,75 +126,75 @@ Questa regola di transizione favorisce lo sfruttamento delle informazioni accumu
 		\bottomrule
 	\end{tabular}
 \end{table}
-\subsection{Pseudocodice}
+\subsection{Pseudocode}
 
 \begin{algorithm}[H]
 	\floatname{ACS}{}
-	\caption{\Gls{ACS} per il \Gls{TSP}}
+	\caption{\Gls{ACS} for the \Gls{TSP}}
 	\begin{algorithmic}[1]
-		\State Inizializza i livelli di feromoni $\tau_{ij} = \tau_0$ per tutti gli archi $(i,j)$
-		\State Inizializza la migliore soluzione globale $S_{gb}$ e la sua lunghezza $L_{gb}$
-		\For{ogni iterazione}
-		\For{ogni formica $k = 1, \ldots, m$}
-		\State Posiziona la formica $k$ su una città di partenza casuale
-		\State Inizializza il tour parziale $S_k = \emptyset$
+		\State Initialize pheromone levels $\tau_{ij} = \tau_0$ for all edges $(i,j)$
+		\State Initialize the best global solution $S_{gb}$ and its length $L_{gb}$
+		\For{each iteration}
+		\For{each ant $k = 1, \ldots, m$}
+		\State Place ant $k$ on a random starting city
+		\State Initialize partial tour $S_k = \emptyset$
 		\Repeat
-		\State Seleziona la prossima città $j$ usando la regola di transizione
-		\State Aggiungi $(i,j)$ a $S_k$
-		\State Applica l'aggiornamento locale dei feromoni a $(i,j)$
+		\State Select the next city $j$ using the transition rule
+		\State Add $(i,j)$ to $S_k$
+		\State Apply local pheromone update to $(i,j)$
 		\State $i \gets j$
-		\Until{il tour $S_k$ è completo}
+		\Until{tour $S_k$ is complete}
 		\If{$L(S_k) < L_{gb}$}
 		\State $S_{gb} \gets S_k$
 		\State $L_{gb} \gets L(S_k)$
 		\EndIf
 		\EndFor
-		\State Applica l'aggiornamento globale dei feromoni al miglior tour $S_{gb}$
+		\State Apply global pheromone update to the best tour $S_{gb}$
 		\EndFor
-		\State \Return la migliore soluzione trovata $S_{gb}$
+		\State \Return the best solution found $S_{gb}$
 	\end{algorithmic}
 	\label{alg:acs}
 \end{algorithm}
 
 
 
-\subsection{Analisi della Complessità}
-La complessità temporale dell'\Gls{ACS} per iterazione è O($n^2m$), dove $n$ è il numero di città e $m$ è il numero di formiche. Tuttavia, il numero di iterazioni necessarie per la convergenza può variare significativamente a seconda delle caratteristiche del problema e dei parametri dell'algoritmo.
+\subsection{Complexity Analysis}
+The time complexity of \Gls{ACS} per iteration is O($n^2m$), where $n$ is the number of cities and $m$ is the number of ants. However, the number of iterations required for convergence can vary significantly depending on problem characteristics and algorithm parameters.
 
-\subsection{Parametri Chiave e loro Impatto}
-L'efficacia dell'\Gls{ACS} dipende in modo cruciale dalla corretta impostazione di diversi parametri:
-
-\begin{itemize}
-	\item $\rho$: Tasso di evaporazione locale dei feromoni
-	\item $\alpha$: Tasso di evaporazione globale dei feromoni
-	\item $\beta$: Importanza relativa dell'informazione euristica
-	\item $q_0$: Bilanciamento tra sfruttamento ed esplorazione
-	\item $m$: Numero di formiche
-	\item $\tau_0$: Livello iniziale di feromoni
-\end{itemize}
-
-La scelta ottimale di questi parametri può variare a seconda del problema specifico e richiede spesso una fase di tuning.
-
-\section{Varianti e Estensioni}
-
-Dalla pubblicazione originale dell' \Gls{ACS} sono state proposte numerose varianti e estensioni:
-\begin{itemize}
-	\item MAX-MIN Ant System (\Gls{MMAS}): Introdotto da Stützle e Hoos, \Gls{MMAS} limita i valori dei feromoni entro un intervallo predefinito per prevenire la stagnazione prematura. \cite{Stuetzle1997}
-	\item Rank-Base Ant System (\Gls{ASrank}): In questa variante, le formiche sono classificate in base alla qualità delle loro soluzioni, e la quanità dei fermoni depositati è proporzionale al rango.
-	\item ACS Ibridi: Combinazioni dell'ACS con altre tecniche di ottimizzazione, come algoritmi genetici o Tabu Search, hanno mostrato risultati promettenti su vari problemi di ottimizzazione combinatoria.
-\end{itemize}
-
-\section{Applicazioni oltre il \Gls{TSP}}
-
-Sebbene inizialmente sviluppato per il \Gls{TSP}, l'\Gls{ACS} e le sue varianti hanno trovato applicazioni in una vasta gamma di domini:
+\subsection{Key Parameters and their Impact}
+The effectiveness of \Gls{ACS} crucially depends on the proper setting of several parameters:
 
 \begin{itemize}
-	\item Problemi di routing di veicoli
-	\item Scheduling e pianificazione
-	\item Assegnazione di frequenze nelle reti di telecomunicazione
-	\item Bioinformatica e folding delle proteine
-	\item Ottimizzazione di reti e grid computing
-	\item Problemi di ottimizzazione multi-obiettivo
+	\item $\rho$: Local pheromone evaporation rate
+	\item $\alpha$: Global pheromone evaporation rate
+	\item $\beta$: Relative importance of heuristic information
+	\item $q_0$: Balance between exploitation and exploration
+	\item $m$: Number of ants
+	\item $\tau_0$: Initial pheromone level
 \end{itemize}
 
-La versatilità dell'\Gls{ACS} lo rende un approccio potente per affrontare problemi complessi di ottimizzazione in vari campi dell'ingegneria e della scienza.
+The optimal choice of these parameters can vary depending on the specific problem and often requires a tuning phase.
+
+\section{Variants and Extensions}
+
+Since the original publication of \Gls{ACS}, numerous variants and extensions have been proposed:
+\begin{itemize}
+	\item MAX-MIN Ant System (\Gls{MMAS}): Introduced by Stützle and Hoos, \Gls{MMAS} limits pheromone values within a predefined range to prevent premature stagnation. \cite{Stuetzle1997}
+	\item Rank-Based Ant System (\Gls{ASrank}): In this variant, ants are ranked according to the quality of their solutions, and the amount of pheromones deposited is proportional to their rank.
+	\item Hybrid ACS: Combinations of ACS with other optimization techniques, such as genetic algorithms or Tabu Search, have shown promising results on various combinatorial optimization problems.
+\end{itemize}
+
+\section{Applications beyond the \Gls{TSP}}
+
+Although initially developed for the \Gls{TSP}, \Gls{ACS} and its variants have found applications in a wide range of domains:
+
+\begin{itemize}
+	\item Vehicle routing problems
+	\item Scheduling and planning
+	\item Frequency assignment in telecommunication networks
+	\item Bioinformatics and protein folding
+	\item Network optimization and grid computing
+	\item Multi-objective optimization problems
+\end{itemize}
+
+The versatility of \Gls{ACS} makes it a powerful approach for tackling complex optimization problems in various fields of engineering and science.

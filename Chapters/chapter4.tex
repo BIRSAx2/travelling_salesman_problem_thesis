@@ -8,27 +8,27 @@
 
 \typeout{NT FILE chapter4.tex}%
 
-\chapter{Algoritmi Euristici e Metaeuristici}\label{chapt:4}
-\section{Approcci Euristici}
+\chapter{Heuristic and Metaheuristic Algorithms}\label{chapt:4}
+\section{Heuristic Approaches}
 
-Gli approcci euristici per risolvere problemi come il \Gls{TSP} sono strategie progettate per trovare soluzioni sufficientemente buone entro un tempo ragionevole, specialmente quando una soluzione esatta non è fattibile a causa della complessità \cite{Johnson2002} del problema. Questi metodi sono essenziali nei casi in cui il costo computazionale per trovare la soluzione ottimale è proibitivo, come è comune con i problemi NP-difficili come il \Gls{TSP} \cite{Cormen2009}.
+Heuristic approaches to solving problems such as the \Gls{TSP} are strategies designed to find sufficiently good solutions within a reasonable time, especially when an exact solution is not feasible due to the complexity \cite{Johnson2002} of the problem. These methods are essential in cases where the computational cost of finding the optimal solution is prohibitive, as is common with NP-hard problems such as the \Gls{TSP} \cite{Cormen2009}.
 
-\subsection{Concetto e Necessità}
-Il concetto di approcci euristici si basa sull'idea di fare ipotesi educate o seguire algoritmi intuitivi che mirano a trovare soluzioni che siano vicine al miglior possibile, senza necessariamente garantire l'ottimalità \cite{Papadimitriou1998}. Le euristiche sono caratterizzate dalle loro strategie empiriche che le rendono significativamente più veloci rispetto ai metodi esatti nella pratica, sebbene a costo di potenzialmente perdere la soluzione ottimale.
+\subsection{Concept and Necessity}
+The concept of heuristic approaches is based on the idea of making educated guesses or following intuitive algorithms that aim to find solutions that are close to the best possible, without necessarily guaranteeing optimality \cite{Papadimitriou1998}. Heuristics are characterized by their empirical strategies that make them significantly faster than exact methods in practice, albeit at the cost of potentially missing the optimal solution.
 
-La necessità delle euristiche deriva dall'intrattabilità computazionale di molti problemi del mondo reale \cite{Lawler1985}. Le euristiche offrono un'alternativa pragmatica fornendo soluzioni che, pur non essendo garantite come ottimali, sono sufficientemente accurate per scopi pratici e possono essere ottenute molto più rapidamente \cite{Aarts1989}.
+The necessity of heuristics stems from the computational intractability of many real-world problems \cite{Lawler1985}. Heuristics offer a pragmatic alternative by providing solutions that, while not guaranteed to be optimal, are sufficiently accurate for practical purposes and can be obtained much more quickly \cite{Aarts1989}.
 
-\subsection{Algoritmi Greedy}
+\subsection{Greedy Algorithms}
 
-Gli algoritmi greedy costituiscono una classe significativa di approcci euristici caratterizzati dalla loro strategia di fare la scelta localmente ottimale in ogni fase con la speranza di trovare un ottimo globale \cite{Cormen2009}. Nel contesto del \Gls{TSP} e di problemi di ottimizzazione simili, gli algoritmi greedy semplificano i processi decisionali suddividendo un problema in una serie di passaggi e scegliendo la migliore opzione disponibile in ogni passaggio senza considerare le conseguenze più ampie di queste scelte\cite{Johnson2002}.
+Greedy algorithms constitute a significant class of heuristic approaches characterized by their strategy of making the locally optimal choice at each stage with the hope of finding a global optimum \cite{Cormen2009}. In the context of the \Gls{TSP} and similar optimization problems, greedy algorithms simplify decision-making processes by breaking down a problem into a series of steps and choosing the best available option at each step without considering the broader consequences of these choices\cite{Johnson2002}.
 
-\subsubsection{Definizione e Principio}
+\subsubsection{Definition and Principle}
 
-Un algoritmo greedy costruisce una soluzione pezzo per pezzo, scegliendo sempre il pezzo successivo che offre il beneficio più immediato\cite{Papadimitriou1998}. Questo approccio è semplice e diretto, rendendolo un'opzione attraente per molti problemi in cui una soluzione rapida e facile è più preziosa di una ottimale. L'efficacia degli algoritmi greedy varia ampiamente da un problema all'altro; in alcuni casi, raggiungono una soluzione ottimale, mentre in altri, possono raggiungere solo una soluzione subottimale\cite{Lawler1985}.
+A greedy algorithm constructs a solution piece by piece, always choosing the next piece that offers the most immediate benefit\cite{Papadimitriou1998}. This approach is simple and straightforward, making it an attractive option for many problems where a quick and easy solution is more valuable than an optimal one. The effectiveness of greedy algorithms varies widely from problem to problem; in some cases, they achieve an optimal solution, while in others, they may only achieve a suboptimal solution\cite{Lawler1985}.
 
-\subsubsection{Applicazione al \Gls{TSP}: Nearest Neighbor Search}
+\subsubsection{Application to the \Gls{TSP}: Nearest Neighbor Search}
 
-Nel \Gls{TSP}, un'applicazione classica dell'algoritmo greedy è il Nearest Neighbor Search \Gls{NNS}, dove l'algoritmo costruisce un tour partendo da una città arbitraria e, ad ogni passo, estende il tour spostandosi verso la città non visitata più vicina fino a quando tutte le città sono visitate\cite{Gutin2016}.
+In the \Gls{TSP}, a classic application of the greedy algorithm is the Nearest Neighbor Search \Gls{NNS}, where the algorithm constructs a tour starting from an arbitrary city and, at each step, extends the tour by moving to the nearest unvisited city until all cities are visited\cite{Gutin2016}.
 
 
 \newcommand{\tspnearestneighbor}[1]{%
@@ -97,55 +97,55 @@ Nel \Gls{TSP}, un'applicazione classica dell'algoritmo greedy è il Nearest Neig
 
 \tspnearestneighbor{6}
 
-\paragraph{Pseudocodice}
+\paragraph{Pseudocode}
 
 \begin{algorithm}
 	\caption{TSP \Gls{NNS}}\label{alg:greedybestfirst}
 	\begin{algorithmic}[1]
 		\Procedure{NearestNeighborSearch}{$cities, distances$}
-		\State $start \gets$ seleziona una città arbitraria da $cities$
+		\State $start \gets$ select an arbitrary city from $cities$
 		\State $current \gets start$
-		\State $tour \gets$ lista contenente $start$
+		\State $tour \gets$ list containing $start$
 		\State $unvisited \gets cities \setminus \{start\}$
 		\While{$unvisited \neq \emptyset$}
-		\State $next \gets$ città in $unvisited$ con distanza minima da $current$
-		\State aggiungi $next$ a $tour$
-		\State rimuovi $next$ da $unvisited$
+		\State $next \gets$ city in $unvisited$ with minimum distance from $current$
+		\State add $next$ to $tour$
+		\State remove $next$ from $unvisited$
 		\State $current \gets next$
 		\EndWhile
-		\State aggiungi $start$ a $tour$ per chiudere il ciclo
+		\State add $start$ to $tour$ to close the cycle
 		\State \Return $tour$
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
 
-Questa strategia greedy assicura che ad ogni passo, il tour cresca aggiungendo la destinazione più vicina possibile, ottimizzando per il passo immediato successivo senza considerare la lunghezza complessiva del tour. Sebbene questo metodo non garantisca la scoperta del tour più breve possibile, riduce significativamente il tempo di calcolo rispetto ai metodi di ricerca esaustiva.
+This greedy strategy ensures that at each step, the tour grows by adding the nearest possible destination, optimizing for the immediate next step without considering the overall tour length. While this method does not guarantee finding the shortest possible tour, it significantly reduces computation time compared to exhaustive search methods.
 
 % TODO: Riordina questo
 
-\subsubsection{Vantaggi e Limitazioni}
+\subsubsection{Advantages and Limitations}
 
-\textbf{Vantaggi:}
+\textbf{Advantages:}
 \begin{itemize}
-	\item \textit{Semplicità}: Gli algoritmi greedy sono semplici da implementare e comprendere.
-	\item \textit{Efficienza}: Spesso forniscono soluzioni rapidamente, rendendoli adatti per problemi in cui la velocità è cruciale.
+	\item \textit{Simplicity}: Greedy algorithms are simple to implement and understand.
+	\item \textit{Efficiency}: They often provide solutions quickly, making them suitable for problems where speed is crucial.
 \end{itemize}
 
-\textbf{Limitazioni:}
+\textbf{Limitations:}
 \begin{itemize}
-	\item \textit{Ottimalità}: Le scelte greedy non portano sempre alla soluzione ottimale, specialmente per problemi complessi come il \Gls{TSP}.
-	\item \textit{Corto raggio di azione}: Concentrandosi sull'ottimalità locale, potrebbero trascurare soluzioni migliori che richiedono scelte iniziali non ottimali.
+	\item \textit{Optimality}: Greedy choices do not always lead to the optimal solution, especially for complex problems like the \Gls{TSP}.
+	\item \textit{Short-sightedness}: By focusing on local optimality, they might overlook better solutions that require initially non-optimal choices.
 \end{itemize}
 
-Gli algoritmi greedy, con la loro semplicità ed efficienza intrinseche, giocano un ruolo cruciale nella risoluzione euristica dei problemi, specialmente nei casi in cui ottenere una soluzione esatta è computazionalmente impraticabile. La loro applicazione al \Gls{TSP} evidenzia l'equilibrio tra efficienza computazionale e qualità della soluzione, un tema che risuona attraverso lo studio degli algoritmi euristici e metaeuristici.
+Greedy algorithms, with their inherent simplicity and efficiency, play a crucial role in the heuristic resolution of problems, especially in cases where obtaining an exact solution is computationally impractical. Their application to the \Gls{TSP} highlights the balance between computational efficiency and solution quality, a theme that resonates through the study of heuristic and metaheuristic algorithms.
 
 
 \begin{table}
 	\centering
-	\caption{Risultati dell'algoritmo Nearest Neighbour}
+	\caption{Results of the Nearest Neighbor algorithm}
 	\begin{tabular}{lrrrr}
 		\toprule
-		Istanza  & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		Instance  & Time (ms) & Tour Length & Optimal Length & Gap   \\
 		\midrule
 		berlin52 & 14         & 8980.92        & 7542.00          & 19.08 \\
 		eil51    & 15         & 513.61         & 426.00           & 20.57 \\
@@ -162,22 +162,22 @@ Gli algoritmi greedy, con la loro semplicità ed efficienza intrinseche, giocano
 \end{table}
 
 
-\section{Algoritmi di Local Search}
+\section{Local Search Algorithms}
 
-Gli algoritmi di ricerca locale rappresentano una classe di metodi euristici progettati per esplorare lo spazio delle soluzioni di un problema di ottimizzazione spostandosi iterativamente da una soluzione a una soluzione vicina nello spazio di ricerca. Questi algoritmi sono particolarmente efficaci per problemi come il \Gls{TSP}. La ricerca locale fornisce un meccanismo per migliorare una soluzione iniziale attraverso piccole modifiche localizzate \cite{Johnson2002,Lawler1985}.
+Local search algorithms represent a class of heuristic methods designed to explore the solution space of an optimization problem by iteratively moving from one solution to a neighboring solution in the search space. These algorithms are particularly effective for problems such as the \Gls{TSP}. Local search provides a mechanism to improve an initial solution through small localized modifications \cite{Johnson2002,Lawler1985}.
 
-\subsection{Tecniche 2-opt e 3-opt}
+\subsection{2-opt and 3-opt Techniques}
 
-Le tecniche 2-opt e 3-opt sono strategie di ricerca locale specifiche utilizzate per affinare le soluzioni del \Gls{TSP}. Funzionano rimuovendo iterativamente due o tre archi dal tour e riconnettendo i segmenti in un ordine diverso, mirando a ridurre la lunghezza totale del tour con ogni operazione.
+The 2-opt and 3-opt techniques are specific local search strategies used to refine \Gls{TSP} solutions. They work by iteratively removing two or three edges from the tour and reconnecting the segments in a different order, aiming to reduce the total tour length with each operation.
 
-\subsubsection{Tecnica 2-opt}
+\subsubsection{2-opt Technique}
 
-L'algoritmo 2-opt controlla sistematicamente ogni coppia di archi nel tour e determina se lo scambio di essi porterebbe a un percorso più breve. Questo processo viene ripetuto fino a quando non possono essere apportati ulteriori miglioramenti.
+The 2-opt algorithm systematically checks each pair of edges in the tour and determines whether swapping them would lead to a shorter path. This process is repeated until no further improvements can be made.
 
 
 \begin{center}
 	\begin{figure}[h]
-		\caption{Scambio 2-opt}
+		\caption{2-opt swap}
 		\begin{tikzpicture}
 			% Definisci i nodi
 			\node[draw=none, fill=none] (A) at (0,2) {A};
@@ -221,7 +221,7 @@ L'algoritmo 2-opt controlla sistematicamente ogni coppia di archi nel tour e det
 \end{center}
 
 \begin{algorithm}
-	\caption{Tecnica 2-opt per \Gls{TSP}}\label{alg:twoopt}
+	\caption{2-opt Technique for \Gls{TSP}}\label{alg:twoopt}
 	\begin{algorithmic}[1]
 		\Procedure{TwoOpt}{$tour, distances$}
 		\State $improved \gets true$
@@ -244,10 +244,10 @@ L'algoritmo 2-opt controlla sistematicamente ogni coppia di archi nel tour e det
 
 \begin{table}
 	\centering
-	\caption{Risultati dell'algoritmo Nearest Neighbour con ottimizzazione 2-opt}
+	\caption{Results of Nearest Neighbor algorithm with 2-opt optimization}
 	\begin{tabular}{lrrrr}
 		\toprule
-		Istanza  & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		Instance  & Time (ms) & Tour Length & Optimal Length & Gap   \\
 		\midrule
 		berlin52 & 124        & 8060.65        & 7542.00          & 6.88  \\
 		eil51    & 284        & 440.90         & 426.00           & 3.50  \\
@@ -264,70 +264,70 @@ L'algoritmo 2-opt controlla sistematicamente ogni coppia di archi nel tour e det
 \end{table}
 
 
-\subsubsection{Tecnica 3-opt}
+\subsubsection{3-opt Technique}
 
-La tecnica 3-opt estende l'idea del 2-opt considerando tre archi per la riconnessione. Questo consente una gamma più ampia di riarrangiamenti ad ogni passo, potenzialmente portando a miglioramenti più significativi a scapito di una maggiore complessità computazionale.
+The 3-opt technique extends the idea of 2-opt by considering three edges for reconnection. This allows a wider range of rearrangements at each step, potentially leading to more significant improvements at the cost of greater computational complexity.
 
-\paragraph{Pseudocodice per la Tecnica 3-opt} è concettualmente simile al 2-opt ma coinvolge più condizioni per gli scambi, riflettendo la maggiore complessità di considerare tre archi alla volta.
+\paragraph{Pseudocode for the 3-opt Technique} is conceptually similar to 2-opt but involves more conditions for swaps, reflecting the greater complexity of considering three edges at a time.
 
 \subsection{Lin–Kernighan}
 
-L'algoritmo di Lin-Kernighan (\Gls{LK}) è una delle tecniche più avanzate e potenti di ricerca locale per risolvere il \Gls{TSP}. Proposto da Shen Lin e Brian W. Kernighan nel 1973, questo algoritmo estende le idee della tecnica \(k\)-opt, rendendola più flessibile e adattabile. L'algoritmo non si limita a una fissata dimensione \(k\) degli scambi, ma decide dinamicamente il numero di archi da rimuovere e ricollegare, rendendolo molto efficace nel migliorare soluzioni iniziali.\cite{lin1973effective}
+The Lin-Kernighan algorithm (\Gls{LK}) is one of the most advanced and powerful local search techniques for solving the \Gls{TSP}. Proposed by Shen Lin and Brian W. Kernighan in 1973, this algorithm extends the ideas of the \(k\)-opt technique, making it more flexible and adaptable. The algorithm is not limited to a fixed size \(k\) of swaps, but dynamically decides the number of edges to remove and reconnect, making it very effective in improving initial solutions.\cite{lin1973effective}
 
 
 \begin{algorithm}
-	\caption{Lin-Kernighan Algorithm per il \Gls{TSP}}\label{alg:lin-kernighan}
+	\caption{Lin-Kernighan Algorithm for the \Gls{TSP}}\label{alg:lin-kernighan}
 	\begin{algorithmic}[1]
-		\Procedure{LinKernighan}{$T$} \Comment{$T$ è il tour iniziale}
-		\State $T' \gets T$ \Comment{Inizializza $T'$ con $T$}
+		\Procedure{LinKernighan}{$T$} \Comment{$T$ is the initial tour}
+		\State $T' \gets T$ \Comment{Initialize $T'$ with $T$}
 		\Repeat
-		\For{ogni città $x_1$ in $T'$}
+		\For{each city $x_1$ in $T'$}
 		\State $k \gets 2$
 		\Repeat
-		\State Seleziona un insieme di $k$ archi $(x_1, y_1), (x_2, y_2), \ldots, (x_k, y_k)$ da $T'$
-		\State Genera un nuovo tour $T''$ rimuovendo gli archi e riconnettendo secondo la mossa $k$-opt
-		\If{$T''$ è più corto di $T'$}
+		\State Select a set of $k$ edges $(x_1, y_1), (x_2, y_2), \ldots, (x_k, y_k)$ from $T'$
+		\State Generate a new tour $T''$ by removing edges and reconnecting according to the $k$-opt move
+		\If{$T''$ is shorter than $T'$}
 		\State $T' \gets T''$
-		\State \textbf{break} \Comment{Esce dal loop interno se c'è un miglioramento}
+		\State \textbf{break} \Comment{Exit inner loop if there is improvement}
 		\EndIf
 		\State $k \gets k + 1$
-		\Until{Nessun ulteriore miglioramento}
+		\Until{No further improvement}
 		\EndFor
-		\Until{Tutte le città sono state provate come città iniziali}
+		\Until{All cities have been tried as starting cities}
 		\State \Return $T'$
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
-\subsubsection{Descrizione}
+\subsubsection{Description}
 
-L'algoritmo di \Gls{LK} inizia con una soluzione iniziale e tenta di migliorare iterativamente questa soluzione tramite una serie di mosse \(k\)-opt generalizzate. Ogni mossa \(k\)-opt cerca di ridurre la lunghezza totale del tour scambiando \(k\) archi del tour attuale con nuovi archi, migliorando così il percorso complessivo.
+The \Gls{LK} algorithm starts with an initial solution and attempts to iteratively improve this solution through a series of generalized \(k\)-opt moves. Each \(k\)-opt move seeks to reduce the total tour length by exchanging \(k\) edges of the current tour with new edges, thus improving the overall path.
 
 
-L'algoritmo di \Gls{LK} è stato largamente studiato e migliorato nel corso degli anni. Per un'analisi dettagliata dell'algoritmo e delle sue estensioni, si possono consultare i seguenti riferimenti \cite{Johnson2002,Lawler1985,Gutin2016}.
+The \Gls{LK} algorithm has been extensively studied and improved over the years. For a detailed analysis of the algorithm and its extensions, the following references can be consulted \cite{Johnson2002,Lawler1985,Gutin2016}.
 \\
 
-Gli algoritmi di ricerca locale, comprese le tecniche 2-opt e 3-opt offrono metodi potenti per migliorare le soluzioni del \Gls{TSP}. Affinando iterativamente una soluzione iniziale, bilanciano l'esplorazione dello spazio delle soluzioni e lo sfruttamento di configurazioni buone conosciute, fornendo mezzi efficaci per avvicinarsi a soluzioni ottimali per problemi di ottimizzazione complessi.
+Local search algorithms, including 2-opt and 3-opt techniques, offer powerful methods for improving \Gls{TSP} solutions. By iteratively refining an initial solution, they balance exploration of the solution space and exploitation of known good configurations, providing effective means to approach optimal solutions for complex optimization problems.
 
 
-\section{Algoritmi metaeuristici}
+\section{Metaheuristic Algorithms}
 
-Gli algoritmi metaeuristici sono strategie di alto livello progettate per navigare nello spazio di ricerca di problemi complessi di ottimizzazione in modo efficiente. Questi algoritmi non garantiscono una soluzione ottimale, ma sono efficaci nel trovare soluzioni molto buone entro un lasso di tempo ragionevole, specialmente per problemi in cui i metodi tradizionali falliscono a causa della maledizione della dimensionalità o della presenza di numerosi ottimi locali.
+Metaheuristic algorithms are high-level strategies designed to navigate the search space of complex optimization problems efficiently. These algorithms do not guarantee an optimal solution, but are effective in finding very good solutions within a reasonable time frame, especially for problems where traditional methods fail due to the curse of dimensionality or the presence of numerous local optima.
 
 \subsection{Simulated Annealing}
 
-Il Simulated Annealing (\Gls{SA}) si presenta come una tecnica stocastica progettata per approssimare l'ottimo globale di una data funzione obiettivo. Questo metodo trova le sue radici nel processo fisico di tempera nella metallurgia, che comporta il riscaldamento e il raffreddamento controllato di un materiale per aumentare la dimensione dei suoi cristalli e ridurre i loro difetti. L'algoritmo SA imita questo processo introducendo una "temperatura" metaforica che diminuisce gradualmente secondo un programma prestabilito. Inizialmente, l'algoritmo è più propenso ad accettare soluzioni che sono peggiori della soluzione attuale, permettendogli di esplorare ampiamente lo spazio delle soluzioni e di evitare di rimanere intrappolato in ottimi locali prematuramente. Man mano che la temperatura diminuisce, l'algoritmo diventa più selettivo, concentrandosi sulla soluzione ottimale.
+Simulated Annealing (\Gls{SA}) presents itself as a stochastic technique designed to approximate the global optimum of a given objective function. This method finds its roots in the physical process of annealing in metallurgy, which involves controlled heating and cooling of a material to increase the size of its crystals and reduce their defects. The SA algorithm mimics this process by introducing a metaphorical "temperature" that gradually decreases according to a predetermined schedule. Initially, the algorithm is more inclined to accept solutions that are worse than the current solution, allowing it to explore the solution space widely and avoid becoming trapped in local optima prematurely. As the temperature decreases, the algorithm becomes more selective, focusing on the optimal solution.
 
-\subsubsection{Applicazione al \Gls{TSP}}
+\subsubsection{Application to the \Gls{TSP}}
 
-Nel contesto del \Gls{TSP}, l'algoritmo SA inizia con una soluzione arbitraria, tipicamente un tour casuale tra le città. Successivamente, affina iterativamente questo tour apportando lievi modifiche, come lo scambio di due città nella sequenza del tour. La decisione di accettare una nuova soluzione è probabilistica e dipende sia dalla differenza nella qualità della soluzione sia dalla temperatura attuale. La capacità di questo metodo di accettare soluzioni peggiori diminuisce probabilisticamente nel tempo man mano che la temperatura si abbassa, simulando il processo di raffreddamento nella tempera.
+In the context of the \Gls{TSP}, the SA algorithm starts with an arbitrary solution, typically a random tour among the cities. Subsequently, it iteratively refines this tour by making slight modifications, such as swapping two cities in the tour sequence. The decision to accept a new solution is probabilistic and depends on both the difference in solution quality and the current temperature. This method's ability to accept worse solutions decreases probabilistically over time as the temperature lowers, simulating the cooling process in annealing.
 
 
-\begin{table}[H] 
+\begin{table}[H]
   \centering
-	\caption{Risultati dell'algoritmo Simulated Annealing}
+	\caption{Results of the Simulated Annealing algorithm}
 	\begin{tabular}{lrrrr}
 		\toprule
-		Istanza  & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		Instance  & Time (ms) & Tour Length & Optimal Length & Gap   \\
 		\midrule
 		berlin52 & 28982      & 7544.37        & 7542.00          & 0.03  \\
 		87eil76  & 39587      & 572.81         & 538.00           & 6.47  \\
@@ -343,9 +343,9 @@ Nel contesto del \Gls{TSP}, l'algoritmo SA inizia con una soluzione arbitraria, 
 	\end{tabular}
 \end{table}
 
-\paragraph{Pseudocodice}
+\paragraph{Pseudocode}
 
-Il pseudocodice per applicare \Gls{SA} per risolvere il \Gls{TSP} è delineato di seguito. Questa rappresentazione algoritmica enfatizza il miglioramento iterativo di un tour, tenendo conto dell'accettazione di soluzioni subottimali basata su un programma di temperatura decrescente per sfuggire ai minimi locali.
+The pseudocode for applying \Gls{SA} to solve the \Gls{TSP} is outlined below. This algorithmic representation emphasizes the iterative improvement of a tour, taking into account the acceptance of suboptimal solutions based on a decreasing temperature schedule to escape local minima.
 
 \begin{algorithm}
 	\caption{Simulated Annealing}\label{alg:detailedsimulatedannealing}
@@ -372,43 +372,43 @@ Il pseudocodice per applicare \Gls{SA} per risolvere il \Gls{TSP} è delineato d
 	\end{algorithmic}
 \end{algorithm}
 
-In questo pseudocodice, \emph{generateInitialSolution} crea un tour iniziale casuale delle città. \emph{perturbSolution} altera leggermente la soluzione attuale, tipicamente scambiando due città nel tour. \emph{calculateCost} valuta la distanza totale (o costo) di un tour. \emph{calculateAcceptanceProbability} determina la probabilità di accettare una nuova soluzione basata sul suo costo, sul costo della soluzione attuale e sulla temperatura attuale, seguendo il criterio di Metropolis\cite{metropolis1953equation}. La temperatura viene aggiornata in ogni iterazione dalla funzione \emph{updateTemperature}, che riduce la temperatura in base al tasso di raffreddamento fino a raggiungere la temperatura di arresto.
+In this pseudocode, \emph{generateInitialSolution} creates a random initial tour of the cities. \emph{perturbSolution} slightly alters the current solution, typically by swapping two cities in the tour. \emph{calculateCost} evaluates the total distance (or cost) of a tour. \emph{calculateAcceptanceProbability} determines the probability of accepting a new solution based on its cost, the cost of the current solution, and the current temperature, following the Metropolis criterion\cite{metropolis1953equation}. The temperature is updated in each iteration by the \emph{updateTemperature} function, which reduces the temperature based on the cooling rate until reaching the stopping temperature.
 
-\subsection{Algoritmi Genetici}
+\subsection{Genetic Algorithms}
 
-Gli Algoritmi Genetici (\Gls{GA}) sono una classe di metodi euristici ispirati ai principi dell'evoluzione biologica e della selezione naturale. Introdotti da John Holland negli anni '60, questi algoritmi sono particolarmente efficaci nell'affrontare problemi di ottimizzazione complessi e non lineari, come il \Gls{TSP}.
+Genetic Algorithms (\Gls{GA}) are a class of heuristic methods inspired by the principles of biological evolution and natural selection. Introduced by John Holland in the 1960s, these algorithms are particularly effective in tackling complex and nonlinear optimization problems, such as the \Gls{TSP}.
 
-\subsubsection{Principi fondamentali}
+\subsubsection{Fundamental Principles}
 
-Gli algoritmi genetici operano su una popolazione di soluzioni potenziali, codificate come "cromosomi". I principi fondamentali includono:
+Genetic algorithms operate on a population of potential solutions, encoded as "chromosomes". The fundamental principles include:
 
 \begin{itemize}
-	\item \textbf{Selezione}: Le soluzioni migliori (più "adatte") hanno maggiori probabilità di essere selezionate per la riproduzione.
-	\item \textbf{Crossover}: Combinazione di parti di due soluzioni genitoriali per crearne una nuova.
-	\item \textbf{Mutazione}: Modifiche casuali introdotte nelle soluzioni per mantenere la diversità genetica.
-	\item \textbf{Evoluzione}: Le nuove generazioni tendono a migliorare nel tempo, convergendo verso soluzioni ottimali o quasi ottimali.
+	\item \textbf{Selection}: The best (most "fit") solutions are more likely to be selected for reproduction.
+	\item \textbf{Crossover}: Combination of parts from two parent solutions to create a new one.
+	\item \textbf{Mutation}: Random modifications introduced in solutions to maintain genetic diversity.
+	\item \textbf{Evolution}: New generations tend to improve over time, converging toward optimal or near-optimal solutions.
 \end{itemize}
 
-\subsubsection{Applicazione al \Gls{TSP}}
+\subsubsection{Application to the \Gls{TSP}}
 
-Nel contesto del \Gls{TSP}, un algorithmo genetico tipicamente opera come segue:
+In the context of the \Gls{TSP}, a genetic algorithm typically operates as follows:
 
 \begin{enumerate}
-	\item \textbf{Codifica}: Ogni tour è rappresentato come una sequenza di città (cromosoma).
-	\item \textbf{Popolazione iniziale}: Generazione di un insieme casuale di tour validi.
-	\item \textbf{Funzione di fitness}: Valutazione della lunghezza di ogni tour (fitness inversamente proporzionale alla lunghezza).
-	\item \textbf{Selezione}: Scelta dei tour migliori per la riproduzione (es. selezione a torneo o roulette).
-	\item \textbf{Crossover}: Combinazione di parti di due tour genitori (es. crossover parzialmente mappato - PMX).
-	\item \textbf{Mutazione}: Piccole modifiche casuali nei tour (es. scambio di due città).
-	\item \textbf{Sostituzione}: Creazione di una nuova generazione combinando genitori e figli.
-	\item \textbf{Iterazione}: Ripetizione del processo per un numero prefissato di generazioni o fino al raggiungimento di un criterio di arresto.
+	\item \textbf{Encoding}: Each tour is represented as a sequence of cities (chromosome).
+	\item \textbf{Initial population}: Generation of a random set of valid tours.
+	\item \textbf{Fitness function}: Evaluation of the length of each tour (fitness inversely proportional to length).
+	\item \textbf{Selection}: Choice of the best tours for reproduction (e.g., tournament or roulette selection).
+	\item \textbf{Crossover}: Combination of parts from two parent tours (e.g., partially mapped crossover - PMX).
+	\item \textbf{Mutation}: Small random modifications in tours (e.g., swapping two cities).
+	\item \textbf{Replacement}: Creation of a new generation by combining parents and offspring.
+	\item \textbf{Iteration}: Repetition of the process for a fixed number of generations or until reaching a stopping criterion.
 \end{enumerate}
 \begin{table}[H]
 	\centering
-	\caption{Risultati dell'algoritmo Genetico}
+	\caption{Results of the Genetic Algorithm}
 	\begin{tabular}{lrrrr}
 		\toprule
-		Istanza  & Tempo (ms) & Lunghezza Tour & Lunghezza ottima & Gap   \\
+		Instance  & Time (ms) & Tour Length & Optimal Length & Gap   \\
 		\midrule
 		eil51    & 22815      & 440.85         & 426.00           & 3.49  \\
 		berlin52 & 26104      & 7918.09        & 7542.00          & 4.99  \\
@@ -424,11 +424,11 @@ Nel contesto del \Gls{TSP}, un algorithmo genetico tipicamente opera come segue:
 	\end{tabular}
 \end{table}
 
-\subsubsection{Pseudocodice}
+\subsubsection{Pseudocode}
 
 
 \begin{algorithm}
-	\caption{Algoritmo Genetico per \Gls{TSP}}\label{alg:geneticalgorithm}
+	\caption{Genetic Algorithm for \Gls{TSP}}\label{alg:geneticalgorithm}
 	\begin{algorithmic}[1]
 		\Procedure{GeneticAlgorithmTSP}{$cities, populationSize, generations, mutationRate$}
 		\State $population \gets$ InitializePopulation($cities, populationSize$)
@@ -451,184 +451,184 @@ Nel contesto del \Gls{TSP}, un algorithmo genetico tipicamente opera come segue:
 	\end{algorithmic}
 \end{algorithm}
 
-\subsubsection{Vantaggi}
+\subsubsection{Advantages}
 
-Gli algoritmi genetici offrono diversi vantaggi significativi per la risoluzione del \Gls{TSP}:
-
-\begin{itemize}
-	\item \textbf{Esplorazione globale}: Capacità di esplorare ampie regioni dello spazio delle soluzioni, riducendo il rischio di convergenza prematura verso ottimi locali.
-	\item \textbf{Parallelizzabilità}: La natura della popolazione si presta bene al calcolo parallelo, migliorando l'efficienza computazionale.
-	\item \textbf{Flessibilità}: Facilmente adattabili a varianti del \Gls{TSP} e ad altri problemi di ottimizzazione combinatoria.
-	\item \textbf{Robustezza}: Capacità di gestire funzioni obiettivo rumorose o mal definite.
-	\item \textbf{Soluzioni multiple}: Possono fornire un insieme di soluzioni buone, non solo una singola soluzione ottimale.
-\end{itemize}
-
-\subsubsection{Svantaggi}
-
-Nonostante i loro punti di forza, gli Algoritmi Genetici presentano anche alcune limitazioni:
+Genetic algorithms offer several significant advantages for solving the \Gls{TSP}:
 
 \begin{itemize}
-	\item \textbf{Tempo di convergenza}: Possono richiedere molte generazioni per convergere, specialmente per problemi di grandi dimensioni.
-	\item \textbf{Sensibilità ai parametri}: Le prestazioni dipendono fortemente dalla scelta di parametri come dimensione della popolazione, tasso di mutazione, metodo di selezione, ecc.
-	\item \textbf{Non garantiscono l'ottimo globale}: Come altre metaeuristiche, non garantiscono di trovare la soluzione ottima globale.
-	\item \textbf{Difficoltà di codifica}: Per alcuni problemi, la rappresentazione efficace delle soluzioni come "cromosomi" può essere complessa.
-	\item \textbf{Perdita di diversità}: Possono soffrire di convergenza prematura se non gestiti correttamente, portando a soluzioni sub-ottimali.
+	\item \textbf{Global exploration}: Ability to explore broad regions of the solution space, reducing the risk of premature convergence to local optima.
+	\item \textbf{Parallelizability}: The population-based nature lends itself well to parallel computation, improving computational efficiency.
+	\item \textbf{Flexibility}: Easily adaptable to variants of the \Gls{TSP} and other combinatorial optimization problems.
+	\item \textbf{Robustness}: Ability to handle noisy or ill-defined objective functions.
+	\item \textbf{Multiple solutions}: Can provide a set of good solutions, not just a single optimal solution.
 \end{itemize}
 
-\subsubsection{Varianti e miglioramenti}
+\subsubsection{Disadvantages}
 
-Numerose varianti e miglioramenti sono stati proposti per ottimizzare le prestazioni degli Algoritmi Genetici per il \Gls{TSP}:
+Despite their strengths, Genetic Algorithms also present some limitations:
 
 \begin{itemize}
-	\item \textbf{Operatori di crossover specializzati}: Come il \Gls{PMX} (Partially Mapped Crossover) o l'\Gls{OX} (Order Crossover), progettati specificamente per preservare l'ordine relativo delle città.
-	\item \textbf{Tecniche di diversificazione}: Introduzione di meccanismi per mantenere la diversità della popolazione, come il "crowding" o la "nicchia ecologica".
-	\item \textbf{Ibridazione}: Combinazione con tecniche di ricerca locale (come 2-opt) per un'ottimizzazione fine delle soluzioni.
-	\item \textbf{Adattamento dei parametri}: Strategie per regolare dinamicamente i parametri dell'algoritmo durante l'esecuzione.
-	\item \textbf{Rappresentazioni alternative}: Utilizzo di codifiche diverse per i tour, come la rappresentazione basata su percorsi o su adiacenza.
+	\item \textbf{Convergence time}: May require many generations to converge, especially for large-scale problems.
+	\item \textbf{Parameter sensitivity}: Performance depends heavily on the choice of parameters such as population size, mutation rate, selection method, etc.
+	\item \textbf{No guarantee of global optimum}: Like other metaheuristics, they do not guarantee finding the global optimal solution.
+	\item \textbf{Encoding difficulty}: For some problems, effective representation of solutions as "chromosomes" can be complex.
+	\item \textbf{Loss of diversity}: May suffer from premature convergence if not properly managed, leading to sub-optimal solutions.
+\end{itemize}
+
+\subsubsection{Variants and Improvements}
+
+Numerous variants and improvements have been proposed to optimize the performance of Genetic Algorithms for the \Gls{TSP}:
+
+\begin{itemize}
+	\item \textbf{Specialized crossover operators}: Such as \Gls{PMX} (Partially Mapped Crossover) or \Gls{OX} (Order Crossover), specifically designed to preserve the relative order of cities.
+	\item \textbf{Diversification techniques}: Introduction of mechanisms to maintain population diversity, such as "crowding" or "ecological niching".
+	\item \textbf{Hybridization}: Combination with local search techniques (such as 2-opt) for fine optimization of solutions.
+	\item \textbf{Parameter adaptation}: Strategies to dynamically adjust algorithm parameters during execution.
+	\item \textbf{Alternative representations}: Use of different encodings for tours, such as path-based or adjacency-based representation.
 \end{itemize}
 
 
-Gli Algoritmi Genetici rappresentano un approccio potente e flessibile per affrontare il \Gls{TSP} e altri problemi di ottimizzazione combinatoria. La loro capacità di esplorare efficacemente spazi di soluzioni vasti e complessi li rende particolarmente adatti per istanze di grandi dimensioni o con caratteristiche non standard. Tuttavia, l'efficacia degli Algoritmi Genetici dipende fortemente dalla scelta appropriata di operatori genetici, parametri e strategie di implementazione. La ricerca continua in questo campo mira a migliorare ulteriormente le prestazioni e l'applicabilità di questi algoritmi a una gamma sempre più ampia di problemi di ottimizzazione.
+Genetic Algorithms represent a powerful and flexible approach to tackling the \Gls{TSP} and other combinatorial optimization problems. Their ability to effectively explore vast and complex solution spaces makes them particularly suitable for large-scale instances or those with non-standard characteristics. However, the effectiveness of Genetic Algorithms depends heavily on the appropriate choice of genetic operators, parameters, and implementation strategies. Ongoing research in this field aims to further improve the performance and applicability of these algorithms to an increasingly wide range of optimization problems.
 
 \subsection{Tabu Search}
 
-Tabu Search (\Gls{TS}) è una metaeuristica di ottimizzazione che estende la ricerca locale incorporando strutture di memoria per guidare il processo di ricerca. Introdotta da Fred Glover nel 1986, questa tecnica è particolarmente efficace per problemi di ottimizzazione combinatoria come il \Gls{TSP}.
+Tabu Search (\Gls{TS}) is an optimization metaheuristic that extends local search by incorporating memory structures to guide the search process. Introduced by Fred Glover in 1986, this technique is particularly effective for combinatorial optimization problems such as the \Gls{TSP}.
 
-\subsubsection{Principi fondamentali}
+\subsubsection{Fundamental Principles}
 
-L'idea chiave di \Gls{TS} è l'uso di una memoria adattiva (la lista tabu) per evitare di tornare a soluzioni recentemente visitate, permettendo così all'algoritmo di esplorare nuove aree dello spazio delle soluzioni e potenzialmente sfuggire agli ottimi locali. La lista tabu memorizza caratteristiche delle soluzioni recenti o mosse effettuate, vietando temporaneamente il loro riutilizzo.
+The key idea of \Gls{TS} is the use of adaptive memory (the tabu list) to avoid returning to recently visited solutions, thus allowing the algorithm to explore new areas of the solution space and potentially escape local optima. The tabu list stores characteristics of recent solutions or moves made, temporarily prohibiting their reuse.
 
-\subsubsection{Applicazione al \Gls{TSP}}
+\subsubsection{Application to the \Gls{TSP}}
 
-Nel contesto del \Gls{TSP}, Tabu Search opera tipicamente come segue:
+In the context of the \Gls{TSP}, Tabu Search typically operates as follows:
 
 \begin{enumerate}
-	\item Inizia con una soluzione iniziale (un tour completo).
-	\item Ad ogni iterazione, esplora il vicinato della soluzione corrente (ad esempio, scambiando coppie di città).
-	\item Seleziona la migliore mossa non tabu, anche se peggiora la soluzione corrente.
-	\item Aggiorna la lista tabu, aggiungendo la mossa appena effettuata e rimuovendo le mosse più vecchie se necessario.
-	\item Ripete il processo per un numero predefinito di iterazioni o fino a soddisfare un criterio di arresto.
+	\item Starts with an initial solution (a complete tour).
+	\item At each iteration, explores the neighborhood of the current solution (e.g., by swapping pairs of cities).
+	\item Selects the best non-tabu move, even if it worsens the current solution.
+	\item Updates the tabu list, adding the move just made and removing older moves if necessary.
+	\item Repeats the process for a predefined number of iterations or until a stopping criterion is met.
 \end{enumerate}
 
-\subsubsection{Pseudocodice}
+\subsubsection{Pseudocode}
 
 
 \begin{algorithm}
-	\caption{Tabu Search per \Gls{TSP}}\label{alg:tabusearch}
+	\caption{Tabu Search for \Gls{TSP}}\label{alg:tabusearch}
 	\begin{algorithmic}[1]
 		\Procedure{TabuSearchTSP}{$initialSolution, maxIterations, tabuListSize$}
 		\State $currentSolution \gets initialSolution$
 		\State $bestSolution \gets currentSolution$
-		\State $tabuList \gets$ inizializza lista vuota
+		\State $tabuList \gets$ initialize empty list
 		\For{$iteration \gets 1$ to $maxIterations$}
-		\State $neighborhood \gets$ generaVicinato($currentSolution$)
+		\State $neighborhood \gets$ generateNeighborhood($currentSolution$)
 		\State $bestCandidate \gets$ null
 		\For{$candidate$ in $neighborhood$}
-		\If{($candidate$ migliore di $bestCandidate$ AND mossa non in $tabuList$) OR\\
-			\qquad ($candidate$ migliore di $bestSolution$)}
+		\If{($candidate$ better than $bestCandidate$ AND move not in $tabuList$) OR\\
+			\qquad ($candidate$ better than $bestSolution$)}
 		\State $bestCandidate \gets candidate$
 		\EndIf
 		\EndFor
 		\State $currentSolution \gets bestCandidate$
-		\If{$currentSolution$ migliore di $bestSolution$}
+		\If{$currentSolution$ better than $bestSolution$}
 		\State $bestSolution \gets currentSolution$
 		\EndIf
-		\State Aggiorna $tabuList$
+		\State Update $tabuList$
 		\EndFor
 		\State \Return $bestSolution$
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
 
-\subsubsection{Vantaggi}
+\subsubsection{Advantages}
 
-Il \Gls{TS} offre diversi vantaggi significativi:
-
-\begin{itemize}
-	\item \textbf{Evita ottimi locali}: La lista tabu permette all'algoritmo di accettare temporaneamente mosse peggiorative, aiutando a sfuggire agli ottimi locali.
-	\item \textbf{Esplorazione efficiente}: Bilancia efficacemente l'esplorazione di nuove aree dello spazio delle soluzioni e lo sfruttamento delle soluzioni buone trovate.
-	\item \textbf{Adattabilità}: Può essere facilmente adattato a vari problemi di ottimizzazione combinatoria.
-	\item \textbf{Memoria a breve e lungo termine}: Può incorporare strategie di memoria a breve e lungo termine per guidare la ricerca in modo più intelligente.
-\end{itemize}
-
-\subsubsection{Svantaggi}
-
-Nonostante i suoi punti di forza, \Gls{TS} presenta anche alcune limitazioni:
+\Gls{TS} offers several significant advantages:
 
 \begin{itemize}
-	\item \textbf{Sensibilità ai parametri}: Le prestazioni possono dipendere fortemente dalla scelta dei parametri, come la dimensione della lista tabu e i criteri di aspirazione.
-	\item \textbf{Complessità computazionale}: L'esplorazione del vicinato ad ogni iterazione può essere computazionalmente costosa per problemi di grandi dimensioni.
-	\item \textbf{Non garantisce l'ottimo globale}: Come altre metaeuristiche, non garantisce di trovare la soluzione ottima globale.
-	\item \textbf{Difficoltà di implementazione}: L'implementazione efficiente delle strutture di memoria e dei criteri di aspirazione può essere complessa.
+	\item \textbf{Avoids local optima}: The tabu list allows the algorithm to temporarily accept worsening moves, helping to escape local optima.
+	\item \textbf{Efficient exploration}: Effectively balances exploration of new areas of the solution space and exploitation of found good solutions.
+	\item \textbf{Adaptability}: Can be easily adapted to various combinatorial optimization problems.
+	\item \textbf{Short and long-term memory}: Can incorporate short and long-term memory strategies to guide the search more intelligently.
+\end{itemize}
+
+\subsubsection{Disadvantages}
+
+Despite its strengths, \Gls{TS} also presents some limitations:
+
+\begin{itemize}
+	\item \textbf{Parameter sensitivity}: Performance can depend heavily on the choice of parameters, such as the tabu list size and aspiration criteria.
+	\item \textbf{Computational complexity}: Exploring the neighborhood at each iteration can be computationally expensive for large-scale problems.
+	\item \textbf{No guarantee of global optimum}: Like other metaheuristics, it does not guarantee finding the global optimal solution.
+	\item \textbf{Implementation difficulty}: Efficient implementation of memory structures and aspiration criteria can be complex.
 \end{itemize}
 
 
-\Gls{TS} rappresenta un potente strumento nell'arsenale delle metaeuristiche per il \Gls{TSP} e altri problemi di ottimizzazione combinatoria. La sua capacità di evitare ottimi locali e di esplorare efficacemente lo spazio delle soluzioni lo rende particolarmente adatto per istanze di problemi di grandi dimensioni o complessi. Tuttavia, come per molte tecniche avanzate, la sua efficacia dipende da un'attenta calibrazione e implementazione.
+\Gls{TS} represents a powerful tool in the arsenal of metaheuristics for the \Gls{TSP} and other combinatorial optimization problems. Its ability to avoid local optima and effectively explore the solution space makes it particularly suitable for large-scale or complex problem instances. However, like many advanced techniques, its effectiveness depends on careful calibration and implementation.
 
 \section{Ant Colony Optimization}
 
-L'Ant Colony Optimization (\Gls{ACO}) è un algoritmo metaeuristico ispirato al comportamento delle colonie di formiche reali \cite{dorigo1996ant}. Questo approccio simula il modo in cui le formiche trovano i percorsi più brevi tra le fonti di cibo e il loro nido, applicando questo concetto alla risoluzione di problemi di ottimizzazione combinatoria come il \Gls{TSP} \cite{dorigo1997ant}.
+Ant Colony Optimization (\Gls{ACO}) is a metaheuristic algorithm inspired by the behavior of real ant colonies \cite{dorigo1996ant}. This approach simulates the way ants find the shortest paths between food sources and their nest, applying this concept to solving combinatorial optimization problems such as the \Gls{TSP} \cite{dorigo1997ant}.
 
-\subsection{Principi Fondamentali dell'\Gls{ACO}}
+\subsection{Fundamental Principles of \Gls{ACO}}
 
-L'\Gls{ACO} si basa su diversi principi chiave:
+\Gls{ACO} is based on several key principles:
 
 \begin{enumerate}
-	\item \textbf{Feromoni}: Le formiche depositano una sostanza chimica chiamata feromone lungo i percorsi che seguono. Questo serve come meccanismo di comunicazione indiretta tra le formiche \cite{dorigo2006ant}.
-	\item \textbf{Evaporazione}: I feromoni evaporano nel tempo, permettendo all'algoritmo di "dimenticare" percorsi meno ottimali e prevenire la convergenza prematura \cite{stutzle2000max}.
-	\item \textbf{Probabilità di scelta}: Le formiche scelgono il loro percorso in base alla quantità di feromoni presenti e alla distanza tra le città, con un elemento di casualità \cite{dorigo2004ant}.
+	\item \textbf{Pheromones}: Ants deposit a chemical substance called pheromone along the paths they follow. This serves as an indirect communication mechanism among ants \cite{dorigo2006ant}.
+	\item \textbf{Evaporation}: Pheromones evaporate over time, allowing the algorithm to "forget" less optimal paths and prevent premature convergence \cite{stutzle2000max}.
+	\item \textbf{Choice probability}: Ants choose their path based on the amount of pheromones present and the distance between cities, with an element of randomness \cite{dorigo2004ant}.
 \end{enumerate}
 
-\subsection{Applicazione al \Gls{TSP}}
+\subsection{Application to the \Gls{TSP}}
 
-Nel contesto del \Gls{TSP}, l'ACO opera come segue:
+In the context of the \Gls{TSP}, ACO operates as follows:
 
 \begin{enumerate}
-	\item \textbf{Inizializzazione}: Si deposita una piccola quantità di feromoni su tutti i percorsi possibili.
-	\item \textbf{Costruzione del Tour}: Ogni formica costruisce un tour completo, scegliendo la prossima città da visitare in base alla formula:
+	\item \textbf{Initialization}: A small amount of pheromones is deposited on all possible paths.
+	\item \textbf{Tour Construction}: Each ant constructs a complete tour, choosing the next city to visit based on the formula:
 
 	      \[P_{ij}^k = \frac{(\tau_{ij})^\alpha \cdot (\eta_{ij})^\beta}{\sum_{l \in N_i^k} (\tau_{il})^\alpha \cdot (\eta_{il})^\beta}\]
 
-	      dove:
+	      where:
 	      \begin{itemize}
-		      \item $P_{ij}^k$ è la probabilità che la formica $k$ si sposti dalla città $i$ alla città $j$
-		      \item $\tau_{ij}$ è la quantità di feromoni sul percorso $(i,j)$
-		      \item $\eta_{ij}$ è l'inverso della distanza tra le città $i$ e $j$
-		      \item $\alpha$ e $\beta$ sono parametri che controllano l'importanza relativa dei feromoni e della distanza
-		      \item $N_i^k$ è l'insieme delle città non ancora visitate dalla formica $k$
+		      \item $P_{ij}^k$ is the probability that ant $k$ moves from city $i$ to city $j$
+		      \item $\tau_{ij}$ is the amount of pheromone on path $(i,j)$
+		      \item $\eta_{ij}$ is the inverse of the distance between cities $i$ and $j$
+		      \item $\alpha$ and $\beta$ are parameters that control the relative importance of pheromones and distance
+		      \item $N_i^k$ is the set of cities not yet visited by ant $k$
 	      \end{itemize}
 
-	\item \textbf{Aggiornamento dei Feromoni}: Dopo che tutte le formiche hanno completato i loro tour, i feromoni vengono aggiornati secondo la formula:
+	\item \textbf{Pheromone Update}: After all ants have completed their tours, pheromones are updated according to the formula:
 
 	      \[\tau_{ij} = (1-\rho)\tau_{ij} + \sum_{k=1}^m \Delta\tau_{ij}^k\]
 
-	      dove:
+	      where:
 	      \begin{itemize}
-		      \item $\rho$ è il tasso di evaporazione dei feromoni
-		      \item $m$ è il numero di formiche
-		      \item $\Delta\tau_{ij}^k$ è la quantità di feromoni depositati dalla formica $k$ sul percorso $(i,j)$, solitamente proporzionale alla qualità del tour trovato
+		      \item $\rho$ is the pheromone evaporation rate
+		      \item $m$ is the number of ants
+		      \item $\Delta\tau_{ij}^k$ is the amount of pheromone deposited by ant $k$ on path $(i,j)$, usually proportional to the quality of the tour found
 	      \end{itemize}
 
-	\item \textbf{Iterazione}: I passi 2 e 3 vengono ripetuti per un numero predefinito di iterazioni o fino a quando non si raggiunge un criterio di terminazione.
+	\item \textbf{Iteration}: Steps 2 and 3 are repeated for a predefined number of iterations or until a termination criterion is reached.
 \end{enumerate}
 
-Il seguente pseudocodice descrive l'implementazione di base dell'\Gls{ACO} per il \Gls{TSP}:
+The following pseudocode describes the basic implementation of \Gls{ACO} for the \Gls{TSP}:
 
 \begin{algorithm}
 	\begin{algorithmic}[1]
-		\Procedure{CostruisciTour}{$G, \alpha, \beta$}
-		\State Scegli una città di partenza casuale
-		\While{ci sono città non visitate}
-		\State Scegli la prossima città usando la formula di probabilità
+		\Procedure{ConstructTour}{$G, \alpha, \beta$}
+		\State Choose a random starting city
+		\While{there are unvisited cities}
+		\State Choose the next city using the probability formula
 		\EndWhile
-		\State \Return tour completo
+		\State \Return complete tour
 		\EndProcedure
 
-		\Procedure{AggiornaPheromoni}{$G, \rho, Q$}
-		\For{ogni arco $(i,j)$ in $G$}
+		\Procedure{UpdatePheromones}{$G, \rho, Q$}
+		\For{each edge $(i,j)$ in $G$}
 		\State $\tau_{ij} \gets (1-\rho)\tau_{ij}$
 		\For{$k = 1$ to $m$}
-		\If{$(i,j)$ è nel $tour_k$}
+		\If{$(i,j)$ is in $tour_k$}
 		\State $\tau_{ij} \gets \tau_{ij} + Q/length_k$
 		\EndIf
 		\EndFor
@@ -638,31 +638,31 @@ Il seguente pseudocodice descrive l'implementazione di base dell'\Gls{ACO} per i
 \end{algorithm}
 
 \begin{algorithm}
-	\caption{\Gls{ACO} per il \Gls{TSP}}\label{alg:aco-tsp}
+	\caption{\Gls{ACO} for the \Gls{TSP}}\label{alg:aco-tsp}
 	\begin{algorithmic}[1]
 		\Procedure{ACO-TSP}{$G, m, \alpha, \beta, \rho, Q, max\_iterations$}
-		\State $G \gets$ grafo delle città
-		\State $m \gets$ numero di formiche
-		\State $\alpha, \beta \gets$ parametri di controllo
-		\State $\rho \gets$ tasso di evaporazione dei feromoni
-		\State $Q \gets$ costante per il deposito di feromoni
-		\State $max\_iterations \gets$ numero massimo di iterazioni
+		\State $G \gets$ graph of cities
+		\State $m \gets$ number of ants
+		\State $\alpha, \beta \gets$ control parameters
+		\State $\rho \gets$ pheromone evaporation rate
+		\State $Q \gets$ constant for pheromone deposit
+		\State $max\_iterations \gets$ maximum number of iterations
 
-		\State Inizializza i feromoni $\tau_{ij} = \tau_0$ per ogni arco $(i,j)$ in $G$
+		\State Initialize pheromones $\tau_{ij} = \tau_0$ for each edge $(i,j)$ in $G$
 		\State $best\_tour \gets \emptyset$
 		\State $best\_length \gets \infty$
 
 		\For{$iteration = 1$ to $max\_iterations$}
 		\For{$k = 1$ to $m$}
-		\State $tour_k \gets$ CostruisciTour($G, \alpha, \beta$)
-		\State $length_k \gets$ CalcolaLunghezzaTour($tour_k$)
+		\State $tour_k \gets$ ConstructTour($G, \alpha, \beta$)
+		\State $length_k \gets$ CalculateTourLength($tour_k$)
 		\If{$length_k < best\_length$}
 		\State $best\_tour \gets tour_k$
 		\State $best\_length \gets length_k$
 		\EndIf
 		\EndFor
 
-		\State AggiornaPheromoni($G, \rho, Q$)
+		\State UpdatePheromones($G, \rho, Q$)
 		\EndFor
 
 		\State \Return $best\_tour, best\_length$
@@ -671,35 +671,35 @@ Il seguente pseudocodice descrive l'implementazione di base dell'\Gls{ACO} per i
 	\end{algorithmic}
 \end{algorithm}
 
-Le procedure \texttt{CostruisciTour} e \texttt{AggiornaPheromoni} sono rappresentate in forma semplificata e possono essere ulteriormente dettagliate in un'implementazione reale.
+The procedures \texttt{ConstructTour} and \texttt{UpdatePheromones} are represented in simplified form and can be further detailed in an actual implementation.
 
-\subsection{Varianti e Miglioramenti}
+\subsection{Variants and Improvements}
 
-Diverse varianti dell'\Gls{ACO} sono state proposte per migliorare le prestazioni dell'algoritmo sul \Gls{TSP}:
-
-\begin{itemize}
-	\item \textbf{MAX-MIN Ant System (\Gls{MMAS})}: Introduce limiti superiori e inferiori alla quantità di feromoni, prevenendo la stagnazione \cite{stutzle2000max}.
-	\item \textbf{Ant Colony System (\Gls{ACS})}: Utilizza una regola di transizione più aggressiva e un aggiornamento locale dei feromoni \cite{dorigo1997ant}.
-	\item \textbf{Rank-Based Ant System}: Modifica la regola di aggiornamento dei feromoni in base alla qualità dei tour trovati \cite{bullnheimer1999rank}.
-\end{itemize}
-
-\subsection{Vantaggi e Sfide}
-
-L'ACO offre diversi vantaggi per la risoluzione del \Gls{TSP}:
+Several variants of \Gls{ACO} have been proposed to improve algorithm performance on the \Gls{TSP}:
 
 \begin{itemize}
-	\item \textbf{Adattabilità}: Può facilmente adattarsi a cambiamenti nel problema, come l'aggiunta o la rimozione di città.
-	\item \textbf{Qualità delle soluzioni}: Spesso trova soluzioni di alta qualità, specialmente per istanze di grandi dimensioni del \Gls{TSP}.
+	\item \textbf{MAX-MIN Ant System (\Gls{MMAS})}: Introduces upper and lower limits to the amount of pheromones, preventing stagnation \cite{stutzle2000max}.
+	\item \textbf{Ant Colony System (\Gls{ACS})}: Uses a more aggressive transition rule and local pheromone update \cite{dorigo1997ant}.
+	\item \textbf{Rank-Based Ant System}: Modifies the pheromone update rule based on the quality of tours found \cite{bullnheimer1999rank}.
 \end{itemize}
 
-Tuttavia, l'\Gls{ACO} presenta anche alcune sfide:
+\subsection{Advantages and Challenges}
+
+ACO offers several advantages for solving the \Gls{TSP}:
 
 \begin{itemize}
-	\item \textbf{Convergenza}: Può convergere prematuramente a soluzioni sub-ottimali se i parametri non sono correttamente calibrati.
-	\item \textbf{Tempo di calcolo}: Per problemi di grandi dimensioni, può richiedere un tempo di calcolo significativo per raggiungere soluzioni di alta qualità.
-	\item \textbf{Parametrizzazione}: L'efficacia dell'algoritmo dipende fortemente dalla scelta dei parametri, che può essere difficile da ottimizzare.
+	\item \textbf{Adaptability}: Can easily adapt to changes in the problem, such as adding or removing cities.
+	\item \textbf{Solution quality}: Often finds high-quality solutions, especially for large-scale \Gls{TSP} instances.
 \end{itemize}
 
-\subsection{Conclusioni}
+However, \Gls{ACO} also presents some challenges:
 
-L'\Gls{ACO} rappresenta un approccio potente e flessibile per affrontare il Traveling Salesman Problem. Ispirandosi ai processi naturali di foraggiamento delle formiche, l'\Gls{ACO} offre un meccanismo robusto per esplorare lo spazio delle soluzioni del \Gls{TSP}, bilanciando efficacemente l'esplorazione di nuove soluzioni con lo sfruttamento delle informazioni accumulate. Nonostante le sfide legate alla parametrizzazione e al tempo di calcolo, l'\Gls{ACS} continua a essere un'area attiva di ricerca e sviluppo nel campo dell'ottimizzazione combinatoria \cite{dorigo2010ant}.
+\begin{itemize}
+	\item \textbf{Convergence}: May converge prematurely to sub-optimal solutions if parameters are not correctly calibrated.
+	\item \textbf{Computation time}: For large-scale problems, may require significant computation time to reach high-quality solutions.
+	\item \textbf{Parameterization}: Algorithm effectiveness depends heavily on parameter choice, which can be difficult to optimize.
+\end{itemize}
+
+\subsection{Conclusions}
+
+\Gls{ACO} represents a powerful and flexible approach to tackling the Traveling Salesman Problem. Drawing inspiration from the natural foraging processes of ants, \Gls{ACO} offers a robust mechanism for exploring the solution space of the \Gls{TSP}, effectively balancing the exploration of new solutions with the exploitation of accumulated information. Despite challenges related to parameterization and computation time, \Gls{ACS} continues to be an active area of research and development in the field of combinatorial optimization \cite{dorigo2010ant}.

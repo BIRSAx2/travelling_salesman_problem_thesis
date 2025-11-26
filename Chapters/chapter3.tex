@@ -14,17 +14,17 @@
 }
 \makeatother
 
-\chapter{Algoritmi esatti per il \Gls{TSP}} \label{chapt:3}
+\chapter{Exact Algorithms for the \Gls{TSP}} \label{chapt:3}
 
-Questo capitolo fornisce un esame approfondito degli algoritmi esatti per risolvere il \Gls{TSP}, incorporando pseudocodice dettagliato per chiarire i principi operativi di ciascun metodo. Attraverso questi algoritmi, esploriamo il panorama computazionale della ricerca di soluzioni ottimali al \Gls{TSP}.
+This chapter provides an in-depth examination of exact algorithms for solving the \Gls{TSP}, incorporating detailed pseudocode to clarify the operational principles of each method. Through these algorithms, we explore the computational landscape of finding optimal solutions to the \Gls{TSP}.
 
-\section{Panoramica degli Algoritmi Esatti}
+\section{Overview of Exact Algorithms}
 
-Gli algoritmi esatti per il \Gls{TSP} sono caratterizzati dalla loro capacità di trovare invariabilmente la soluzione ottimale, sebbene con costi computazionali che possono diventare proibitivi man mano che il numero di città aumenta. Questi algoritmi servono come base teorica e pratica per comprendere i limiti della risoluzione computazionale del \Gls{TSP}.
+Exact algorithms for the \Gls{TSP} are characterized by their ability to invariably find the optimal solution, albeit with computational costs that can become prohibitive as the number of cities increases. These algorithms serve as a theoretical and practical foundation for understanding the limits of computational resolution of the \Gls{TSP}.
 
-\subsection{Metodo a Brute-Force}
+\subsection{Brute-Force Method}
 
-Il metodo a forza bruta esamina sistematicamente ogni possibile tour per identificare quello con la distanza totale più corta. Nonostante la sua semplicità, la crescita esponenziale dei calcoli lo rende impraticabile di dimensione non banale.
+The brute-force method systematically examines every possible tour to identify the one with the shortest total distance. Despite its simplicity, the exponential growth of calculations makes it impractical for non-trivial sizes.
 
 \begin{algorithm}
 	\caption{TSP Brute Force}\label{bruteforce}
@@ -63,7 +63,7 @@ Il metodo a forza bruta esamina sistematicamente ogni possibile tour per identif
 			\draw (A) -- (C) node[pos=1/3, above right] {5};
 
 		\end{tikzpicture}
-		\caption{Grafo di partenza con quattro città}
+		\caption{Starting graph with four cities}
 		\label{fig:subfig1}
 	\end{subfigure}
 	\hfill
@@ -87,7 +87,7 @@ Il metodo a forza bruta esamina sistematicamente ogni possibile tour per identif
 			\draw[thick, red] (A) -- (B) -- (C) -- (D) -- (A);
 
 		\end{tikzpicture}
-		\caption{Percorso ottimale con distanza totale 15}
+		\caption{Optimal path with total distance 15}
 		\label{fig:subfig2}
 	\end{subfigure}
 
@@ -111,7 +111,7 @@ Il metodo a forza bruta esamina sistematicamente ogni possibile tour per identif
 			\draw[thick, red] (A) -- (B) -- (D) -- (C) -- (A);
 
 		\end{tikzpicture}
-		\caption{Percorso alternativo con distanza totale 19}	
+		\caption{Alternative path with total distance 19}
 		\label{fig:subfig3}
 	\end{subfigure}
 	\hfill
@@ -135,29 +135,29 @@ Il metodo a forza bruta esamina sistematicamente ogni possibile tour per identif
 			\draw[thick, red] (A) -- (D) -- (B) -- (C) -- (A);
 
 		\end{tikzpicture}
-		\caption{Percorso alternativo con distanza totale 26}
+		\caption{Alternative path with total distance 26}
 		\label{fig:subfig4}
 	\end{subfigure}
 
-	\caption{Brute force TSP con quattro città}
+	\caption{Brute force TSP with four cities}
 	\label{fig:four_subfigures}
 \end{figure}
 
-La complessità computazionale di questo metodo è $O(n!)$, che riflette il numero fattoriale di tour che devono essere valutati.
+The computational complexity of this method is $O(n!)$, which reflects the factorial number of tours that must be evaluated.
 
-\subsection{Algoritmo di Bellman-Held-Karp}
+\subsection{Bellman-Held-Karp Algorithm}
 
-L'algoritmo di Bellman-Held-Karp rappresenta un significativo avanzamento nelle soluzioni esatte del \Gls{TSP} sfruttando la programmazione dinamica per ridurre l'onere computazionale. Questo approccio calcola il percorso più breve dividendo il problema in sottoproblemi più piccoli e memorizzando i risultati di questi sottoproblemi per evitare calcoli ridondanti sfruttando la programmazione dinamica.
+The Bellman-Held-Karp algorithm represents a significant advancement in exact solutions for the \Gls{TSP} by exploiting dynamic programming to reduce the computational burden. This approach computes the shortest path by dividing the problem into smaller subproblems and storing the results of these subproblems to avoid redundant calculations exploiting dynamic programming.
 
 \begin{algorithm}
-	\caption{Algoritmo di Bellman-Held-Karp}\label{bellmanheldkarp}
+	\caption{Bellman-Held-Karp Algorithm}\label{bellmanheldkarp}
 	\begin{algorithmic}[1]
 		\Procedure{BellmanHeldKarp}{$cities$}
-		\State Crea una tabella $distances$ per memorizzare i percorsi più brevi
-		\State Inizializza tutte le voci in $distances$ a $\infty$
-		\State $distances[1][\{1\}] \gets 0$ \Comment{Città di partenza}
+		\State Create a table $distances$ to store the shortest paths
+		\State Initialize all entries in $distances$ to $\infty$
+		\State $distances[1][\{1\}] \gets 0$ \Comment{Starting city}
 		\For{$m = 2$ to $|cities|$}
-		\ForAll{sottoinsiemi $S$ di $cities$ di dimensione $m$ contenenti 1}
+		\ForAll{subsets $S$ of $cities$ of size $m$ containing 1}
 		\ForAll{$j \in S, j \neq 1$}
 		\State $distances[j][S] \gets \min_{k \neq j, k \in S} (distances[k][S\setminus\{j\}] + distance(k, j))$
 		\EndFor
@@ -168,7 +168,7 @@ L'algoritmo di Bellman-Held-Karp rappresenta un significativo avanzamento nelle 
 	\end{algorithmic}
 \end{algorithm}
 
-L'algoritmo di Bellman-Held-Karp opera con una complessità temporale di $O(n^2 \cdot 2^n)$~\ref{fig:agl_complexity}, rendendolo significativamente più efficiente del metodo a brute-force per istanze di problema di dimensioni moderate. Tuttavia, la componente esponenziale della sua complessità limita ancora la sua applicabilità pratica a istanze relativamente piccole di \Gls{TSP}.
+The Bellman-Held-Karp algorithm operates with a time complexity of $O(n^2 \cdot 2^n)$~\ref{fig:agl_complexity}, making it significantly more efficient than the brute-force method for moderate-sized problem instances. However, the exponential component of its complexity still limits its practical applicability to relatively small instances of the \Gls{TSP}.
 
 % \begin{figure}[htbp]
 % 	\centering
@@ -193,24 +193,24 @@ L'algoritmo di Bellman-Held-Karp opera con una complessità temporale di $O(n^2 
 
 \subsubsection{Branch and Bound}
 
-Branch and Bound (\Gls{BnB}) è una tecnica algoritmica generale che può essere applicata a vari problemi di ottimizzazione combinatoria, incluso il \Gls{TSP}. Esplora sistematicamente lo spazio delle soluzioni dividendolo in sottoinsiemi più piccoli (branching) e utilizzando limiti per eliminare i sottoinsiemi che non contengono la soluzione ottimale, riducendo così lo spazio di ricerca.
+Branch and Bound (\Gls{BnB}) is a general algorithmic technique that can be applied to various combinatorial optimization problems, including the \Gls{TSP}. It systematically explores the solution space by dividing it into smaller subsets (branching) and using bounds to eliminate subsets that do not contain the optimal solution, thus reducing the search space.
 
 \begin{algorithm}
-	\caption{\Gls{BnB} per il \Gls{TSP}}\label{branchbound}
+	\caption{\Gls{BnB} for the \Gls{TSP}}\label{branchbound}
 	\begin{algorithmic}[1]
 		\Procedure{BranchAndBoundTSP}{$cities$}
-		\State Inizializza una coda di priorità $Q$ con una soluzione parziale che parte dalla prima città
+		\State Initialize a priority queue $Q$ with a partial solution starting from the first city
 		\State $min\_distance \gets \infty$
-		\While{$Q$ non è vuota}
-		\State Prendi la soluzione parziale con il limite inferiore più basso da $Q$
-		\If{rappresenta un tour completo}
-		\If{il suo costo è inferiore a $min\_distance$}
-		\State Aggiorna $min\_distance$ e registra il tour
+		\While{$Q$ is not empty}
+		\State Take the partial solution with the lowest lower bound from $Q$
+		\If{it represents a complete tour}
+		\If{its cost is less than $min\_distance$}
+		\State Update $min\_distance$ and record the tour
 		\EndIf
 		\Else
-		\State Dividi aggiungendo una città alla soluzione parziale
-		\State Calcola i limiti per le nuove soluzioni parziali
-		\State Aggiungi le nuove soluzioni parziali a $Q$
+		\State Branch by adding a city to the partial solution
+		\State Calculate bounds for the new partial solutions
+		\State Add the new partial solutions to $Q$
 		\EndIf
 		\EndWhile
 		\State \Return $min\_distance$
@@ -218,23 +218,23 @@ Branch and Bound (\Gls{BnB}) è una tecnica algoritmica generale che può essere
 	\end{algorithmic}
 \end{algorithm}
 
-L'efficienza di \Gls{BnB} per il \Gls{TSP} dipende in modo significativo dalla funzione di limite utilizzata per stimare il limite inferiore delle soluzioni parziali. Un limite efficace può portare a riduzioni sostanziali dello spazio di ricerca, consentendo all'algoritmo di trovare la soluzione ottimale più rapidamente rispetto ai metodi di ricerca esaustiva. Tuttavia, la sua complessità temporale peggiore rimane $O(n!)$~\ref{fig:agl_complexity}, il che significa che per istanze molto grandi del problema, anche questo approccio sofisticato potrebbe non essere pratico.
+The efficiency of \Gls{BnB} for the \Gls{TSP} depends significantly on the bounding function used to estimate the lower bound of partial solutions. An effective bound can lead to substantial reductions in the search space, allowing the algorithm to find the optimal solution more quickly than exhaustive search methods. However, its worst-case time complexity remains $O(n!)$~\ref{fig:agl_complexity}, which means that for very large problem instances, even this sophisticated approach may not be practical.
 
-\section{Analisi degli Algoritmi Esatti}
+\section{Analysis of Exact Algorithms}
 
-\subsection{Fattibilità Computazionale}
+\subsection{Computational Feasibility}
 
-Gli algoritmi esatti per il \Gls{TSP}, come il metodo a forza bruta, la programmazione dinamica e l'algoritmo di Bellman-Held-Karp, offrono garanzie teoriche per trovare il tour ottimale. Tuttavia, la loro fattibilità computazionale è notevolmente compromessa all'aumentare del numero di città. Il tasso di crescita fattoriale della complessità del metodo a forza bruta e il tasso di crescita esponenziale della complessità Bellman-Held-Karp limitano la loro applicazione pratica a istanze relativamente piccole del \Gls{TSP}.
+Exact algorithms for the \Gls{TSP}, such as the brute-force method, dynamic programming, and the Bellman-Held-Karp algorithm, offer theoretical guarantees for finding the optimal tour. However, their computational feasibility is significantly compromised as the number of cities increases. The factorial growth rate of the brute-force method's complexity and the exponential growth rate of the Bellman-Held-Karp complexity limit their practical application to relatively small instances of the \Gls{TSP}.
 
 \begin{center}
 	\begin{figure}[h]
 		\centering
-		\caption{Complessità degli Algoritmi Esatti}
+		\caption{Complexity of Exact Algorithms}
 		\label{fig:agl_complexity}
 		\begin{tikzpicture}
 			\begin{semilogyaxis}[
-					xlabel={Elementi},
-					ylabel={Operazioni},
+					xlabel={Elements},
+					ylabel={Operations},
 					ylabel near ticks,
 					ylabel style={at={(1.05,0.5)}, anchor=center},
 					domain=0:10,
@@ -263,7 +263,7 @@ Gli algoritmi esatti per il \Gls{TSP}, come il metodo a forza bruta, la programm
 	\begin{tikzpicture}
 		\begin{axis}[
 				ybar,
-				ylabel={Numero massimo di città},
+				ylabel={Maximum number of cities},
 				symbolic x coords={Brute Force, Held-Karp, Branch and Bound},
 				xtick=data,
 				nodes near coords,
@@ -275,48 +275,48 @@ Gli algoritmi esatti per il \Gls{TSP}, come il metodo a forza bruta, la programm
 			\addplot coordinates {(Brute Force,12) (Held-Karp,23) (Branch and Bound,40)};
 		\end{axis}
 	\end{tikzpicture}
-	\caption{Dimensione massima del problema risolvibile in un'ora (approssimativo)}
+	\caption{Maximum problem size solvable in one hour (approximate)}
 	\label{fig:max-problem-size}
 \end{figure}
 
-\subsection{Vantaggi e Svantaggi}
+\subsection{Advantages and Disadvantages}
 
-Riassumendo:
+In summary:
 
-\textbf{Vantaggi:}
+\textbf{Advantages:}
 \begin{itemize}
-	\item Garanzia di trovare una soluzione ottimale.
-	\item Forniscono un benchmark per valutare le prestazioni di algoritmi euristici e meteuristici.
+	\item Guarantee of finding an optimal solution.
+	\item Provide a benchmark for evaluating the performance of heuristic and metaheuristic algorithms.
 \end{itemize}
 
-\textbf{Svantaggi:}
+\textbf{Disadvantages:}
 \begin{itemize}
-	\item Complessità temporale esponenziale che li rende impraticabili per grandi istanze.
-	\item Significative risorse computazionali richieste anche per problemi di dimensioni moderate.
-	\item La programmazione dinamica e Held-Karp, pur essendo più efficienti del metodo a forza bruta, affrontano ancora limitazioni a causa della loro complessità spaziale e della necessità di un calcolo estensivo.
+	\item Exponential time complexity that makes them impractical for large instances.
+	\item Significant computational resources required even for moderate-sized problems.
+	\item Dynamic programming and Held-Karp, while more efficient than the brute-force method, still face limitations due to their space complexity and the need for extensive computation.
 \end{itemize}
 
 
 \subsection{Concorde}
 
 
-Concorde è considerato uno dei risolutori esatti più efficienti per risolvere il \Gls{TSP}. Sviluppato da un gruppo di ricercatori guidati da Applegate et al., questo risolutore sfrutta una combinazione di metodi avanzati come il branch-and-bound, il cutting-plane e tecniche di programmazione lineare e combinatoria~\cite{Applegate2007}. Concorde è in grado di risolvere istanze del \Gls{TSP} con di migliaia di città in tempi ragionevoli, rendendolo uno strumento di riferimento per confronti sperimentali e applicazioni pratiche di grande scala.
+Concorde is considered one of the most efficient exact solvers for solving the \Gls{TSP}. Developed by a group of researchers led by Applegate et al., this solver exploits a combination of advanced methods such as branch-and-bound, cutting-plane, and linear and combinatorial programming techniques~\cite{Applegate2007}. Concorde is capable of solving \Gls{TSP} instances with thousands of cities in reasonable times, making it a reference tool for experimental comparisons and large-scale practical applications.
 
-L'efficienza di Concorde è dovuta alla sua capacità di ridurre drasticamente lo spazio di ricerca mediante il branch-and-bound, migliorato con l'uso di piani di taglio per raffinare i limiti inferiori delle soluzioni. In aggiunta, Concorde implementa euristiche efficaci per identificare buone soluzioni iniziali, che aiutano a limitare l'esplorazione delle soluzioni subottimali. Concorde è anche stato utilizzato per risolvere problemi di benchmark nella letteratura del \Gls{TSP}, come le istanze del problema TSPLIB \cite{TSPLIB}, dimostrando la sua efficacia per problemi di dimensioni reali~\cite{Cook2011}.
+Concorde's efficiency is due to its ability to drastically reduce the search space through branch-and-bound, enhanced with the use of cutting planes to refine the lower bounds of solutions. In addition, Concorde implements effective heuristics to identify good initial solutions, which help limit the exploration of suboptimal solutions. Concorde has also been used to solve benchmark problems in the \Gls{TSP} literature, such as the TSPLIB problem instances \cite{TSPLIB}, demonstrating its effectiveness for real-world problem sizes~\cite{Cook2011}.
 
-\textbf{Vantaggi:}
+\textbf{Advantages:}
 \begin{itemize}
-    \item Capacità di risolvere grandi istanze del \Gls{TSP}.
-    \item Utilizzo combinato di tecniche avanzate di ottimizzazione.
-    \item Implementazioni efficienti e ben documentate.
+    \item Ability to solve large \Gls{TSP} instances.
+    \item Combined use of advanced optimization techniques.
+    \item Efficient and well-documented implementations.
 \end{itemize}
 
-\textbf{Svantaggi:}
+\textbf{Disadvantages:}
 \begin{itemize}
-    \item Richiede elevate risorse computazionali per istanze di dimensioni estremamente grandi.
-    \item La complessità delle tecniche implementate può renderlo difficile da adattare a problemi leggermente diversi dal \Gls{TSP}.
+    \item Requires high computational resources for extremely large instances.
+    \item The complexity of the implemented techniques can make it difficult to adapt to problems slightly different from the \Gls{TSP}.
 \end{itemize}
 
 
-L'esplorazione degli algoritmi esatti getta le basi per comprendere le complessità computazionali intrinseche del \Gls{TSP}. Sebbene la loro applicazione pratica sia limitata dalle loro esigenze computazionali, rimangono cruciali per l'analisi teorica e per preparare il terreno per le tecniche risolutive alternative discusse nei capitoli successivi.
+The exploration of exact algorithms lays the foundation for understanding the intrinsic computational complexities of the \Gls{TSP}. Although their practical application is limited by their computational demands, they remain crucial for theoretical analysis and for setting the stage for the alternative solution techniques discussed in subsequent chapters.
 

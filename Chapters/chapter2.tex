@@ -8,20 +8,20 @@
 
 \typeout{NT FILE chapter2.tex}%
 
-\chapter{Quadro Teorico: Complessità ed efficienza}\label{chapt:2}
+\chapter{Theoretical Framework: Complexity and Efficiency}\label{chapt:2}
 % \Glsresetall
 
 
 
-\section{Complessità Computazionale}
+\section{Computational Complexity}
 
-La complessità computazionale si riferisce allo studio dei requisiti di risorse degli algoritmi, concentrandosi principalmente sulle risorse di tempo e spazio in funzione della dimensione dell'input. Questo campo categorizza i problemi in base alle risorse minime necessarie per risolverli, fornendo un quadro teorico per comprendere la difficoltà intrinseca dei problemi computazionali e l'efficienza degli algoritmi progettati per risolverli. ~\cite{GareyJohnson1979}
+Computational complexity refers to the study of resource requirements of algorithms, focusing primarily on time and space resources as a function of input size. This field categorizes problems based on the minimum resources needed to solve them, providing a theoretical framework for understanding the intrinsic difficulty of computational problems and the efficiency of algorithms designed to solve them. ~\cite{GareyJohnson1979}
 
-\subsection{Complessità Temporale}
+\subsection{Time Complexity}
 
-La complessità temporale è una misura della quantità di tempo di calcolo che un algoritmo impiega per completarsi in funzione della lunghezza dell'input. Viene spesso espressa utilizzando la notazione Big O, che descrive il limite superiore del tasso di crescita del tempo di esecuzione ~\cite{BigONotation}. Comprendere la complessità temporale di un algoritmo è cruciale per prevederne la scalabilità e la fattibilità nelle applicazioni pratiche, soprattutto per i problemi noti per essere computazionalmente intensivi come il \Gls{TSP}. 
+Time complexity is a measure of the amount of computational time an algorithm takes to complete as a function of the input length. It is often expressed using Big O notation, which describes the upper bound of the growth rate of execution time ~\cite{BigONotation}. Understanding the time complexity of an algorithm is crucial for predicting its scalability and feasibility in practical applications, especially for problems known to be computationally intensive such as the \Gls{TSP}.
 
-Il \Gls{TSP}, essendo \Gls{NP}-hard, non ha una soluzione in tempo polinomiale nota che possa risolvere in modo efficiente tutte le istanze del problema. L'approccio a forza bruta per il \Gls{TSP}, ad esempio, ha una complessità temporale fattoriale (\(O(n!)\)), rendendolo computazionalmente irrealizzabile anche per istanze del problema di dimensioni moderatamente grandi. Ciò ha portato all'esplorazione di vari algoritmi euristici e meteuristici che mirano a soluzioni accettabili in tempo polinomiale (\(O(n^k)\)), dove \(k\) è una costante, scambiando precisione per efficienza e applicabilità pratica.~\cite{Dorigo1996}
+The \Gls{TSP}, being \Gls{NP}-hard, does not have a known polynomial-time solution that can efficiently solve all instances of the problem. The brute-force approach for the \Gls{TSP}, for example, has a factorial time complexity (\(O(n!)\)), making it computationally infeasible even for moderately large problem instances. This has led to the exploration of various heuristic and metaheuristic algorithms that aim for acceptable solutions in polynomial time (\(O(n^k)\)), where \(k\) is a constant, trading accuracy for efficiency and practical applicability.~\cite{Dorigo1996}
 
 
 \begin{figure}[h]
@@ -59,16 +59,16 @@ Il \Gls{TSP}, essendo \Gls{NP}-hard, non ha una soluzione in tempo polinomiale n
 		\end{axis}
 	\end{tikzpicture}
 	\vspace{1.0cm}
-	\caption{Tasso di crescita delle diverse complessità}
+	\caption{Growth rate of different complexities}
 \end{figure}
 
 
 \begin{table}[h]
 	\centering
-	\caption{Numero di possibili permutazioni per numero di città}
+	\caption{Number of possible permutations per number of cities}
 	\begin{tabular}{c l}
 		\toprule
-		Numero città & Numero Permutazioni                \\
+		Number of cities & Number of Permutations                \\
 		\midrule
 		4            & 24                                 \\
 		5            & 120                                \\
@@ -92,15 +92,15 @@ Il \Gls{TSP}, essendo \Gls{NP}-hard, non ha una soluzione in tempo polinomiale n
 	\end{tabular}
 \end{table}
 
-\subsection{Complessità Spaziale}
+\subsection{Space Complexity}
 
-La complessità spaziale misura la quantità totale di memoria di cui un algoritmo necessita in funzione della dimensione dell'input. Come la complessità temporale, la complessità spaziale è cruciale per valutare l'efficienza di un algoritmo, in particolare in scenari in cui le risorse di memoria sono limitate. Nel contesto del \Gls{TSP} e di problemi di ottimizzazione simili, la complessità spaziale di un algoritmo può influire significativamente sulla sua usabilità in applicazioni del mondo reale, dove le soluzioni spesso devono essere calcolate in tempo reale o su hardware con capacità di memoria limitate.~\cite{HeldKarp1962}.
+Space complexity measures the total amount of memory an algorithm requires as a function of input size. Like time complexity, space complexity is crucial for evaluating the efficiency of an algorithm, particularly in scenarios where memory resources are limited. In the context of the \Gls{TSP} and similar optimization problems, the space complexity of an algorithm can significantly impact its usability in real-world applications, where solutions often need to be computed in real-time or on hardware with limited memory capacity.~\cite{HeldKarp1962}.
 
-Ad esempio, gli approcci di programmazione dinamica per il \Gls{TSP}, come l'algoritmo di Held-Karp, offrono una complessità temporale più favorevole rispetto alla forza bruta (\(O(n^2 2^n)\)) ma a costo di una complessità di spazio esponenziale (\(O(n^2)\)). Tali compromessi tra complessità temporale e spaziale sono considerazioni centrali nella progettazione degli algoritmi, soprattutto quando si sviluppano nuovi algoritmi destinati a istanze di problemi su larga scala, come quelle riscontrate in applicazioni di logistica e routing.
+For example, dynamic programming approaches for the \Gls{TSP}, such as the Held-Karp algorithm, offer a more favorable time complexity compared to brute force (\(O(n^2 2^n)\)) but at the cost of exponential space complexity (\(O(n^2)\)). Such trade-offs between time and space complexity are central considerations in algorithm design, especially when developing new algorithms intended for large-scale problem instances, such as those encountered in logistics and routing applications.
 
-\section{Il Problema \Gls{P} vs. \Gls{NP} }
+\section{The \Gls{P} vs. \Gls{NP} Problem}
 
-Il problema \Gls{P} vs \Gls{NP} rappresenta una delle questioni aperte più significative nel campo dell'informatica teorica. Si tratta di stabilire se ogni problema la cui soluzione può essere verificata in modo efficiente (in tempo polinomiale) da un computer possa anche essere risolto altrettanto velocemente (sempre in tempo polinomiale). La classe \Gls{P} include problemi che possono essere risolti rapidamente, mentre la classe \Gls{NP} comprende problemi per i quali una soluzione data può essere verificata rapidamente.~\cite{PvsNP}.
+The \Gls{P} vs \Gls{NP} problem represents one of the most significant open questions in the field of theoretical computer science. It concerns establishing whether every problem whose solution can be efficiently verified (in polynomial time) by a computer can also be solved just as quickly (also in polynomial time). The \Gls{P} class includes problems that can be solved quickly, while the \Gls{NP} class comprises problems for which a given solution can be verified quickly.~\cite{PvsNP}.
 \begin{figure}[h]
 	\centering
 	% TODO: Use venndiagram package to draw the diagram
@@ -172,27 +172,27 @@ Il problema \Gls{P} vs \Gls{NP} rappresenta una delle questioni aperte più sign
 		\draw[very thick] (-9.5,0) parabola bend (0,12.5) (9.5,0);
 		\node at (0,12) {R};
 	\end{tikzpicture}
-	\caption{Classificazione dei problemi computazionali}
+	\caption{Classification of computational problems}
 \end{figure}
-\subsection{Definizione e Rilevanza}
+\subsection{Definition and Relevance}
 
-Formalmente, un problema appartiene alla classe \Gls{P} se può essere risolto in tempo polinomiale, il che significa che la quantità di tempo necessaria per risolvere il problema cresce in modo polinomiale con la dimensione dell'input. La classe \Gls{NP} , d'altra parte, comprende i problemi per i quali una soluzione data può essere verificata in tempo polinomiale. Il problema \Gls{P} vs. \Gls{NP} chiede essenzialmente se queste due classi sono uguali; cioè, se ogni problema che può essere verificato rapidamente può anche essere risolto rapidamente.
+Formally, a problem belongs to the \Gls{P} class if it can be solved in polynomial time, which means that the amount of time needed to solve the problem grows polynomially with the size of the input. The \Gls{NP} class, on the other hand, comprises problems for which a given solution can be verified in polynomial time. The \Gls{P} vs. \Gls{NP} problem essentially asks whether these two classes are equal; that is, whether every problem that can be verified quickly can also be solved quickly.
 
-La rilevanza del problema \Gls{P} vs. \Gls{NP} risiede nelle sue implicazioni per un vasto campo di discipline, dalla crittografia e la progettazione di algoritmi ai processi decisionali e oltre. Una prova che \Gls{P} è uguale a \Gls{NP} potrebbe potenzialmente rivoluzionare i campi della matematica e dell'informatica, consentendo soluzioni efficienti a una moltitudine di problemi complessi attualmente considerati intrattabili. Al contrario, provare che \Gls{P} non è uguale a \Gls{NP} formalizzerebbe la difficoltà computazionale intrinseca di questi problemi.
+The relevance of the \Gls{P} vs. \Gls{NP} problem lies in its implications for a vast field of disciplines, from cryptography and algorithm design to decision-making processes and beyond. A proof that \Gls{P} equals \Gls{NP} could potentially revolutionize the fields of mathematics and computer science, enabling efficient solutions to a multitude of complex problems currently considered intractable. Conversely, proving that \Gls{P} does not equal \Gls{NP} would formalize the intrinsic computational difficulty of these problems.
 
-\subsection{Implicazioni per il \Gls{TSP}}
+\subsection{Implications for the \Gls{TSP}}
 
-La classificazione del \Gls{TSP} come \Gls{NP}-hard sottolinea la complessità e le sfide computazionali associate al trovare una soluzione esatta per grandi istanze del problema. Questa classificazione ha implicazioni significative sia per la ricerca teorica che per le applicazioni pratiche nel campo. Implica che a meno che \Gls{P} non sia uguale a \Gls{NP} non ci si dovrebbe aspettare di scoprire un algoritmo in grado di risolvere rapidamente (in tempo polinomiale) e accuratamente ogni istanza del \Gls{TSP}. Questa consapevolezza ha spostato il focus di gran parte della ricerca sul \Gls{TSP} verso lo sviluppo di algoritmi euristici e meteuristici, che mirano a trovare soluzioni sufficientemente buone in un lasso di tempo ragionevole, piuttosto che inseguire l'elusivo obiettivo di una soluzione esatta per tutte le possibili istanze.~\cite{Karp1972}.
+The classification of the \Gls{TSP} as \Gls{NP}-hard underscores the complexity and computational challenges associated with finding an exact solution for large problem instances. This classification has significant implications for both theoretical research and practical applications in the field. It implies that unless \Gls{P} equals \Gls{NP}, one should not expect to discover an algorithm capable of solving quickly (in polynomial time) and accurately every instance of the \Gls{TSP}. This awareness has shifted the focus of much of the research on the \Gls{TSP} toward the development of heuristic and metaheuristic algorithms, which aim to find sufficiently good solutions in a reasonable time frame, rather than pursuing the elusive goal of an exact solution for all possible instances.~\cite{Karp1972}.
 
-Inoltre, le implicazioni del fatto che il \Gls{TSP} sia \Gls{NP}-hard si estendono oltre lo sviluppo degli algoritmi. Influenza il modo in cui i problemi vengono modellati in scenari pratici in cui sorgono problemi simili al \Gls{TSP}, come la logistica e il routing, la progettazione di reti e la pianificazione. In queste applicazioni, l'enfasi è spesso rivolta al trovare soluzioni che si avvicinino all'ottimale ma possano essere ottenute molto più rapidamente di quanto permetterebbe un algoritmo esatto. Questo approccio consente all'industria di raggiungere efficienza e risparmi di costi anche quando si affrontano problemi di routing e pianificazione complessi.
+Furthermore, the implications of the \Gls{TSP} being \Gls{NP}-hard extend beyond algorithm development. It influences how problems are modeled in practical scenarios where TSP-like problems arise, such as logistics and routing, network design, and scheduling. In these applications, the emphasis is often on finding solutions that approximate the optimal but can be obtained much more quickly than an exact algorithm would allow. This approach enables industry to achieve efficiency and cost savings even when facing complex routing and scheduling problems.
 
-Pertanto, le implicazioni della classificazione del \Gls{TSP} risuonano sia nello studio accademico della teoria degli algoritmi che nelle considerazioni pratiche sull'applicazione di queste teorie in situazioni del mondo reale.
+Therefore, the implications of the \Gls{TSP} classification resonate in both the academic study of algorithm theory and in practical considerations on applying these theories in real-world situations.
 
-\section{Complessità del \Gls{TSP}}
+\section{Complexity of the \Gls{TSP}}
 
-La dimostrazione che il \Gls{TSP} è \Gls{NP} -hard è stata presentata per la prima volta da Richard M. Karp nel 1972. Il lavoro di Karp, parte di un articolo che identificava 21 problemi \Gls{NP}-complete, ha gettato le basi per comprendere i limiti computazionali delle soluzioni algoritmiche per il \Gls{TSP} e problemi simili. Dimostrando che la versione decisionale del \Gls{TSP} (determinare se esiste un tour di una data lunghezza o inferiore) è \Gls{NP}-complete, Karp ha dimostrato che la versione di ottimizzazione del \Gls{TSP}, in cui l'obiettivo è trovare il tour più breve possibile, è \Gls{NP} -hard.
+The proof that the \Gls{TSP} is \Gls{NP}-hard was first presented by Richard M. Karp in 1972. Karp's work, part of a paper that identified 21 \Gls{NP}-complete problems, laid the foundation for understanding the computational limits of algorithmic solutions for the \Gls{TSP} and similar problems. By demonstrating that the decision version of the \Gls{TSP} (determining whether a tour of a given length or less exists) is \Gls{NP}-complete, Karp showed that the optimization version of the \Gls{TSP}, where the goal is to find the shortest possible tour, is \Gls{NP}-hard.
 
-La dimostrazione di Karp impiega una tecnica nota come riduzione, in cui un problema \Gls{NP}-complete noto viene trasformato in un'istanza del \Gls{TSP} in tempo polinomiale. Questo metodo illustra che se un algoritmo in tempo polinomiale potesse risolvere il \Gls{TSP}, potrebbe, per estensione, risolvere tutti i problemi in \Gls{NP}, una proposizione che rimane non verificata. 
+Karp's proof employs a technique known as reduction, in which a known \Gls{NP}-complete problem is transformed into an instance of the \Gls{TSP} in polynomial time. This method illustrates that if a polynomial-time algorithm could solve the \Gls{TSP}, it could, by extension, solve all problems in \Gls{NP}, a proposition that remains unverified. 
 
 
 \begin{table}[htbp]
@@ -201,21 +201,21 @@ La dimostrazione di Karp impiega una tecnica nota come riduzione, in cui un prob
 	\setlength{\tabcolsep}{4pt}
 	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}p{2cm}p{2cm}p{2cm}p{3.5cm}p{3cm}p{2.5cm}@{}}
 			\toprule
-			\textbf{Algoritmo} & \textbf{Complessità Temporale -  Spaziale} & \textbf{Descrizione} & \textbf{Vantaggi} & \textbf{Svantaggi} \\ \midrule
-			Held-Karp & \(O(n^2 2^n)\) - \(O(n^2)\) & Algoritmo esatto che utilizza la programmazione dinamica & Fornisce soluzione ottimale & Inattuabile per grandi \(n\) \\[6pt]
-			Nearest Neighbor & \(O(n^2)\) - \(O(n)\) & Algoritmo euristico greedy & Semplice e veloce & Spesso lontano dall'ottimale \\[6pt]
-			Christofides & \(O(n^3)\) - \(O(n^2)\) & Algoritmo di approssimazione con rapporto di 3/2 & Migliore approssimazione per TSP metrico & Ancora non esatto \\[6pt]
-			Algoritmi Genetici & \(O(n^2)\) - \(O(n)\) & Algoritmo metaeuristico ispirato alla selezione naturale & Flessibile e adattabile & Nessuna garanzia di soluzione ottimale \\ \bottomrule
+			\textbf{Algorithm} & \textbf{Time - Space Complexity} & \textbf{Description} & \textbf{Advantages} & \textbf{Disadvantages} \\ \midrule
+			Held-Karp & \(O(n^2 2^n)\) - \(O(n^2)\) & Exact algorithm using dynamic programming & Provides optimal solution & Infeasible for large \(n\) \\[6pt]
+			Nearest Neighbor & \(O(n^2)\) - \(O(n)\) & Greedy heuristic algorithm & Simple and fast & Often far from optimal \\[6pt]
+			Christofides & \(O(n^3)\) - \(O(n^2)\) & Approximation algorithm with 3/2 ratio & Best approximation for metric TSP & Still not exact \\[6pt]
+			Genetic Algorithms & \(O(n^2)\) - \(O(n)\) & Metaheuristic algorithm inspired by natural selection & Flexible and adaptable & No guarantee of optimal solution \\ \bottomrule
 	\end{tabular*}
-	\caption{Confronto tra diversi algoritmi per TSP}
+	\caption{Comparison between different algorithms for TSP}
 \end{table}
 
-\subsection{Impatto sulla progettazione degli algoritmi}
+\subsection{Impact on Algorithm Design}
 
-L'\Gls{NP}-hardness del \Gls{TSP} ha un profondo impatto sulla progettazione degli algoritmi per risolverlo, favorendo lo sviluppo di varie strategie volte a superare gli ostacoli computazionali:
+The \Gls{NP}-hardness of the \Gls{TSP} has a profound impact on the design of algorithms to solve it, fostering the development of various strategies aimed at overcoming computational obstacles:
 
 \begin{itemize}
-	\item \textbf{Algoritmi esatti:} Nonostante l'\Gls{NP}-hardness del \Gls{TSP}, sono stati ideati algoritmi esatti, come l'algoritmo di Held-Karp. Questi algoritmi garantiscono una soluzione ottimale, ma lo fanno a un costo computazionale che aumenta esponenzialmente con le dimensioni del problema, rendendoli impraticabili per istanze di grandi dimensioni.
-	\item \textbf{Approcci euristici:} Per affrontare istanze di \Gls{TSP} più grandi, vengono impiegati algoritmi euristici. Questi algoritmi non garantiscono una soluzione ottimale, ma possono spesso trovare buone soluzioni in una frazione del tempo richiesto dai metodi esatti. Esempi includono l'algoritmo Nearest Neighbor e l'algoritmo di Christofides.
-  \item \textbf{Algoritmi meteuristici:} Per istanze ancora più complesse, gli approcci meteuristici, come il Genetic Algorithm \Gls{GA} e l'Ant Colony System \Gls{ACS}, offrono strategie flessibili che esplorano lo spazio delle soluzioni in modo più ampio, mirando a sfuggire agli ottimi locali e avvicinarsi più efficacemente agli ottimi globali. Queste tecniche attingono ispirazione dai processi naturali e hanno il vantaggio dell'adattabilità a diverse istanze di problema.
+	\item \textbf{Exact algorithms:} Despite the \Gls{NP}-hardness of the \Gls{TSP}, exact algorithms have been devised, such as the Held-Karp algorithm. These algorithms guarantee an optimal solution, but do so at a computational cost that increases exponentially with problem size, making them impractical for large instances.
+	\item \textbf{Heuristic approaches:} To tackle larger \Gls{TSP} instances, heuristic algorithms are employed. These algorithms do not guarantee an optimal solution, but can often find good solutions in a fraction of the time required by exact methods. Examples include the Nearest Neighbor algorithm and Christofides' algorithm.
+  \item \textbf{Metaheuristic algorithms:} For even more complex instances, metaheuristic approaches, such as the Genetic Algorithm \Gls{GA} and the Ant Colony System \Gls{ACS}, offer flexible strategies that explore the solution space more broadly, aiming to escape local optima and approach global optima more effectively. These techniques draw inspiration from natural processes and have the advantage of adaptability to different problem instances.
 \end{itemize}
